@@ -5,7 +5,7 @@
 ### $this -> db -> queryBuilder(...);
 Без указания типа запроса ничего не сработает
 Поэтому на месте троеточия нужно поставить на выбор:
-###### select, insert, delete, update
+##### select, insert, delete, update
 ***
 
 ### select
