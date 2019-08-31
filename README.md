@@ -31,4 +31,6 @@ $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where([
 ### insert
 
 ##### $this -> db -> queryBuilder('insert') -> insert('users') -> columns(['id', 'email', 'age']) -> values([8, 'toxa@hacker.ua', 49]);
+Множество values:
+##### $this -> db -> queryBuilder('insert') -> insert('users') -> columns(['id', 'email', 'age']) -> values([[8, 'toxa@hacker.ua', 49], [467, 'modved@russia.ua', 45]]);
 Если параметр в columns один, то допускатеся несколько нотаций columns('id') и columns(['id'])
