@@ -8,13 +8,13 @@
 ###### select, insert, delete, update
 ***
 
-#### select
+### select
 ##### $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where(['id' => 5]);
 Если в where необходимо добавить несколько параметров(AND, OR), то запрос будет выглядить так:
 $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where([['id' => 5], ['OR'], ['email' => 'test@gmail.com']]);
 ***
 
-#### update
+### update
 
 ##### $this -> db -> queryBuilder('update') -> table('users') -> set(['id' => 5]) -> where(['id' => 8]);
 Множество параметров
@@ -24,11 +24,11 @@ $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where([
 Пример запроса:
 ##### $this -> db -> queryBuilder('update') -> table('users') -> set([['id' => ':age'], ['email' => 'test@yandex.ru']]) -> where([['id' => 8], ['AND'], ['email'] => ':id']]);
 ***
-#### delete
+### delete
 
 ##### $this -> db -> queryBuilder('delete') -> from('users') -> where([['id' => 5], ['OR'], ['id' => 18]]);
 
-#### insert
+### insert
 
 ##### $this -> db -> queryBuilder('insert') -> insert('users') -> columns(['id', 'email', 'age']) -> values([8, 'toxa@hacker.ua', 49]);
 Если параметр в columns один, то допускатеся несколько нотаций columns('id') и columns(['id'])
