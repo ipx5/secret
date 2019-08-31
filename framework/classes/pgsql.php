@@ -30,12 +30,13 @@ class pgsql {
     protected $queryType = 0;
     protected $selectFields = '';
     protected $table = '';
-    protected $tableAlias = 't';
     protected $condition = '';
     protected $insertInto = '';
     protected $insertFields = '';
+    protected $values = '';
     protected $updateTerm = '';
-
+    protected $columns = '';
+    protected $escapeValues = '';
 
     public function select($fields = '*') {
         $this-> queryType = self::TYPE_SELECT;
@@ -43,9 +44,18 @@ class pgsql {
         return $this;
     }
     
-    public function insertInto($tname) {
+    public function insert($tableName) {
         $this->queryType = self::TYPE_INSERT;
-        $this-> insertInto = $tname;
+        $this->table = $tableName;
+        return $this;
+    }
+
+    public function columns($columns) {
+        if (gettype($columns) == 'array' && count($columns) > 1) {
+            $this -> columns = implode(',', $columns);
+        } else {
+            $this -> columns = $columns;
+        };
         return $this;
     }
     
@@ -65,9 +75,31 @@ class pgsql {
         $this->table = $tname;
         return $this;
     }
+
+    public function testSQL($values) {
+        $sql = '(';
+        foreach ($values as $key => $value) {
+            if (count($values)-1 == $key) {
+                $sql .=  '\'' .$value . '\'';
+            } else {
+                $sql .= '\'' .$value . '\',';
+            }
+        }
+        return $sql .= ')';
+    }
     
-    public function insertValues($values) {
-        $this->insertFields = $values;
+    public function values($values) {
+        if (gettype(reset($values)) == 'array') {
+            foreach ($values as $key => $value) {
+                if (count($values)-1 == $key) {
+                    $this -> values .= $this -> testSQL($value);
+                } else {
+                    $this -> values .= $this -> testSQL($value) . ', ';
+                }
+            }
+        } else {
+            $this -> values .= $this->testSQL($values);
+        }
         return $this;
     }
 
@@ -81,7 +113,18 @@ class pgsql {
     }
     
     public function escape($data) {
-        return pg_escape_string($data);
+        if (gettype($data) == 'array') {
+            foreach ($data as $key => $value) {
+                if ($key == count($data)-1) {
+                    $this -> escapeValues .= pg_escape_string($value);
+                } else {
+                    $this -> escapeValues .= pg_escape_string($value) . ',';
+                }
+            }
+        } else {
+            $this -> escapeValues .= pg_escape_string($data);
+        }
+        return $this;
     }
     
     public function query() {
@@ -122,13 +165,9 @@ class pgsql {
         return $sql;
     }
     
-    protected function getInsertText(array $data) {
-        $fields = '';
-        $values = '';
-        foreach ($data as $rowName => $value) {
-            $fields .= ($fields == '' ? '': ',') . $rowName;
-            $values .= ($values == '' ? ',' : '\'') . $this->escape($value);
-        }
+    protected function getInsertText() {
+        $sql = 'INSERT INTO ' . $this -> table  . (($this -> columns) ? ' (' . ($this -> columns) . ') ' : '')  . ' VALUES ' . $this -> values;
+        return $sql;
     }
     
     protected function getDeleteText() {

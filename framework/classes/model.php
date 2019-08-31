@@ -4,7 +4,15 @@ abstract class model {
     protected $db = false;
     public function __construct() {
         if ($this->db == false) {
-            $this->db = new pgsql(app::getInstance()->db['local']);
+            include_once 'framework/classes/queryBuilder/Pgsql.php';
+            $this->db = new Pgsql(app::getInstance()->db['local']);
         }
+    }
+
+    public function insertFakeUsers() {
+        $this -> db -> insert('users') -> columns(['email', 'password']) ->
+            values([['test@gmail.com', 'test'], ['nobody@yandex.ru', 'nodody'],
+                    ['superman@mail.ru', 'superman']
+            ]) -> query();
     }
 }
