@@ -10,6 +10,7 @@
 
 #### select
 $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where(['id' => 5]);
+----
 Если в where необходимо добавить несколько параметров(AND, OR), то запрос будет выглядить так:
 $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where([['id' => 5], ['OR'], ['email' => 'test@gmail.com']]);
 ***
