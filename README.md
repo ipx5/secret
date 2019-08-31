@@ -28,6 +28,7 @@ $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where([
 
 ##### $this -> db -> queryBuilder('delete') -> from('users') -> where([['id' => 5], ['OR'], ['id' => 18]]);
 
+***
 ### insert
 
 ##### $this -> db -> queryBuilder('insert') -> insert('users') -> columns(['id', 'email', 'age']) -> values([8, 'toxa@hacker.ua', 49]);
