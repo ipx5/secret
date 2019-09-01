@@ -22,40 +22,24 @@ class Pgsql implements PgsqlBehavior {
         }
     }
     public function queryBuilder($type) {
-        switch ($type) {
-            case 'insert':
-                $this -> queryType = $type;
-                return $this -> currentState = new Insert($this);
-            case 'select':
-                $this -> queryType = $type;
-                return $this -> currentState = new Select($this);
-            case 'delete':
-                $this -> queryType = $type;
-                return $this -> currentState = new Delete($this);
-            case 'update':
-                $this -> queryType = $type;
-                return $this -> currentState = new Update($this);
+        if ($type == 'select') {
+            $this -> currentState = new Select($this);
+        } else {
+            $className = ucfirst($type);
+            $this -> currentState = new $className($this);
         }
+        $this -> queryType = $type;
+        return $this -> currentState;
     }
 
     public function query() {
-        switch ($this->queryType) {
-            case 'insert':
-                $sql = $this -> getInsertText();
-                $this -> clear();
-                return pg_query($this->connection, $sql);
-            case 'select':
-                $sql = $this -> getSelectText();
-                $this -> clear();
-                return $this -> currentState -> selectQuery($sql);
-            case 'delete':
-                $sql = $this -> getDeleteText();
-                $this -> clear();
-                return pg_query($this -> connection, $sql);
-            case 'update':
-                $sql = $this -> getUpdateText();
-                $this -> clear();
-                return pg_query($this -> connection, $sql);
+        $nameMethod = 'get' . ucfirst($this -> queryType) . 'Text';
+        $sql = $this -> $nameMethod();
+        $this -> clear();
+        if ($this -> queryType == 'select') {
+            return $this -> currentState -> selectQuery($sql);
+        } else {
+            return pg_query($this->connection, $sql);
         }
     }
 
