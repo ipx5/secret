@@ -4,7 +4,6 @@ abstract class model {
     protected $db = false;
     public function __construct() {
         if ($this->db == false) {
-            include_once 'framework/classes/queryBuilder/Pgsql.php';
             $this->db = new Pgsql(app::getInstance()->db['local']);
         }
     }
