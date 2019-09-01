@@ -54,11 +54,21 @@ class Update implements UpdateBehavior {
         $sql = '';
         foreach ($values as $key => $value) {
             if (count($values)-1 == $key) {
-                if ($value[0] == ':') {
+                if ($value != '' && $value[0] == ':') {
                     $sql .= $key . '=' . substr($value, 1) . ' ';
+                } else {
+                    if (ctype_digit($value)) {
+                        $sql .= $key . '='  .$value;
+                    } else {
+                        $sql .= $key . '=' . '\'' .$value . '\'';
+                    }
                 }
             } else {
-                $sql .= $key . '=' . '\'' .$value . '\',';
+                if (ctype_digit($value)) {
+                    $sql .= $key . '='  .$value . ',';
+                } else {
+                    $sql .= $key . '=' . '\'' .$value . '\',';
+                }
             }
         }
         return $sql;
@@ -84,6 +94,7 @@ class Update implements UpdateBehavior {
         if (!empty($this -> pgsql -> where)) {
             $sql .= ' WHERE ' . $this -> pgsql -> where;
         }
+        echo $sql;
         return $sql;
     }
     public function __call($name, $params) {

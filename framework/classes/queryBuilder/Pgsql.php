@@ -15,6 +15,7 @@ class Pgsql implements PgsqlBehavior {
     public $columns;
     public $values;
     public $where;
+    public $returning;
     public $connection = false;
     public function __construct($config) {
         if ($this->connection == false) {
@@ -34,6 +35,10 @@ class Pgsql implements PgsqlBehavior {
         $this -> clear();
         if ($this -> queryType == 'select') {
             return $this -> currentState -> selectQuery($sql);
+        } else if ($this -> returning) {
+            $result = pg_query($this->connection, $sql);
+            $insert_row = pg_fetch_row($result);
+            return $insert_id = $insert_row[0];
         } else {
             return pg_query($this->connection, $sql);
         }

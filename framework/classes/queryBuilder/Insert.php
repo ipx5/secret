@@ -9,6 +9,7 @@ interface InsertBehavior {
 }
 
 class Insert implements InsertBehavior  {
+
     protected $pgsql;
 
     public function __construct($object) {
@@ -50,17 +51,25 @@ class Insert implements InsertBehavior  {
     public function toScreen($values) {
         $sql = '(';
         foreach ($values as $key => $value) {
-            if (count($values)-1 == $key) {
-                $sql .=  '\'' .$value . '\'';
+            if ($key >= 1 && ($value != 'RETURNING id')) {
+                if (ctype_digit($value)) {
+                    $sql .= ',' . $value;
+                } else {
+                    $sql .= ',\'' . $value . '\'';
+                }
             } else {
-                $sql .= '\'' .$value . '\',';
+                if ($value == 'RETURNING id') {
+                    $this->pgsql->returning = $value;
+                } else {
+                    $sql .= '\'' . $value . '\'';
+                }
             }
         }
         return $sql .= ')';
     }
 
     public function getInsertText() {
-        return 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? ' (' . ($this -> pgsql -> columns) . ') ' : '')  . ' VALUES ' . $this -> pgsql -> values;
+        return 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? ' (' . ($this -> pgsql -> columns) . ') ' : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ?? '');
     }
 
 }
