@@ -8,7 +8,7 @@ interface InsertBehavior {
     public function getInsertText();
 }
 
-class InsertClass implements InsertBehavior  {
+class Insert implements InsertBehavior  {
     protected $pgsql;
 
     public function __construct($object) {

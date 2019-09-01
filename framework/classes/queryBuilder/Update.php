@@ -10,7 +10,7 @@ interface UpdateBehavior {
     public function where($value);
 }
 
-class UpdateClass implements UpdateBehavior {
+class Update implements UpdateBehavior {
     protected $pgsql;
 
     public function __construct($object) {

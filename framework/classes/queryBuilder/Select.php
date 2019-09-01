@@ -9,7 +9,7 @@ interface SelectInterface {
     public function selectQuery($sql);
 }
 
-class SelectClass implements SelectInterface {
+class Select implements SelectInterface {
 
     protected $pgsql;
 

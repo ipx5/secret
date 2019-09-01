@@ -7,7 +7,7 @@ interface DeleteBehavior {
     public function toScreen($value);
 }
 
-class DeleteClass implements DeleteBehavior {
+class Delete implements DeleteBehavior {
     protected $pgsql;
 
     public function __construct($object) {

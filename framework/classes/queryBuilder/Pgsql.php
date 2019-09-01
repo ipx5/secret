@@ -24,21 +24,17 @@ class Pgsql implements PgsqlBehavior {
     public function queryBuilder($type) {
         switch ($type) {
             case 'insert':
-                include_once 'framework/classes/queryBuilder/Insert.php';
                 $this -> queryType = $type;
-                return $this -> currentState = new InsertClass($this);
+                return $this -> currentState = new Insert($this);
             case 'select':
-                include_once 'framework/classes/queryBuilder/Select.php';
                 $this -> queryType = $type;
-                return $this -> currentState = new SelectClass($this);
+                return $this -> currentState = new Select($this);
             case 'delete':
-                include_once 'framework/classes/queryBuilder/Delete.php';
                 $this -> queryType = $type;
-                return $this -> currentState = new DeleteClass($this);
+                return $this -> currentState = new Delete($this);
             case 'update':
-                include_once 'framework/classes/queryBuilder/Update.php';
                 $this -> queryType = $type;
-                return $this -> currentState = new UpdateClass($this);
+                return $this -> currentState = new Update($this);
         }
     }
 

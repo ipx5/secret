@@ -56,7 +56,7 @@ class app {
     }
     private function init() {
         $basepath = get_include_path();
-        $basepath .= PATH_SEPARATOR . CLASSES;
+        $basepath .= PATH_SEPARATOR . CLASSES . PATH_SEPARATOR . QB;
         set_include_path($basepath);
     }
 }
