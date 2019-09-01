@@ -6,6 +6,7 @@ class controllerTest extends controller {
     }
     public function actionPage()
     {
+        
     }
 }
 

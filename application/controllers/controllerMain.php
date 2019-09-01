@@ -6,6 +6,7 @@ class controllerMain extends controller {
             [
              'lo_auth' => $this->renderTemplate('auth'),
             ]);
+        $model = $this -> getModel('test');
+        $model -> insertFakeData();
         }
-
 }
