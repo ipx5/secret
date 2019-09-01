@@ -22,12 +22,8 @@ class Pgsql implements PgsqlBehavior {
         }
     }
     public function queryBuilder($type) {
-        if ($type == 'select') {
-            $this -> currentState = new Select($this);
-        } else {
-            $className = ucfirst($type);
-            $this -> currentState = new $className($this);
-        }
+        $className = ucfirst($type);
+        $this -> currentState = new $className($this);
         $this -> queryType = $type;
         return $this -> currentState;
     }
