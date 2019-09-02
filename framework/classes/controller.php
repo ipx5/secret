@@ -4,7 +4,7 @@ abstract class controller {
     
     protected $models = [];
     protected $layout = 'main';
-    protected $templateDir = 'template';
+    protected $templateDir = '';
 
     public function __construct() {}
     
@@ -20,12 +20,12 @@ abstract class controller {
         return $this->models[$name];
     }
     
-    protected function renderLayout($lay ,$params = []) {
+    protected function renderLayout( $params = []) {
         foreach ($params as $name => $value) {
             $$name = $value;
         }
         ob_start();
-        include app::getInstance()->paths['layout']. $lay . '.php';
+        include app::getInstance()->paths['layout']. $this-> layout.'.php';
         return ob_get_clean();
     }
 
@@ -34,7 +34,7 @@ abstract class controller {
             $$var = $value;
         }
         ob_start();
-        include app::getInstance()->paths['template'] . $name . '.php';
+        include app::getInstance()->paths['views'] .$this->templateDir.DS. $name . '.php';
         return ob_get_clean();
     }
 }

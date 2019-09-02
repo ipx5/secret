@@ -17,11 +17,11 @@ return [
     ],
     'db' => [
         'local' => [
-            'host' => 'localhost',
+            'host' => '194.87.102.4',
             'port' => 5432,
-            'dbname' => 'zhuravlev',
-            'user' => 'zhuravlev',
-            'password' => 'zhuravlev'
+            'dbname' => '****',
+            'user' => '*****',
+            'password' => '*****'
         ]
     ]
 ];
