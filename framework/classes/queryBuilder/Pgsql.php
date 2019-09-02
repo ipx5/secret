@@ -16,6 +16,8 @@ class Pgsql implements PgsqlBehavior {
     public $values;
     public $where;
     public $returning;
+    public $limit;
+    public $offset;
     public $connection = false;
     public function __construct($config) {
         if ($this->connection == false) {

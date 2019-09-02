@@ -17,6 +17,10 @@ class Select implements SelectInterface {
         $this -> pgsql = $object;
     }
 
+    public function __call($name, $params) {
+        return $this -> pgsql -> $name(reset($params));
+    }
+
     public function select($columns = '*') {
         if (gettype($columns) == 'array' && count($columns) > 1) {
             $this -> pgsql -> columns = implode(',', $columns);
@@ -44,18 +48,14 @@ class Select implements SelectInterface {
         return $this;
     }
 
-    public function getSelectText() {
-        $sql = 'SELECT ' . $this->pgsql -> columns . ' FROM ' . $this-> pgsql -> table;
-
-        if (!empty($this-> pgsql -> where)) {
-            $sql .= ' WHERE ' . $this-> pgsql -> where;
-        }
-
-        return $sql;
+    public function limit($number) {
+        $this -> pgsql -> limit = $number;
+        return $this;
     }
 
-    public function __call($name, $params) {
-        return $this -> pgsql -> $name(reset($params));
+    public function offset($number) {
+        $this -> pgsql -> offset = $number;
+        return $this;
     }
 
     public function toScreen($values) {
@@ -70,6 +70,24 @@ class Select implements SelectInterface {
                 $sql .= $key . '=' . '\'' . $value . '\' ';
             }
         }
+        return $sql;
+    }
+
+    public function getSelectText() {
+        $sql = 'SELECT ' . $this->pgsql -> columns . ' FROM ' . $this-> pgsql -> table;
+
+        if (!empty($this-> pgsql -> where)) {
+            $sql .= ' WHERE ' . $this-> pgsql -> where;
+        }
+
+        if (!empty($this -> pgsql -> limit)) {
+            $sql .= ' LIMIT ' . $this -> pgsql -> limit;
+        }
+
+        if (!empty($this -> pgsql -> offset)) {
+            $sql .= ' OFFSET ' . $this -> pgsql -> offset;
+        }
+
         return $sql;
     }
 

@@ -3,10 +3,9 @@
 
 class User {
 
-    public static $db = 2;
+    public static $db;
 
     public static function newEmptyInstance() {
-
         self::$db = new Pgsql(app::getInstance()->db['local']);
         return new self();
     }
@@ -108,5 +107,26 @@ class User {
         $new_id = self::$db -> queryBuilder('insert') -> insert('users') -> columns(['email', 'salt', 'token', 'tmp_token', 'admin', 'role_id', 'status'])
             -> values([$this->email ?? '', $this->salt ?? '', $this->token ?? '', $this->tmp_token ?? '', $this->admin ?? '0', $this->role_id ?? '0', $this->status ?? '1', 'RETURNING id']) -> query();
         $this->id = $new_id;
+    }
+
+    public static function _delete($aId) {
+        $array = [];
+        if (gettype($aId) == 'array') {
+            foreach ($aId as $key => $value) {
+                if ($key == 0) {
+                    $array[] = ['id' => $value];
+                } else {
+                    $array[] = ['OR'];
+                    $array[] = ['id' => $value];
+                }
+            }
+            self::$db -> queryBuilder('delete') -> from('users') -> where($array) -> query();
+        } else {
+            self::$db -> queryBuilder('delete') -> from('users') -> where(['id' => $aId]) -> query();
+        }
+    }
+
+    public static function select($limit = 0, $offset = 0) {
+        print_r(self::$db -> queryBuilder('select') -> select('*') -> from('users') -> limit($limit) -> offset($offset) -> query());
     }
 }

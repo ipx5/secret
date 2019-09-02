@@ -27,9 +27,14 @@ class Delete implements DeleteBehavior {
         $sql = '';
         if (gettype($condition) == 'array' && gettype(reset($condition)) == 'array') {
             foreach ($condition as $key => $value) {
-                $sql .= $this -> toScreen($value);
+                if (gettype($value) == 'number') {
+                    $sql .= $key . '=' . $value;
+                } else {
+                    $sql .= $this -> toScreen($value);
+                }
             }
         } else {
+
             $sql = $this -> toScreen($condition);
         }
         $this-> pgsql -> where = $sql;
