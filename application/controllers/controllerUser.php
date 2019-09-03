@@ -2,18 +2,27 @@
 
 class controllerUser extends controller{
     public $templateDir = 'user';
+
     public function actionRegister(){
         $db = new Pgsql( app::getInstance()-> db['local'] );
         $users = $db-> queryBuilder('select')-> select('*')-> from('users')-> where('subtoken !=\'\'')-> query();
-        foreach ($users as $users) {
-            echo $user['status'].' <a target="_blank" href="/user/authorization?token='.$user['sub_token'].'">'.$user['email'].'</a><br/>';
+        foreach ($users as $user) {
+            switch($user['status']){
+                case 1:
+                    echo $user['status'].' <a target="_blank" href="/user/authorization?token='.$user['sub_token'].'">'.$user['email'].'</a><br/>';
+                    break;
+                case 2:
+                    echo $user['status'].' <a target="_blank" href="/user/restore?token='.$user['sub_token'].'">'.$user['email'].'</a><br/>';
+                    break;
+            }
         }
     }
+
     public function actionRegistration(){
         $data = app::getInstance()-> request-> request;
         if( app::getInstance()-> request-> isForm ){
             try{
-                app::getInstance()-> user-> registration(app::getInstance()->request->request);
+                app::getInstance()-> user-> registration(app::getInstance()-> request-> request);
             } catch (Exception $e){
                 $data['error'] = $e-> getMessage();
             }
@@ -22,11 +31,12 @@ class controllerUser extends controller{
             'lo_content' => $this-> renderTemplate('registration', $data)
         ]);
     }
+
     public function actionAuthorization(){
         $data = app::getInstance()-> request -> request;
         if ( app::getInstance()-> request-> isForm ){
             try{
-                $user = app::getInstance()-> user-> authenticate(app::getInstance()->request->request);
+                $user = app::getInstance()-> user-> authenticate(app::getInstance()-> request-> request);
                 app::getInstance()-> user-> authorization($user);
             } catch (Exception $e){
                 $data['error'] = $e-> getMessage();
@@ -36,14 +46,43 @@ class controllerUser extends controller{
             'lo_content' => $this-> renderTemplate('authorization', $data)
         ]);
     }
-    public function actionReset()
-    {
-        # code...
+
+    public function actionReset(){
+        $data = app::getInstance()-> request -> request;
+        if ( app::getInstance()-> request-> isForm ){
+            try{
+                app::getInstance()-> user-> reset(app::getInstance()-> request-> request);
+                header('location:/user/resetSuccess?email='.app::getInstance()-> request-> request['email']);
+            } catch (Exception $e){
+                $data['error'] = $e-> getMessage();
+            }
+            echo $this-> renderLayout([
+            'lo_content' => $this-> renderTemplate('reset')
+            ]);
+        }
     }
-    public function actionRestore()
-    {
-        # code...
+
+    public function actionResetSuccess(){
+        echo $this-> renderLayout([
+            'lo_content' => $this-> renderTemplate('resetSuccess', ['email' => app::getInstance()-> request-> request['email']])
+            ]);
     }
+
+    public function actionRestore(){
+        $data = app::getInstance()-> request -> request;
+        if ( app::getInstance()-> request-> isForm ){
+            try {
+                app::getInstance()-> user-> restore($data);
+                header('location:/user/authorization');
+            } catch (Exception $e){
+                $data['error'] = $e-> getMessage();
+            }
+        }
+        echo $this-> renderLayout([
+            'lo_content' => $this-> renderTemplate('restore', ['token' => $data['token']])
+        ]);
+    }
+    
     public function actionLogout()
     {
         app::getInstance()-> user-> logout();

@@ -2,7 +2,7 @@
 <?php echo $error ?? '';?>
 </div>
 <form method="POST" action="/user/restore/">
-<input type="hidden" name="sub_token" value="<?php echo $sub_token ?? ''; ?>" >
+<input type="hidden" name="sub_token" value="<?php echo $token ?? ''; ?>" >
     <table>
         <tr>
             <td>Password</td>

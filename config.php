@@ -12,7 +12,7 @@ return [
         'controllers'=> APP_PATH . 'controllers' . DS,
         'models' => APP_PATH . 'models' . DS,
         'views' => APP_PATH . 'views' . DS,
-        'layout' => APP_PATH . 'views' . DS . 'layout' . DS,
+        'layouts' => APP_PATH . 'views' . DS . 'layouts' . DS,
         'template' => APP_PATH . 'views' . DS . 'template' . DS
     ],
     'db' => [

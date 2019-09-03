@@ -15,3 +15,5 @@
     </table>
     <input type="submit" name="send">
 </form>
+<br />
+<a href="/user/restore"> Забыли пароль? </a>

@@ -1,3 +1,6 @@
+<div>
+<?php echo $error ?? ''; ?>
+</div>
 <form method="POST" action="/user/reset/">
     <table>
         <tr>
