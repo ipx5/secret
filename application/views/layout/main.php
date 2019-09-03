@@ -11,6 +11,7 @@
     </div>
     <div id="user">
         Вы вошли как <?php echo app::getInstance()-> user-> email;?>
+        <a href='user/logout/'> Выйти </a>
     </div>
     <div id="menu">
         <?php echo $lo_menu ?? '';?>
@@ -18,10 +19,6 @@
     <div id="content">
         <?php echo $lo_content ?? '';?>
     </div>
-        <?php if(!app::getInstance()-> acceptCookie) { app::getInstance()-> acceptCookie++; ?>
-        <div>
-        Данный сайт использует cookie.
-        </div>
-        <?php }?>
+
 </body>
 </html>

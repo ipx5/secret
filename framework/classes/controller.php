@@ -19,7 +19,6 @@ abstract class controller {
         }
         return $this->models[$name];
     }
-    
     protected function renderLayout( $params = []) {
         foreach ($params as $name => $value) {
             $$name = $value;
@@ -28,7 +27,6 @@ abstract class controller {
         include app::getInstance()->paths['layout']. $this-> layout.'.php';
         return ob_get_clean();
     }
-
     protected function renderTemplate($name, $params = []) {
         foreach ($params as $var => $value) {
             $$var = $value;

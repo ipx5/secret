@@ -24,7 +24,7 @@ class controllerUser extends controller{
     }
     public function actionAuthorization(){
         $data = app::getInstance()-> request -> request;
-        if ( app::getInstance()-> request-> isFrom ){
+        if ( app::getInstance()-> request-> isForm ){
             try{
                 $user = app::getInstance()-> user-> authenticate(app::getInstance()->request->request);
                 app::getInstance()-> user-> authorization($user);

@@ -1,7 +1,12 @@
 <?php
 
 spl_autoload_register('app::autoload');
-
+function debug ($str){
+    echo '<pre>';
+    var_dump($str);
+    echo '</pre>';
+    exit;
+}
 class app {
     protected $config = false;
     public $request = false;
