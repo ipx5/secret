@@ -23,7 +23,7 @@ abstract class controller {
         }
         return $this-> models[$name];
     }
-    protected function renderLayout( $params = []) {
+    protected function renderLayout( $params =[]) {
         foreach ($params as $name => $value) {
             $$name = $value;
         }

@@ -61,7 +61,7 @@ class controllerUser extends controller{
             ]);
         }
     }
-
+    
     public function actionResetSuccess(){
         echo $this-> renderLayout([
             'lo_content' => $this-> renderTemplate('resetSuccess', ['email' => app::getInstance()-> request-> request['email']])
@@ -86,6 +86,6 @@ class controllerUser extends controller{
     public function actionLogout()
     {
         app::getInstance()-> user-> logout();
-        header('location:/user/authorization');
+        echo header('location:/user/authorization');
     }
 }
