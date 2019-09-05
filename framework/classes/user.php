@@ -1,5 +1,11 @@
 <?php
 
+
+// statuses:
+// 1-ok
+// 0-register but not corfirmed
+// 2-password is reseted
+
 session_start();
 class user {
     protected $db = false;
@@ -146,18 +152,22 @@ class user {
                 break;
             }
         }
-        
         setcookie('token', $token, time()+365*86400, '/', '', false, true);
-
         $this-> db-> queryBuilder('update')-> table('users')->set(['token'=>$token])-> where(['id'=> $user['id']])-> query();
         foreach ($user as $key => $value) {
             $this-> $key = $value;
         }
+        $this-> isUser = true;
     }
 
     public function logout(){
         $this-> db-> queryBuilder('update')-> table('users')-> set(['token'=> ''])-> where(['id'=> $user['id']])-> query();
         $_SESSION = [];
         setcookie('token', '', time()-1, '/');
+    }
+
+    public function saveRole()
+    {
+        
     }
 }

@@ -86,8 +86,7 @@ class controllerUser extends controller{
         ]);
     }
     
-    public function actionLogout()
-    {
+    public function actionLogout(){
         app::getInstance()-> user-> logout();
         header('location:/user/authorization');
     }
