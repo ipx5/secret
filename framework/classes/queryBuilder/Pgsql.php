@@ -51,6 +51,8 @@ class Pgsql implements PgsqlBehavior {
         $this -> columns = '';
         $this -> table = '';
         $this -> where = '';
+        $this -> limit = '';
+        $this -> offset = '';
     }
 
     public function __call($name, $params) {

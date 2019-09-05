@@ -60,14 +60,23 @@ class Select implements SelectInterface {
 
     public function toScreen($values) {
         $sql = '';
+        $valueTest = '=';
         foreach ($values as $key => $value) {
-            if (($key == 0 && $value == 'AND') || ($key == 0 && $value == 'OR') || ($key == 0 && $value == 'and') || ($key == 0 && $value == 'or')) {
+            if (($key === 0 && $value === 'AND') || ($key === 0 && $value === 'OR') || ($key === 0 && $value === 'and') || ($key === 0 && $value === 'or')) {
                 $sql .= $value . ' ';
             } else {
-                if ($value[0] == ':') {
-                    $sql .= $key . '=' . $value . ' ';
+                 if ($value === '!' && $key === 0) {
+                    $valueTest = '!=';
+                } else if (gettype($value) == 'string' && strlen($value) && $value[0] === ':') {
+                    $sql .= $key . '=' . substr($value, 1) . ' ';
+                } else {
+                     if (gettype($value) == 'number') {
+                         $sql .= $key . $valueTest .  $value . ' ';
+                     } else {
+                         $sql .= $key . $valueTest . '\'' . $value . '\' ';
+                     }
+                    $valueTest = '=';
                 }
-                $sql .= $key . '=' . '\'' . $value . '\' ';
             }
         }
         return $sql;

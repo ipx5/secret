@@ -12,73 +12,40 @@ class User {
 
     private function __construct(){}
 
-    private $id;
-    private $email;
-    private $salt;
-    private $token;
-    private $tmp_token;
-    private $admin;
-    private $role_id;
-    private $status;
+    public $id;
+    public $email;
+    public $password;
+    public $salt;
+    public $token;
+    public $tmp_token;
+    public $admin;
+    public $role_id;
+    public $status;
 
-    public function getId() {
-        return $this -> id;
+    protected function set($name, $arguments) {
+        $resetArgument = reset($arguments);
+        $this -> $name = $resetArgument;
+        return false;
     }
 
-    public function setEmail($aEmail) {
-        $this -> email = $aEmail;
+    public function __call($name, $arguments) {
+        $method = substr($name, 0, 3);
+        $name = strtolower(substr($name, 3));
+        if ($method == 'get' || $method == 'set' || !empty($this -> $name)) {
+            $value = $this -> $method($name, $arguments);
+            if ($value) {
+                return $value;
+            } else {
+                return $this;
+            }
+        } else {
+            echo "Неверное имя функции";
+            return;
+        }
     }
 
-    public function getEmail() {
-        return $this -> email;
-    }
-
-    public function setSalt($aSalt) {
-        $this -> salt = $aSalt;
-    }
-
-    public function getSalt() {
-        return $this -> salt;
-    }
-
-    public function setToken($aToken) {
-        $this -> email = $aToken;
-    }
-
-    public function getToken() {
-        return $this -> token;
-    }
-
-    public function setTmpToken($aTmpToken) {
-        $this -> tmp_token = $aTmpToken;
-    }
-
-    public function getTmpToken() {
-        return $this -> tmp_token;
-    }
-
-    public function setAdmin($aAdmin) {
-        $this -> admin = $aAdmin;
-    }
-
-    public function getAdmin() {
-        return $this -> admin;
-    }
-
-    public function setRoleId($aRoleId) {
-        $this -> role_id = $aRoleId;
-    }
-
-    public function getRoleId() {
-        return $this -> role_id;
-    }
-
-    public function setStatus($aStatus) {
-        $this -> status = $aStatus;
-    }
-
-    public function getStatus() {
-        return $this -> status;
+    public function get($name, $arguments = []) {
+        return $this -> $name;
     }
 
     public function save() {
@@ -94,6 +61,7 @@ class User {
         set([
             ['id' => $this -> id ?? ''],
             ['email' => $this -> email ?? ''],
+            ['password' => $this -> password ?? ''],
             ['salt' => $this->salt ?? ''],
             ['token' => $this->token ?? ''],
             ['tmp_token' => $this->tmp_token ?? ''],
@@ -104,8 +72,8 @@ class User {
     }
 
     public function _insert() {
-        $new_id = self::$db -> queryBuilder('insert') -> insert('users') -> columns(['email', 'salt', 'token', 'tmp_token', 'admin', 'role_id', 'status'])
-            -> values([$this->email ?? '', $this->salt ?? '', $this->token ?? '', $this->tmp_token ?? '', $this->admin ?? '0', $this->role_id ?? '0', $this->status ?? '1', 'RETURNING id']) -> query();
+        $new_id = self::$db -> queryBuilder('insert') -> insert('users') -> columns(['email', 'salt', 'token', 'tmp_token', 'admin', 'role_id', 'status', 'password'])
+            -> values([$this->email ?? '', $this->salt ?? '', $this->token ?? '', $this->tmp_token ?? '', $this -> password ?? '', $this->admin ?? '0', $this->role_id ?? '0', $this->status ?? '1', 'RETURNING id']) -> query();
         $this->id = $new_id;
     }
 
@@ -127,6 +95,35 @@ class User {
     }
 
     public static function select($limit = 0, $offset = 0) {
-        print_r(self::$db -> queryBuilder('select') -> select('*') -> from('users') -> limit($limit) -> offset($offset) -> query());
+        $result = self::$db -> queryBuilder('select') -> select('*') -> from('users') -> limit($limit) -> offset($offset) -> query();
+        if ($result != false) {
+            $arrayUsers = [];
+            foreach ($result as $value) {
+                $arrayUsers[] = self::newInstance($value['id']);
+            }
+            return $arrayUsers;
+        } else {
+            return false;
+        }
+    }
+
+    public static function newInstance($aId) {
+        $result = self::$db -> queryBuilder('select') -> select('*') -> from('users') -> where(['id' => $aId]) -> limit(1) -> query();
+        $row = reset($result);
+        if ($row != false) {
+            $product = new self();
+            $product -> id = $row['id'];
+            $product -> email = $row['email'];
+            $product -> password = $row['password'];
+            $product -> salt = $row['salt'];
+            $product -> token = $row['token'];
+            $product -> tmp_token = $row['tmp_token'];
+            $product -> admin = $row['admin'];
+            $product -> role_id = $row['role_id'];
+            $product -> status = $row['status'];
+            return $product;
+        } else {
+            return false;
+        }
     }
 }

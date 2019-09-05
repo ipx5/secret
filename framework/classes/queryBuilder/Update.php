@@ -23,25 +23,31 @@ class Update implements UpdateBehavior {
     }
 
     public function set($values) {
+        $set = '';
         if (gettype(reset($values)) == 'array') {
             foreach ($values as $key => $value) {
-                if (count($values)-1 == $key) {
-                    $this -> pgsql -> values .= $this -> toScreenSet($value);
+                if ($set === '') {
+                    $set .= $this -> toScreenSet($value);
                 } else {
-                    $this -> pgsql -> values .= $this -> toScreenSet($value) . ', ';
+                    $set .= ', ' . $this -> toScreenSet($value);
                 }
             }
         } else {
-            $this -> pgsql -> values .= $this->toScreenSet($values);
+            $set .= $this -> toScreenSet($values);
         }
+        $this -> pgsql -> values = $set;
         return $this;
     }
 
     public function where($condition) {
         $sql = '';
-        if (gettype($condition) == 'array' && gettype(reset($condition)) == 'array') {
+        if (gettype(reset($condition)) == 'array') {
             foreach ($condition as $key => $value) {
-                $sql .= $this -> toScreenWhere($value);
+                if ($sql === '') {
+                    $sql .= $this -> toScreenWhere($value);
+                } else {
+                    $sql .= ', ' . $this -> toScreenWhere($value);
+                }
             }
         } else {
             $sql = $this -> toScreenWhere($condition);
@@ -53,22 +59,11 @@ class Update implements UpdateBehavior {
     public function toScreenSet($values) {
         $sql = '';
         foreach ($values as $key => $value) {
-            if (count($values)-1 == $key) {
-                if ($value != '' && $value[0] == ':') {
-                    $sql .= $key . '=' . substr($value, 1) . ' ';
-                } else {
-                    if (ctype_digit($value)) {
-                        $sql .= $key . '='  .$value;
-                    } else {
-                        $sql .= $key . '=' . '\'' .$value . '\'';
-                    }
-                }
+            $type = gettype($value);
+            if ($sql === '') {
+                $sql .= $key .'=' . (($type == 'string') ? '\'' . $value . '\'' : $value);
             } else {
-                if (ctype_digit($value)) {
-                    $sql .= $key . '='  .$value . ',';
-                } else {
-                    $sql .= $key . '=' . '\'' .$value . '\',';
-                }
+                $sql .= ',' . $key . '=' . (($type == 'string') ? '\'' . $value . '\'' : $value);
             }
         }
         return $sql;
@@ -76,14 +71,23 @@ class Update implements UpdateBehavior {
 
     public function toScreenWhere($values) {
         $sql = '';
+        $term = '=';
         foreach ($values as $key => $value) {
-            if (($key == 0 && $value == 'AND') || ($key == 0 && $value == 'OR') || ($key == 0 && $value == 'and') || ($key == 0 && $value == 'or')) {
-                $sql .= $value . ' ';
-            } else {
-                if ($value[0] == ':') {
-                    $sql .= $key . '=' . $value . ' ';
+            $type = gettype($value);
+            if ($sql === '') {
+                if ($value == '!') {
+                    $term = '!=';
+                } else {
+                    $sql .= $key .$term . (($type == 'string') ? '\'' . $value . '\'' : $value);
+                    $term = '=';
                 }
-                $sql .= $key . '=' . '\'' . $value . '\' ';
+            } else if ($value == 'OR' || $value == 'AND') {
+                $sql .= ' ' . $value;
+            } else if ($value == '!') {
+                $term = '!=';
+            } else {
+                $sql .= ' ' . $key . $term . (($type == 'string') ? '\'' . $value . '\'' : $value);
+                $term = '=';
             }
         }
         return $sql;
