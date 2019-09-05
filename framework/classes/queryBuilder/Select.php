@@ -65,17 +65,16 @@ class Select implements SelectInterface {
             if (($key === 0 && $value === 'AND') || ($key === 0 && $value === 'OR') || ($key === 0 && $value === 'and') || ($key === 0 && $value === 'or')) {
                 $sql .= $value . ' ';
             } else {
-                if ($value === '!' && $key === 0) {
+                 if ($value === '!' && $key === 0) {
                     $valueTest = '!=';
                 } else if (gettype($value) == 'string' && strlen($value) && $value[0] === ':') {
                     $sql .= $key . '=' . substr($value, 1) . ' ';
                 } else {
-		
-                    if (gettype($value) == 'number') {
-                        $sql .= $key . $valueTest .  $value . ' ';
-                    } else {
-                        $sql .= $key . $valueTest . '\'' . $value . '\' ';
-                    }
+                     if (gettype($value) == 'number') {
+                         $sql .= $key . $valueTest .  $value . ' ';
+                     } else {
+                         $sql .= $key . $valueTest . '\'' . $value . '\' ';
+                     }
                     $valueTest = '=';
                 }
             }
@@ -97,14 +96,15 @@ class Select implements SelectInterface {
         if (!empty($this -> pgsql -> offset)) {
             $sql .= ' OFFSET ' . $this -> pgsql -> offset;
         }
+
         return $sql;
     }
 
     public function selectQuery($sql) {
         $res = pg_query($this-> pgsql -> connection, $sql);
         $out = [];
+        $current = false;
         while ($current = pg_fetch_assoc($res)) {
-		//print_r($current);
             $out[] = $current;
         }
         return $out;
