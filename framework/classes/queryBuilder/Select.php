@@ -17,6 +17,10 @@ class Select implements SelectInterface {
         $this -> pgsql = $object;
     }
 
+    public function __call($name, $params) {
+        return $this -> pgsql -> $name(reset($params));
+    }
+
     public function select($columns = '*') {
         if (gettype($columns) == 'array' && count($columns) > 1) {
             $this -> pgsql -> columns = implode(',', $columns);
@@ -44,6 +48,41 @@ class Select implements SelectInterface {
         return $this;
     }
 
+    public function limit($number) {
+        $this -> pgsql -> limit = $number;
+        return $this;
+    }
+
+    public function offset($number) {
+        $this -> pgsql -> offset = $number;
+        return $this;
+    }
+
+    public function toScreen($values) {
+        $sql = '';
+        $valueTest = '=';
+        foreach ($values as $key => $value) {
+            if (($key === 0 && $value === 'AND') || ($key === 0 && $value === 'OR') || ($key === 0 && $value === 'and') || ($key === 0 && $value === 'or')) {
+                $sql .= $value . ' ';
+            } else {
+                if ($value === '!' && $key === 0) {
+                    $valueTest = '!=';
+                } else if (gettype($value) == 'string' && strlen($value) && $value[0] === ':') {
+                    $sql .= $key . '=' . substr($value, 1) . ' ';
+                } else {
+		
+                    if (gettype($value) == 'number') {
+                        $sql .= $key . $valueTest .  $value . ' ';
+                    } else {
+                        $sql .= $key . $valueTest . '\'' . $value . '\' ';
+                    }
+                    $valueTest = '=';
+                }
+            }
+        }
+        return $sql;
+    }
+
     public function getSelectText() {
         $sql = 'SELECT ' . $this->pgsql -> columns . ' FROM ' . $this-> pgsql -> table;
 
@@ -51,24 +90,12 @@ class Select implements SelectInterface {
             $sql .= ' WHERE ' . $this-> pgsql -> where;
         }
 
-        return $sql;
-    }
+        if (!empty($this -> pgsql -> limit)) {
+            $sql .= ' LIMIT ' . $this -> pgsql -> limit;
+        }
 
-    public function __call($name, $params) {
-        return $this -> pgsql -> $name(reset($params));
-    }
-
-    public function toScreen($values) {
-        $sql = '';
-        foreach ($values as $key => $value) {
-            if (($key == 0 && $value == 'AND') || ($key == 0 && $value == 'OR') || ($key == 0 && $value == 'and') || ($key == 0 && $value == 'or')) {
-                $sql .= $value . ' ';
-            } else {
-                if ($value[0] == ':') {
-                    $sql .= $key . '=' . $value . ' ';
-                }
-                $sql .= $key . '=' . '\'' . $value . '\' ';
-            }
+        if (!empty($this -> pgsql -> offset)) {
+            $sql .= ' OFFSET ' . $this -> pgsql -> offset;
         }
         return $sql;
     }
@@ -76,8 +103,8 @@ class Select implements SelectInterface {
     public function selectQuery($sql) {
         $res = pg_query($this-> pgsql -> connection, $sql);
         $out = [];
-        $current = false;
         while ($current = pg_fetch_assoc($res)) {
+		//print_r($current);
             $out[] = $current;
         }
         return $out;

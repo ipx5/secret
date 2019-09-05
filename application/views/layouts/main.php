@@ -7,11 +7,14 @@
 </head>
 <body>
     <div id="main">
-    <h1><?php echo 'secret' ?></h1>
+        <h1><?php echo 'secret' ?></h1></br>
+        <a href='/user/authorization/'> Войти </a> </br>
+        <a href='/user/registration/'> Зарегистрироваться </a></br>
+        <a href='/user/restore/'> Забыли пароль? </a></br>
     </div>
     <div id="user">
         Вы вошли как <?php echo app::getInstance()-> user-> email;?>
-        <a href='user/logout/'> Выйти </a>
+        <a href='/user/logout/'> Выйти </a>
     </div>
     <div id="menu">
         <?php echo $lo_menu ?? '';?>

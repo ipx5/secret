@@ -71,7 +71,7 @@ class user {
         $user = reset($user);//удаляю ключ из массива (метод php)
         $salt = md5(time() + random_int(0, PHP_INT_MAX));
         $password= sha1($data['password'].$salt);
-        $this-> db-> queryBuilder('update')-> update('users')-> set([['sub_token'=> ''], ['status'=> 0], ['password' => $password], ['salt' => $salt]])-> where(['id'=> $user])-> query();
+        $this-> db-> queryBuilder('update')-> table('users')-> set([['sub_token'=> ''], ['status'=> 0], ['password' => $password], ['salt' => $salt]])-> where(['id'=> $user])-> query();
     }
 
     public function reset($email){
@@ -84,7 +84,7 @@ class user {
         }
         $user = reset($user); //удаляю ключ из массива (метод php)
         $subtoken = sha1(time()+random_int(0, PHP_INT_MAX));
-        $this-> db-> queryBuilder('update')-> update('users')-> set([['sub_token'=> $subtoken], ['status'=> 2], ['token' => '']])-> where(['id'=> $user['id']])-> query();
+        $this-> db-> queryBuilder('update')-> table('users')-> set([['sub_token'=> $subtoken], ['status'=> 2], ['token' => '']])-> where(['id'=> $user['id']])-> query();
         $_SESSION = [];
         setcookie('token', '', time()-1, '/');
         //TODO отправить ссылку на емайл http://localhost/user/restore/?token=$subtoken
@@ -129,7 +129,7 @@ class user {
             if(!isset($user['sub_token']) || $user['sub_token'] != $checkUser['sub_token']){
                 throw new Exception('Invalid data for email confirmation');
             }
-            $this-> db-> queryBuilder('update')-> update('users')-> set([['sub_token'=> ''], ['status'=> 0]])-> where(['id'=> $checkUser['id']])-> query();
+            $this-> db-> queryBuilder('update')-> table('users')-> set([['sub_token'=> ''], ['status'=> 0]])-> where(['id'=> $checkUser['id']])-> query();
         } elseif ($checkUser['status'] == 2) {
             throw new Exception('Password is reset');
             
@@ -141,20 +141,22 @@ class user {
     public function authorization($user){
         for(;;){
             $token =sha1(time().random_int(0, PHP_INT_MAX));
-            $check = $this-> db = queryBuilder('select')-> select('id')-> from('users')-> where(['token'=> $token])->query();
+            $check = $this-> db -> queryBuilder('select')-> select('id')-> from('users')-> where(['token'=> $token])->query();
             if (empty($check)){
                 break;
             }
         }
+        
         setcookie('token', $token, time()+365*86400, '/', '', false, true);
-        $this-> db-> queryBuilder('update')-> update('users')->set(['token'=>$token])-> where(['id'=> $user['id']])-> query();
+
+        $this-> db-> queryBuilder('update')-> table('users')->set(['token'=>$token])-> where(['id'=> $user['id']])-> query();
         foreach ($user as $key => $value) {
             $this-> $key = $value;
         }
     }
 
     public function logout(){
-        $this-> db-> queryBuilder('update')-> update('users')-> set(['token'=> ''])-> where(['id'=> $this-> id])-> query();
+        $this-> db-> queryBuilder('update')-> table('users')-> set(['token'=> ''])-> where(['id'=> $user['id']])-> query();
         $_SESSION = [];
         setcookie('token', '', time()-1, '/');
     }

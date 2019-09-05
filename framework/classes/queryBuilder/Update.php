@@ -94,7 +94,7 @@ class Update implements UpdateBehavior {
         if (!empty($this -> pgsql -> where)) {
             $sql .= ' WHERE ' . $this -> pgsql -> where;
         }
-        echo $sql;
+        //echo $sql;
         return $sql;
     }
     public function __call($name, $params) {

@@ -5,11 +5,11 @@ class controllerUser extends controller{
 
     public function actionRegister(){
         $db = new Pgsql( app::getInstance()-> db['local'] );
-        $users = $db-> queryBuilder('select')-> select('*')-> from('users')-> where('subtoken !=\'\'')-> query();
+        $users = $db-> queryBuilder('select')-> select('*')-> from('users')-> where(['!', 'sub_token' => ''])-> query();
         foreach ($users as $user) {
             switch($user['status']){
                 case 1:
-                    echo $user['status'].' <a target="_blank" href="/user/authorization?token='.$user['sub_token'].'">'.$user['email'].'</a><br/>';
+                    echo 'Status: '.$user['status'].' авторизация : <a target="_blank" href="/user/authorization?token='.$user['sub_token'].'">'.$user['email'].'</a><br/>';
                     break;
                 case 2:
                     echo $user['status'].' <a target="_blank" href="/user/restore?token='.$user['sub_token'].'">'.$user['email'].'</a><br/>';
@@ -45,6 +45,7 @@ class controllerUser extends controller{
         echo $this-> renderLayout([
             'lo_content' => $this-> renderTemplate('authorization', $data)
         ]);
+        
     }
 
     public function actionReset(){
@@ -73,12 +74,14 @@ class controllerUser extends controller{
         if ( app::getInstance()-> request-> isForm ){
             try {
                 app::getInstance()-> user-> restore($data);
-                header('location:/user/authorization');
+                echo header('location:/user/authorization');
             } catch (Exception $e){
                 $data['error'] = $e-> getMessage();
             }
         }
+
         echo $this-> renderLayout([
+            
             'lo_content' => $this-> renderTemplate('restore', ['token' => $data['token']])
         ]);
     }
@@ -86,6 +89,6 @@ class controllerUser extends controller{
     public function actionLogout()
     {
         app::getInstance()-> user-> logout();
-        echo header('location:/user/authorization');
+        header('location:/user/authorization');
     }
 }
