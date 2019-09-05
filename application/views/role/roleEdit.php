@@ -3,7 +3,7 @@
 </div>
 <form action="/role/edit" method="POST">
     <input type="hiden" name="id" value="<?php echo $role['id'] ?? 0; ?>"><br/>
-    <?php foreach ($privileges as $privileges) { ?>
+    <?php foreach ($privileges as $privilege) { ?>
         <?php echo $privilege['name']; ?>
         <input type="checkbox" name="privilege[]" value="<?php echo $privilege['id']; ?>" <?php isset($role['privileges'][$privilege['id']]) ? ' checked="cheked"':''?>><br/>
     <?php } ?>

@@ -29,9 +29,9 @@ class roles extends model {
         }
     }
     public function roleInfoById($id){
-        $this-> roleById($id);
+        $role= $this-> roleById($id);
         if(isset($role['id'])){
-            $role['privileges'] = $this-> privilegesByRole->($role['id']);
+            $role['privileges'] = $this-> privilegesByRole->$role['id'];
         }
         return $role;
     }

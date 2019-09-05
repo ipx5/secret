@@ -13,7 +13,7 @@ class controllerRole extends controller {
 
     public function actionEdit(){
         $error = '';
-        if(app:getInstance()-> request-> isForm){
+        if(app::getInstance()-> request-> isForm){
             try{
                 $this-> getModel('roles')-> saveRole(app::getInstance()-> request-> request);
                 header('location:/role/show');
@@ -27,7 +27,7 @@ class controllerRole extends controller {
         echo $this-> renderLayout([
             'lo_content' => $this-> renderTemplate('roleEdit', [
                 'privileges' => $priveileges,
-                'role' => $role,
+                'role' => $roles,
                 'errors' => $error
             ])
         ]);
