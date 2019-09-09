@@ -8,6 +8,7 @@ class test extends model {
     public function insertFakeData() {
         include_once 'framework/classes/ActiveRecord/User.php';
 
+
 //        print_r($this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where(
 //            [['!', "id" => 8],['AND'],
 //                ['!', "id" => 340], ['AND'],
