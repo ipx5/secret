@@ -57,6 +57,7 @@ class app {
             $this ->runController('error', 'notfound');
         } catch (dbException $e) {
             echo $e->getMessage();
+            die();
         }
     }
     

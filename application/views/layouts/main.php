@@ -17,7 +17,11 @@
         <a href='/user/logout/'> Выйти </a>
     </div>
     <div id="menu">
+        <a href='/user/users/'> Пользователи </a> </br>
+        <a href='/role/show/'> Роли </a></br>
+        <a href='/user/register/'> Email </a></br>
         <?php echo $lo_menu ?? '';?>
+        
     </div>
     <div id="content">
         <?php echo $lo_content ?? '';?>
