@@ -41,12 +41,21 @@ class Update implements UpdateBehavior {
 
     public function where($condition) {
         $sql = '';
+        $symbol = ', ';
         if (gettype(reset($condition)) == 'array') {
             foreach ($condition as $key => $value) {
                 if ($sql === '') {
                     $sql .= $this -> toScreenWhere($value);
-                } else {
-                    $sql .= ', ' . $this -> toScreenWhere($value);
+                }
+                else {
+                    $result = $this -> toScreenWhere($value);
+                    if ($result === 'OR' || $result === 'AND') {
+                        $symbol = ' ';
+                        $sql .= $symbol . $result;
+                    } else {
+                        $sql .= $symbol . $result;
+                        $symbol = ', ';
+                    }
                 }
             }
         } else {
@@ -74,18 +83,14 @@ class Update implements UpdateBehavior {
         $term = '=';
         foreach ($values as $key => $value) {
             $type = gettype($value);
-            if ($sql === '') {
-                if ($value == '!') {
-                    $term = '!=';
-                } else {
-                    $sql .= $key .$term . (($type == 'string') ? '\'' . $value . '\'' : $value);
-                    $term = '=';
-                }
-            } else if ($value == 'OR' || $value == 'AND') {
-                $sql .= ' ' . $value;
-            } else if ($value == '!') {
+             if ($value === 'OR' || $value === 'AND') {
+                $sql .= $value;
+            } else if ($value === '!') {
                 $term = '!=';
-            } else {
+            } else if (substr($value, 0, 1) === ':' || $type === 'number') {
+                 $sql .= ' ' . $key . $term . substr($value, 1);
+             }
+             else {
                 $sql .= ' ' . $key . $term . (($type == 'string') ? '\'' . $value . '\'' : $value);
                 $term = '=';
             }
@@ -98,9 +103,19 @@ class Update implements UpdateBehavior {
         if (!empty($this -> pgsql -> where)) {
             $sql .= ' WHERE ' . $this -> pgsql -> where;
         }
-        //echo $sql;
+
+        if (!empty($this -> pgsql -> returning)) {
+            $sql .= ' RETURNING ' . $this -> pgsql -> returning;
+        }
         return $sql;
     }
+
+    public function returningColumn($params) {
+        $columns = implode(", ", $params);
+        $this -> pgsql -> returning = $columns;
+        return $this;
+    }
+
     public function __call($name, $params) {
         return $this -> pgsql -> $name(reset($params));
     }

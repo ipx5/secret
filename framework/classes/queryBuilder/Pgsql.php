@@ -4,7 +4,7 @@
 interface PgsqlBehavior {
     public function queryBuilder($queryType);
     public function query();
-    public function escape($data);
+//    public function escape($data);
     public function clear();
 }
 
@@ -18,6 +18,8 @@ class Pgsql implements PgsqlBehavior {
     public $returning;
     public $limit;
     public $offset;
+    public $orderBy;
+    public $join;
     public $connection = false;
     public function __construct($config) {
         if ($this->connection == false) {
@@ -42,6 +44,8 @@ class Pgsql implements PgsqlBehavior {
             $insert_row = pg_fetch_row($result);
             return $insert_id = $insert_row[0];
         } else {
+            echo "</br>";
+            echo $sql;
             return pg_query($this->connection, $sql);
         }
     }
@@ -59,19 +63,19 @@ class Pgsql implements PgsqlBehavior {
         return $this -> currentState -> $name(reset($params));
     }
 
-    public function escape($data) {
-        $escapeValues = '';
-        if (gettype($data) == 'array') {
-            foreach ($data as $key => $value) {
-                if ($key == count($data)-1) {
-                    $escapeValues .= pg_escape_string($value);
-                } else {
-                    $escapeValues .= pg_escape_string($value) . ',';
-                }
-            }
-        } else {
-            $escapeValues .= pg_escape_string($data);
-        }
-        return $this;
-    }
+//    public function escape($data) {
+//        $escapeValues = '';
+//        if (gettype($data) == 'array') {
+//            foreach ($data as $key => $value) {
+//                if ($key == count($data)-1) {
+//                    $escapeValues .= pg_escape_string($value);
+//                } else {
+//                    $escapeValues .= pg_escape_string($value) . ',';
+//                }
+//            }
+//        } else {
+//            $escapeValues .= pg_escape_string($data);
+//        }
+//        return $this;
+//    }
 }

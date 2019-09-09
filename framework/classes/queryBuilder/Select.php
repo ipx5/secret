@@ -22,11 +22,19 @@ class Select implements SelectInterface {
     }
 
     public function select($columns = '*') {
-        if (gettype($columns) == 'array' && count($columns) > 1) {
-            $this -> pgsql -> columns = implode(',', $columns);
+        $sql = '';
+        if (gettype($columns) == 'array') {
+            foreach ($columns as $key => $value) {
+                if ($sql === '') {
+                    $sql .= key($value) . '.' . current($value);
+                } else {
+                    $sql .= ', ' . key($value) . '.' . current($value);
+                }
+            }
+            $this -> pgsql -> columns = $sql;
         } else {
             $this -> pgsql -> columns = $columns;
-        };
+        }
         return $this;
     }
 
@@ -35,7 +43,10 @@ class Select implements SelectInterface {
         return $this;
     }
 
-    public function where($condition) {
+    public function where($tables ,$condition) {
+        if (!empty($tables)) {
+
+        }
         $sql = '';
         if (gettype($condition) == 'array' && gettype(reset($condition)) == 'array') {
             foreach ($condition as $key => $value) {
@@ -82,8 +93,31 @@ class Select implements SelectInterface {
         return $sql;
     }
 
+    public function orderBy($value) {
+        $this -> pgsql -> orderBy = $value;
+        return $this;
+    }
+
+    public function join($type, $table, $params = '') {
+        $sql = $type . ' ' . $table . ' on ';
+        $paramsSql = '';
+        foreach ($params as $key => $value) {
+            if ($value === '=') {
+                $paramsSql .= $value;
+            } else {
+                $paramsSql .= $key . '.' . $value;
+            }
+        }
+        $this -> pgsql -> join = $sql . $paramsSql;
+        return $this;
+    }
+
     public function getSelectText() {
         $sql = 'SELECT ' . $this->pgsql -> columns . ' FROM ' . $this-> pgsql -> table;
+
+        if (!empty($this -> pgsql -> join)) {
+            $sql .= ' ' . $this -> pgsql -> join;
+        }
 
         if (!empty($this-> pgsql -> where)) {
             $sql .= ' WHERE ' . $this-> pgsql -> where;
@@ -97,6 +131,12 @@ class Select implements SelectInterface {
             $sql .= ' OFFSET ' . $this -> pgsql -> offset;
         }
 
+        if (!empty($this -> pgsql -> orderBy)) {
+            $sql .= ' ORDER BY ' . $this -> pgsql -> orderBy;
+        }
+
+        echo $sql;
+        die('12');
         return $sql;
     }
 
