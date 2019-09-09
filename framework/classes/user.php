@@ -166,8 +166,8 @@ class user {
         setcookie('token', '', time()-1, '/');
     }
 
-    public function saveRole()
-    {
-        
-    }
+    // public function saveRole()
+    // {
+    //     //TODO save role
+    // }
 }

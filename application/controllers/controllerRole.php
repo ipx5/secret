@@ -23,11 +23,11 @@ class controllerRole extends controller {
         }
         $id = app::getInstance()-> request -> request['id'] ?? 0;
         $priveileges = $this-> getModel('roles')-> privilegesList();
-        $roles = $this-> getModel('roles')-> roleInfoById($id);
+        $role = $this-> getModel('roles')-> roleInfoById($id);
         echo $this-> renderLayout([
             'lo_content' => $this-> renderTemplate('roleEdit', [
                 'privileges' => $priveileges,
-                'role' => $roles,
+                'role' => $role,
                 'errors' => $error
             ])
         ]);

@@ -69,7 +69,7 @@ class Insert implements InsertBehavior  {
     }
 
     public function getInsertText() {
-        return 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? (' (' . ($this -> pgsql -> columns) . ') ') : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ?? '');
+        return 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? ' (' . ($this -> pgsql -> columns) . ') ' : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ?? '');
     }
 
 }

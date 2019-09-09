@@ -3,6 +3,34 @@
 class controllerUser extends controller{
     public $templateDir = 'user';
 
+    public function actionUsers(){
+        $users= $this-> getModel('users')-> usersList();
+        echo $this-> renderLayout(['lo_content' => $this-> renderTemplate( 'usersList', ['users' => $users])]);
+
+    }
+    public function actionEditUser(){
+        $error = '';
+        if(app::getInstance()-> request-> isForm){
+            try{
+                $this-> getModel('users')-> saveUser(app::getInstance()-> request-> request);
+                header('location:/user/users');
+            } catch (Exception $e){
+                $error = $e-> getMessage();
+            }
+        }
+        $id = app::getInstance()-> request -> request['id'] ?? 0;
+        $user = $this-> getModel('users')-> getUserById($id);
+        $roles = $this-> getModel('roles')-> rolesList();
+
+        echo $this-> renderLayout([
+            'lo_content' => $this-> renderTemplate('userEdit', [
+                'user' => $user,
+                'roles' => $roles,
+                'errors' => $error
+            ])
+        ]);
+    }
+
     public function actionRegister(){
         $db = new Pgsql( app::getInstance()-> db['local'] );
         $users = $db-> queryBuilder('select')-> select('*')-> from('users')-> where(['!', 'sub_token' => ''])-> query();
