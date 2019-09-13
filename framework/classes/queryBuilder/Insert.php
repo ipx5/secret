@@ -35,13 +35,13 @@ class Insert implements InsertBehavior  {
         if ($typeValue) {
             foreach ($values as $key => $value) {
                 if ($chunkValues === '') {
-                    $chunkValues .= '(' . $this -> pgsql -> toScreen($value, ',') . ')';
+                    $chunkValues .= '(' . $this -> toScreenValues($value) . ')';
                 } else {
-                    $chunkValues .= ',' . '(' . $this -> pgsql -> toScreen($value, ',') . ')';
+                    $chunkValues .= ',' . '(' . $this -> toScreenValues($value) . ')';
                 }
             }
         } else {
-            $chunkValues .= $this-> pgsql -> toScreen($values, ',');
+            $chunkValues .= '(' . $this -> toScreenValues($values) . ')';
         }
         $this -> pgsql -> values = $chunkValues;
         return $this;
@@ -51,11 +51,33 @@ class Insert implements InsertBehavior  {
         return $this -> pgsql -> $name(reset($params));
     }
 
+    public function returning($params) {
+        $columns = implode(", ", $params);
+        $this -> pgsql -> returning = $columns;
+        return $this;
+    }
+
     public function getInsertText() {
-        $sql = 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? (' (' . ($this -> pgsql -> columns) . ') ') : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ?? '');
-        echo $sql;
-        die(' END');
+        $sql = 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? (' (' . ($this -> pgsql -> columns) . ') ') : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ? ' RETURNING ' . $this -> pgsql -> returning : '');
         return $sql;
+    }
+
+    public function toScreenValues($values) {
+        $result = '';
+        foreach ($values as $key => $value) {
+            if ($result === '') {
+                if (is_string($value)) {
+                    $result .= ' \'' .  $value .'\'';
+                } else {
+                    $result .= $value;
+                }
+            } else if (is_string($value)) {
+                $result .= ', \'' .  $value . '\'';
+            } else {
+                $result .= ', ' . $value;
+            }
+        }
+        return $result;
     }
 
 }

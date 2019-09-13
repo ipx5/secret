@@ -50,12 +50,6 @@ class Update implements UpdateBehavior {
         return $sql;
     }
 
-    public function returningColumn($params) {
-        $columns = implode(", ", $params);
-        $this -> pgsql -> returning = $columns;
-        return $this;
-    }
-
     public function __call($name, $params) {
         return $this -> pgsql -> $name(reset($params));
     }

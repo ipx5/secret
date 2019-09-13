@@ -6,9 +6,35 @@ class test extends model {
     }
 
     public function insertFakeData() {
-        include_once 'framework/classes/ActiveRecord/ActiveRecord.php';
+//        include_once 'framework/classes/ActiveRecord/ActiveRecord.php';
         include_once 'framework/classes/ActiveRecord/User1.php';
+//        include_once 'framework/classes/ActiveRecord/Entity.php';
+        include_once 'framework/classes/ActiveRecord/ActiveRecord.php';
 
+        $config = [
+            'users' => [
+                'id' => 'int',
+                'email' => 'str',
+                'password' => 'str',
+                'token' => 'str',
+                'tmp_token' => 'str',
+                'admin' => 'int',
+                'role_id' => 'int',
+                'status' => 'int'
+            ],
+
+            'role' => [
+                'id' => 'int',
+                'role' => 'str',
+                'roles' => 'str'
+            ]
+        ];
+
+        $AR = $this -> ActiveRecord($config);
+//        print_r($users = $AR -> start('users') -> select(1, 1));
+//        $role = $AR -> start('role');
+//        print_r($role);
+//        ActiveRecord::start($config) -> setTable('users');
 
 //        $this -> db -> queryBuilder('update') -> table('users') ->
 //        set(['email' => 'vovaYa', 'token' => 'tokenTEST', 'tmp_token' => 'tmp_tokenTEST']) ->
