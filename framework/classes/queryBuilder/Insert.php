@@ -4,7 +4,7 @@ interface InsertBehavior {
     public function insert($tableName);
     public function columns($columns);
     public function values($values);
-    public function toScreen($values);
+//    public function toScreen($values);
     public function getInsertText();
 }
 
@@ -30,17 +30,20 @@ class Insert implements InsertBehavior  {
     }
 
     public function values($values) {
-        if (gettype(reset($values)) == 'array') {
+        $typeValue = is_array(reset($values));
+        $chunkValues = '';
+        if ($typeValue) {
             foreach ($values as $key => $value) {
-                if (count($values)-1 == $key) {
-                    $this -> pgsql -> values .= $this -> toScreen($value);
+                if ($chunkValues === '') {
+                    $chunkValues .= '(' . $this -> toScreenValues($value) . ')';
                 } else {
-                    $this -> pgsql -> values .= $this -> toScreen($value) . ', ';
+                    $chunkValues .= ',' . '(' . $this -> toScreenValues($value) . ')';
                 }
             }
         } else {
-            $this -> pgsql -> values .= $this->toScreen($values);
+            $chunkValues .= '(' . $this -> toScreenValues($values) . ')';
         }
+        $this -> pgsql -> values = $chunkValues;
         return $this;
     }
 
@@ -48,28 +51,33 @@ class Insert implements InsertBehavior  {
         return $this -> pgsql -> $name(reset($params));
     }
 
-    public function toScreen($values) {
-        $sql = '(';
-        foreach ($values as $key => $value) {
-            if ($key >= 1 && ($value != 'RETURNING id')) {
-                if (ctype_digit($value)) {
-                    $sql .= ',' . $value;
-                } else {
-                    $sql .= ',\'' . $value . '\'';
-                }
-            } else {
-                if ($value == 'RETURNING id') {
-                    $this->pgsql->returning = $value;
-                } else {
-                    $sql .= '\'' . $value . '\'';
-                }
-            }
-        }
-        return $sql .= ')';
+    public function returning($params) {
+        $columns = implode(", ", $params);
+        $this -> pgsql -> returning = $columns;
+        return $this;
     }
 
     public function getInsertText() {
-        return 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? ' (' . ($this -> pgsql -> columns) . ') ' : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ?? '');
+        $sql = 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? (' (' . ($this -> pgsql -> columns) . ') ') : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ? ' RETURNING ' . $this -> pgsql -> returning : '');
+        return $sql;
+    }
+
+    public function toScreenValues($values) {
+        $result = '';
+        foreach ($values as $key => $value) {
+            if ($result === '') {
+                if (is_string($value)) {
+                    $result .= ' \'' .  $value .'\'';
+                } else {
+                    $result .= $value;
+                }
+            } else if (is_string($value)) {
+                $result .= ', \'' .  $value . '\'';
+            } else {
+                $result .= ', ' . $value;
+            }
+        }
+        return $result;
     }
 
 }
