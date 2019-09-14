@@ -74,9 +74,5 @@ class app {
         $controller = new $fname;
         $controller -> $aname();
     }
-    public function print_d($data){
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
-    }
+
 }

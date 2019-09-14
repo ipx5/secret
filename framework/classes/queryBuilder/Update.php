@@ -5,9 +5,6 @@ interface UpdateBehavior {
     public function table($tableName);
     public function set($values);
     public function getUpdateText();
-    public function toScreenWhere($value);
-    public function toScreenSet($value);
-    public function where($value);
 }
 
 class Update implements UpdateBehavior {
@@ -23,74 +20,21 @@ class Update implements UpdateBehavior {
     }
 
     public function set($values) {
-        $set = '';
-        if (gettype(reset($values)) == 'array') {
+        $chunkQuery = '';
+        $typeValues = is_array(reset($values));
+        if ($typeValues) {
             foreach ($values as $key => $value) {
-                if ($set === '') {
-                    $set .= $this -> toScreenSet($value);
+                if ($chunkQuery === '') {
+                    $chunkQuery .= $this -> pgsql -> toScreen($value);
                 } else {
-                    $set .= ', ' . $this -> toScreenSet($value);
+                    $chunkQuery .= ',' . $this -> pgsql -> toScreen($value);
                 }
             }
         } else {
-            $set .= $this -> toScreenSet($values);
+            $chunkQuery .= $this -> pgsql -> toScreen($values, ',');
         }
-        $this -> pgsql -> values = $set;
+        $this -> pgsql -> values = $chunkQuery;
         return $this;
-    }
-
-    public function where($condition) {
-        $sql = '';
-        if (gettype(reset($condition)) == 'array') {
-            foreach ($condition as $key => $value) {
-                if ($sql === '') {
-                    $sql .= $this -> toScreenWhere($value);
-                } else {
-                    $sql .= ', ' . $this -> toScreenWhere($value);
-                }
-            }
-        } else {
-            $sql = $this -> toScreenWhere($condition);
-        }
-        $this-> pgsql -> where = $sql;
-        return $this;
-    }
-
-    public function toScreenSet($values) {
-        $sql = '';
-        foreach ($values as $key => $value) {
-            $type = gettype($value);
-            if ($sql === '') {
-                $sql .= $key .'=' . (($type == 'string') ? '\'' . $value . '\'' : $value);
-            } else {
-                $sql .= ',' . $key . '=' . (($type == 'string') ? '\'' . $value . '\'' : $value);
-            }
-        }
-        return $sql;
-    }
-
-    public function toScreenWhere($values) {
-        $sql = '';
-        $term = '=';
-        foreach ($values as $key => $value) {
-            $type = gettype($value);
-            if ($sql === '') {
-                if ($value == '!') {
-                    $term = '!=';
-                } else {
-                    $sql .= $key .$term . (($type == 'string') ? '\'' . $value . '\'' : $value);
-                    $term = '=';
-                }
-            } else if ($value == 'OR' || $value == 'AND') {
-                $sql .= ' ' . $value;
-            } else if ($value == '!') {
-                $term = '!=';
-            } else {
-                $sql .= ' ' . $key . $term . (($type == 'string') ? '\'' . $value . '\'' : $value);
-                $term = '=';
-            }
-        }
-        return $sql;
     }
 
     public function getUpdateText() {
@@ -98,9 +42,14 @@ class Update implements UpdateBehavior {
         if (!empty($this -> pgsql -> where)) {
             $sql .= ' WHERE ' . $this -> pgsql -> where;
         }
-        //echo $sql;
+
+        if (!empty($this -> pgsql -> returning)) {
+            $sql .= ' RETURNING ' . $this -> pgsql -> returning;
+        }
+
         return $sql;
     }
+
     public function __call($name, $params) {
         return $this -> pgsql -> $name(reset($params));
     }

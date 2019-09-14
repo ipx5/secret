@@ -4,7 +4,7 @@
 interface SelectInterface {
     public function select();
     public function from($table);
-    public function where($condition);
+//    public function where($condition);
     public function getSelectText();
     public function selectQuery($sql);
 }
@@ -22,29 +22,24 @@ class Select implements SelectInterface {
     }
 
     public function select($columns = '*') {
-        if (gettype($columns) == 'array' && count($columns) > 1) {
-            $this -> pgsql -> columns = implode(',', $columns);
+        $sql = '';
+        if (gettype($columns) == 'array') {
+            foreach ($columns as $key => $value) {
+                if ($sql === '') {
+                    $sql .= key($value) . '.' . current($value);
+                } else {
+                    $sql .= ', ' . key($value) . '.' . current($value);
+                }
+            }
+            $this -> pgsql -> columns = $sql;
         } else {
             $this -> pgsql -> columns = $columns;
-        };
+        }
         return $this;
     }
 
     public function from($table) {
         $this-> pgsql -> table = $table;
-        return $this;
-    }
-
-    public function where($condition) {
-        $sql = '';
-        if (gettype($condition) == 'array' && gettype(reset($condition)) == 'array') {
-            foreach ($condition as $key => $value) {
-                $sql .= $this -> toScreen($value);
-            }
-        } else {
-            $sql = $this -> toScreen($condition);
-        }
-        $this-> pgsql -> where = $sql;
         return $this;
     }
 
@@ -58,32 +53,31 @@ class Select implements SelectInterface {
         return $this;
     }
 
-    public function toScreen($values) {
-        $sql = '';
-        $valueTest = '=';
-        foreach ($values as $key => $value) {
-            if (($key === 0 && $value === 'AND') || ($key === 0 && $value === 'OR') || ($key === 0 && $value === 'and') || ($key === 0 && $value === 'or')) {
-                $sql .= $value . ' ';
+    public function orderBy($value) {
+        $this -> pgsql -> orderBy = $value;
+        return $this;
+    }
+
+    public function join($type, $table, $params = '') {
+        $sql = $type . ' ' . $table . ' on ';
+        $paramsSql = '';
+        foreach ($params as $key => $value) {
+            if ($value === '=') {
+                $paramsSql .= $value;
             } else {
-                 if ($value === '!' && $key === 0) {
-                    $valueTest = '!=';
-                } else if (gettype($value) == 'string' && strlen($value) && $value[0] === ':') {
-                    $sql .= $key . '=' . substr($value, 1) . ' ';
-                } else {
-                     if (gettype($value) == 'number') {
-                         $sql .= $key . $valueTest .  $value . ' ';
-                     } else {
-                         $sql .= $key . $valueTest . '\'' . $value . '\' ';
-                     }
-                    $valueTest = '=';
-                }
+                $paramsSql .= $key . '.' . $value;
             }
         }
-        return $sql;
+        $this -> pgsql -> join = $sql . $paramsSql;
+        return $this;
     }
 
     public function getSelectText() {
         $sql = 'SELECT ' . $this->pgsql -> columns . ' FROM ' . $this-> pgsql -> table;
+
+        if (!empty($this -> pgsql -> join)) {
+            $sql .= ' ' . $this -> pgsql -> join;
+        }
 
         if (!empty($this-> pgsql -> where)) {
             $sql .= ' WHERE ' . $this-> pgsql -> where;
@@ -97,6 +91,9 @@ class Select implements SelectInterface {
             $sql .= ' OFFSET ' . $this -> pgsql -> offset;
         }
 
+        if (!empty($this -> pgsql -> orderBy)) {
+            $sql .= ' ORDER BY ' . $this -> pgsql -> orderBy;
+        }
         return $sql;
     }
 

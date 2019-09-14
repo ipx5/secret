@@ -10,7 +10,7 @@ class controllerTest extends controller {
             echo header('location: /user/autorization/');
         }
         $this-> renderLayout([
-            'lo)content'=>'It works ' . app::getInstance()-> user-> email.'<br />,
+            'lo_content'=>'It works ' . app::getInstance()-> user-> email.'<br />',
         ]);
         //echo 'It works ' . app::getInstance()-> user-> email.'<br />;
     }
