@@ -2,10 +2,16 @@
 
 define('DS', DIRECTORY_SEPARATOR);
 define('BASE_PATH', __DIR__ .DS);
+define('PS', PATH_SEPARATOR);
 define('APP_PATH', BASE_PATH . 'application' . DS);
-define('CLASSES', BASE_PATH . 'framework' . DS . 'classes' . DS);
+define('CLASSES', BASE_PATH . 'framework' . DS . 'classes');
 define('IMG', APP_PATH . 'views' . DS .  'img' . DS);
-define('QB', BASE_PATH . 'framework' . DS . 'classes' . DS . 'queryBuilder');
+define('QB', CLASSES . DS . 'QueryBuilder');
+define('AR', CLASSES . DS . 'ActiveRecord');
+define('Exceptions', CLASSES . DS . 'Exceptions');
+define('MVC', CLASSES . DS . 'MVC');
+define('API', BASE_PATH . 'framework' . DS . 'API');
+define('HTTP', CLASSES . DS . 'Http');
 
 return [
     'paths'=> [

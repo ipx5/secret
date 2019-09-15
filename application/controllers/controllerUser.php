@@ -1,6 +1,6 @@
 <?php
 
-class controllerUser extends controller{
+class controllerUser extends Controller{
     public $templateDir = 'user';
 
     public function actionUsers(){
@@ -21,7 +21,6 @@ class controllerUser extends controller{
         $id = app::getInstance()-> request -> request['id'] ?? 0;
         $user = $this-> getModel('users')-> getUserById($id);
         $roles = $this-> getModel('roles')-> rolesList();
-
         echo $this-> renderLayout([
             'lo_content' => $this-> renderTemplate('userEdit', [
                 'user' => $user,

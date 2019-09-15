@@ -13,7 +13,7 @@ class user {
 
     public function __construct(){
         $this-> db= new Pgsql(app::getInstance()-> db['local']);
-        // $test= $this-> db -> queryBuilder('select')-> select('*')-> from('users')-> where(['email'=>'toxa@hacker.ua'])->query();
+        // $test= $this-> db -> QueryBuilder('select')-> select('*')-> from('users')-> where(['email'=>'toxa@hacker.ua'])->query();
         // debug($test);
         //debug($_SESSION);
         if(!isset($this-> id)){

@@ -1,6 +1,6 @@
 <?php
 
-class controllerRole extends controller {
+class controllerRole extends Controller {
     protected $templateDir = 'role';
     public function __construct(){
         parent::__construct();

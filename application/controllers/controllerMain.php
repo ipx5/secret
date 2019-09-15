@@ -1,6 +1,6 @@
 <?php
 
-class controllerMain extends controller {
+class controllerMain extends Controller {
     public function actionPage() {
         echo $this->renderLayout(
             [

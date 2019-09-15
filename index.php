@@ -8,5 +8,6 @@ if (DEBUG) {
 }
 
 $config = include './config.php';
-include './framework/core.php';
+include './framework/Core.php';
+include './framework/classes/Autoload.php';
 app::getInstance()->start($config);
