@@ -1,12 +1,12 @@
 <?php
 
+
 class request {
 
     public $isForm = false;
     public $request = [];
     public $controller = '';
     public $action = '';
-    public $method;
 
     public function __construct() {
 
@@ -24,7 +24,8 @@ class request {
 
     public function requestForApi() {
         $router = new Router($this -> getUrl(), $this -> getMethod());
-        include 'framework/API/Add.php';
+        $Routes = new Routes($router);
+        $router -> run();
     }
 
     public function server($key) {
@@ -43,5 +44,4 @@ class request {
     public function getMethod() {
         return strtoupper($_SERVER['REQUEST_METHOD']);
     }
-
 }
