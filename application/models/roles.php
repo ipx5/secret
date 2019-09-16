@@ -1,5 +1,5 @@
 <?php 
-class roles extends model {
+class roles extends Model {
     public function rolesList() {
         return $this-> db -> queryBuilder('select')-> select('*')-> from('roles')-> query();
     }

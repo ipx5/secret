@@ -1,6 +1,6 @@
 <?php
 
-class users extends model {
+class users extends Model {
     public function usersList(){
         return $users= $this-> db -> queryBuilder('select')-> select('*')-> from('users')-> query();
     }

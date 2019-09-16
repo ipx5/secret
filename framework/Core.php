@@ -20,6 +20,7 @@ class app {
     private function __construct() {
         autoloadRun(); // Autoload.php
         $this -> request =  new Request;
+        $this -> response =  new Response;
     }
 
     // Added properties in config

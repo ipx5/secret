@@ -1,6 +1,6 @@
 <?php
 
-class test extends model {
+class test extends Model {
     public function __construct() {
         parent::__construct();
     }

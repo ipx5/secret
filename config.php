@@ -23,7 +23,7 @@ return [
     ],
     'db' => [
         'local' => [
-            'host' => '194.87.102.4',
+            'host' => 'localhost',
             'port' => 5432,
             'dbname' => 'hackeru',
             'user' => 'hackeru',
