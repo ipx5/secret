@@ -1,6 +1,6 @@
 <?php
 
-abstract class model {
+abstract class Model {
     protected $db = false;
     protected $currentTable = false;
     protected $ActiveRecordInstance = false;

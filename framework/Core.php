@@ -38,6 +38,7 @@ class app {
             $this-> acceptCookie = 1;
             $this-> user = new user;
             $this -> request =  new Request;
+            $this -> response =  new Response;
         //} 
         //new Users();
         try {
