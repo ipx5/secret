@@ -23,11 +23,25 @@ class request {
     }
 
     public function requestForApi() {
-        $router = new Router();
-        require 'framework/API/Add.php';
+        $router = new Router($this -> getUrl(), $this -> getMethod());
+        include 'framework/API/Add.php';
+    }
+
+    public function server($key) {
+        $value = $_SERVER[strtoupper($key)];
+        return isset($value) ? $this -> clean($value) : $this -> clean($_SERVER);
     }
 
     public function getTypeRequest() {
         return explode('/', $_SERVER['REQUEST_URI'])[1];
     }
+
+    public function getUrl() {
+        return $_SERVER['REQUEST_URI'];
+    }
+
+    public function getMethod() {
+        return strtoupper($_SERVER['REQUEST_METHOD']);
+    }
+
 }

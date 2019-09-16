@@ -36,7 +36,6 @@ class app {
 
     public function start($config) {
         $this->config = $config;
-
         //if(!empty($_COOKIE) || (bool) $this-> acceptCookie){
             $this-> acceptCookie = 1;
             $this-> user = new user;
