@@ -1,5 +1,6 @@
 <?php
 
+
 define('DEBUG', 1);
 if (DEBUG) {
     ini_set('display_errors', 1);

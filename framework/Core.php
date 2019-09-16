@@ -17,10 +17,7 @@ class app {
     private static $instance = false;
     private function __wakeup() {}
     private function __clone() {}
-    private function __construct() {
-        autoloadRun(); // Autoload.php
-        $this -> request =  new Request;
-    }
+    private function __construct() {}
 
     // Added properties in config
     public function __get($name) {
@@ -36,9 +33,11 @@ class app {
 
     public function start($config) {
         $this->config = $config;
+        autoloadRun();
         //if(!empty($_COOKIE) || (bool) $this-> acceptCookie){
             $this-> acceptCookie = 1;
             $this-> user = new user;
+            $this -> request =  new Request;
         //} 
         //new Users();
         try {
