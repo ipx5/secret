@@ -54,6 +54,7 @@ class app {
     }
     
     protected function runController($controller, $action) {
+        
         $fname = 'controller' . ucfirst(strtolower(str_replace(['/', '.'], '', $controller)));
 
         if (!@include_once $this->paths['controllers'] . $fname . '.php') {

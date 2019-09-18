@@ -8,7 +8,7 @@ abstract class Controller {
     public $response;
 
     public function __construct() {
-        $this->response = app::getInstance()-> response ;
+        $this->response = new Response ;
     }
     
     protected function getModel($name) {
