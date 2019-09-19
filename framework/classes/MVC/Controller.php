@@ -1,12 +1,15 @@
 <?php
 
-abstract class controller {
+abstract class Controller {
     
     protected $models = [];
     protected $layout = 'main';
     protected $templateDir = '';
+    public $response;
 
-    public function __construct() {}
+    public function __construct() {
+        $this->response = new Response ;
+    }
     
     protected function getModel($name) {
         if (!isset($this-> models[$name])) {
@@ -38,5 +41,10 @@ abstract class controller {
         ob_start();
         include app::getInstance()->paths['views'] .$this->templateDir.DS. $name . '.php';
         return ob_get_clean();
+    }
+
+    public function send($status = 200, $msg) {
+        $this->response->setHeader(sprintf('HTTP/1.1 ' . $status . ' %s' , $this->response->getStatusCodeText($status)));
+        $this->response->setContent($msg);
     }
 }

@@ -25,16 +25,11 @@ class Delete implements DeleteBehavior {
 
     public function where($condition) {
         $sql = '';
-        if (gettype($condition) == 'array' && gettype(reset($condition)) == 'array') {
+        if (is_array(reset($condition))) {
             foreach ($condition as $key => $value) {
-                if (gettype($value) == 'number') {
-                    $sql .= $key . '=' . $value;
-                } else {
-                    $sql .= $this -> toScreen($value);
-                }
+                $sql .= $this -> toScreen($value);
             }
         } else {
-
             $sql = $this -> toScreen($condition);
         }
         $this-> pgsql -> where = $sql;
@@ -44,15 +39,15 @@ class Delete implements DeleteBehavior {
     public function toScreen($values) {
         $sql = '';
         foreach ($values as $key => $value) {
-            if (($key == 0 && $value == 'AND') || ($key == 0 && $value == 'OR') || ($key == 0 && $value == 'and') || ($key == 0 && $value == 'or')) {
+            $typeString = is_string($value);
+            if ((is_int($key) && $value == 'AND') || (is_int($key) && $value == 'OR') || (is_int($key) && $value == 'and') || (is_int($key) && $value == 'or')) {
                 $sql .= $value . ' ';
-            } else {
-                // TEST
-                if ($value[0] == ':') {
-                    $sql .= $key . '=' . substr($value, 1) . ' ';
-                }
-                // TEST
+            } else if ($typeString && strlen($value) && $value[0] === ':') {
+                $sql .= $key . '='  . substr($value, 1) . ' ';
+            } else if ($typeString) {
                 $sql .= $key . '=' . '\'' . $value . '\' ';
+            } else {
+                $sql .= $key . '=' . $value . ' ';
             }
         }
         return $sql;

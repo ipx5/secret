@@ -46,7 +46,6 @@ class Update implements UpdateBehavior {
         if (!empty($this -> pgsql -> returning)) {
             $sql .= ' RETURNING ' . $this -> pgsql -> returning;
         }
-
         return $sql;
     }
 

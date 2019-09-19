@@ -38,6 +38,7 @@ class app {
             $this-> acceptCookie = 1;
             $this-> user = new user;
             $this -> request =  new Request;
+            $this -> response =  new Response;
         //} 
         //new Users();
         try {
@@ -53,6 +54,7 @@ class app {
     }
     
     protected function runController($controller, $action) {
+        
         $fname = 'controller' . ucfirst(strtolower(str_replace(['/', '.'], '', $controller)));
 
         if (!@include_once $this->paths['controllers'] . $fname . '.php') {
@@ -64,5 +66,11 @@ class app {
         $aname = 'action' .ucfirst(strtolower($action));
         $controller = new $fname;
         $controller -> $aname();
+    }
+
+    public function printTest($value) {
+        echo "<pre>";
+        print_r($value);
+        echo "</pre>";
     }
 }

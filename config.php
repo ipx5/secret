@@ -12,6 +12,7 @@ define('Exceptions', CLASSES . DS . 'Exceptions');
 define('MVC', CLASSES . DS . 'MVC');
 define('API', BASE_PATH . 'framework' . DS . 'API');
 define('HTTP', CLASSES . DS . 'Http');
+define('CONTROLLERS', APP_PATH . 'controllers');
 
 return [
     'paths'=> [
@@ -23,11 +24,15 @@ return [
     ],
     'db' => [
         'local' => [
-            'host' => '194.87.102.4',
+            'host' => 'localhost',
             'port' => 5432,
-            'dbname' => 'hackeru',
+            'dbname' => 'zhuravlev',
+            'user' => 'zhuravlev',
+            'password' => 'zhuravlev',
+            'dbname' => 'secret',
             'user' => 'hackeru',
             'password' => 'HackerUwd2'
+
         ]
-    ]
+    ],
 ];

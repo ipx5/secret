@@ -36,6 +36,7 @@ class Pgsql implements PgsqlBehavior {
     public function query() {
         $nameMethod = 'get' . ucfirst($this -> queryType) . 'Text';
         $sql = $this -> $nameMethod();
+        echo $sql;
         $this -> clear();
         if ($this -> queryType == 'select') {
             return $this -> currentState -> selectQuery($sql);
@@ -101,6 +102,16 @@ class Pgsql implements PgsqlBehavior {
         return $chunkWhere;
     }
 
+    public function selectQuery($sql) {
+        $res = pg_query($this -> connection, $sql);
+        $out = [];
+        $current = false;
+        while ($current = pg_fetch_assoc($res)) {
+            $out[] = $current;
+        }
+        return $out;
+    }
+
     public function clear() {
         $this -> values = '';
         $this -> columns = '';
@@ -110,5 +121,6 @@ class Pgsql implements PgsqlBehavior {
         $this -> offset = '';
         $this -> orderBy = '';
         $this -> join = '';
+        $this -> returning = '';
     }
 }

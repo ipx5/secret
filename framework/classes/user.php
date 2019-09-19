@@ -9,7 +9,7 @@
 session_start();
 class user {
     protected $db = false;
-    public $isUser= false;
+    public $isUser = false;
 
     public function __construct(){
         $this-> db= new Pgsql(app::getInstance()-> db['local']);
