@@ -26,9 +26,6 @@ return [
         'local' => [
             'host' => 'localhost',
             'port' => 5432,
-            'dbname' => 'zhuravlev',
-            'user' => 'zhuravlev',
-            'password' => 'zhuravlev',
             'dbname' => 'secret',
             'user' => 'hackeru',
             'password' => 'HackerUwd2'
