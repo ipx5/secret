@@ -6,7 +6,7 @@ interface SelectInterface {
     public function from($table);
 //    public function where($condition);
     public function getSelectText();
-    public function selectQuery($sql);
+//    public function selectQuery($sql);
 }
 
 class Select implements SelectInterface {
@@ -97,13 +97,4 @@ class Select implements SelectInterface {
         return $sql;
     }
 
-    public function selectQuery($sql) {
-        $res = pg_query($this-> pgsql -> connection, $sql);
-        $out = [];
-        $current = false;
-        while ($current = pg_fetch_assoc($res)) {
-            $out[] = $current;
-        }
-        return $out;
-    }
 }
