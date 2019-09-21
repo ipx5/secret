@@ -22,24 +22,50 @@ class Select implements SelectInterface {
     }
 
     public function select($columns = '*') {
+        $columnsIsArray = is_array($columns);
         $sql = '';
-        if (gettype($columns) == 'array') {
-            foreach ($columns as $key => $value) {
-                if ($sql === '') {
-                    $sql .= key($value) . '.' . current($value);
-                } else {
-                    $sql .= ', ' . key($value) . '.' . current($value);
+        if ($columnsIsArray && is_array(reset($columns))) {
+            foreach ($columns as $value) {
+                foreach ($value as $key => $val) {
+                    if ($sql === '') {
+                        $sql .= $key . '.' . $val;
+                    } else {
+                        $sql .= ', ' . $key . '.' . $val;
+                    }
                 }
             }
             $this -> pgsql -> columns = $sql;
-        } else {
+        } else if ($columnsIsArray) {
+            foreach ($columns as $key => $value) {
+                $keyIsString = is_string($key);
+                if ($sql === '') {
+                    if (!$keyIsString) {
+                        $sql .= $value;
+                    } else {
+                        $sql .= $key . '.' . $value;
+                    }
+                } else {
+                    if (!$keyIsString) {
+                        $sql .= ', ' . $value;
+                    } else {
+                        $sql .= $key . '.' . $value;
+                    }
+                }
+            }
+            $this -> pgsql -> columns = $sql;
+        } else if (is_string($columns)) {
             $this -> pgsql -> columns = $columns;
+        } else {
+            throw new DbException(404, 'Invalid term select');
         }
         return $this;
     }
 
-    public function from($table) {
-        $this-> pgsql -> table = $table;
+    public function from($tableName) {
+        if (!is_string($tableName)) {
+            throw new DbException(404, 'Invalid format table(Select)');
+        }
+        $this-> pgsql -> table = $tableName;
         return $this;
     }
 
@@ -73,6 +99,9 @@ class Select implements SelectInterface {
     }
 
     public function getSelectText() {
+        if (empty($this -> pgsql -> columns) || empty($this -> pgsql -> table)) {
+            throw new DbException(404, 'Invalid query Select. Please, check the entered data');
+        }
         $sql = 'SELECT ' . $this->pgsql -> columns . ' FROM ' . $this-> pgsql -> table;
 
         if (!empty($this -> pgsql -> join)) {
@@ -94,6 +123,7 @@ class Select implements SelectInterface {
         if (!empty($this -> pgsql -> orderBy)) {
             $sql .= ' ORDER BY ' . $this -> pgsql -> orderBy;
         }
+        echo $sql;
         return $sql;
     }
 

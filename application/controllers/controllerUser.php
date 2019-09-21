@@ -5,8 +5,8 @@ class controllerUser extends Controller{
 
     public function actionUsers(){
         $users= $this-> getModel('users')-> usersList();
-        echo $this-> renderLayout(['lo_content' => $this-> renderTemplate( 'usersList', ['users' => $users])]);
 
+        echo $this-> renderLayout(['lo_content' => $this-> renderTemplate( 'usersList', ['users' => $users])]);
     }
     public function actionEditUser(){
         $error = '';

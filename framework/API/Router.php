@@ -14,7 +14,6 @@ class Router {
         $this -> url = chop($url,'/');
         $this -> method = $method;
         $this->response = new Response;
-
     }
     
     public function get($pattern, $callback) {
@@ -35,9 +34,6 @@ class Router {
     }
 
     private function complianceByMethod() {
-        $url = explode('/api', $this -> url)[1];
-        // debug($url);
-        if (!$url) $url = '/';
         foreach ($this->router as $value) {
             
             if (strtoupper($this->method) == $value->getMethod())
@@ -55,8 +51,6 @@ class Router {
     }
 
     public function dispatch($url, $pattern) {
-        $url = explode('/api', $this -> url)[1];
-        //debug($url);
         preg_match_all('@:([\w]+)@', $pattern, $params, PREG_PATTERN_ORDER);
 
         $patternAsRegex = preg_replace_callback('@:([\w]+)@', [$this, 'convertPatternToRegex'], $pattern);
@@ -78,12 +72,14 @@ class Router {
         }
         return false;
     }
+
     public function getRouter() {
         return $this->router;
     }
     private function setParams($key, $value) {
         $this->params[$key] = $value;
     }
+
     private function convertPatternToRegex($matches) {
         $key = str_replace(':', '', $matches[0]);
         return '(?P<' . $key . '>[a-zA-Z0-9_\-\.\!\~\*\\\'\(\)\:\@\&\=\$\+,%]+)';

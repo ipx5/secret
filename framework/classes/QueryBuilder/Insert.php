@@ -17,19 +17,28 @@ class Insert implements InsertBehavior  {
     }
 
     public function insert($tableName) {
+        if (!is_string($tableName)) {
+            throw new DbException(404, 'Invalid format table(Insert)');
+        }
         $this->pgsql->table = $tableName;
         return $this;
     }
     public function columns($columns) {
-        if (gettype($columns) == 'array' && count($columns) > 1) {
+        $columnsIsArray = is_array($columns);
+        if ($columnsIsArray && count($columns) > 1) {
             $this -> pgsql -> columns = implode(',', $columns);
-        } else {
+        } elseif (is_string($columns)) {
             $this -> pgsql -> columns = reset($columns);
+        } else {
+            throw new DbException(404, 'Input the correct data in columns(Array or string)');
         };
         return $this;
     }
 
     public function values($values) {
+        if (!is_array($values)) {
+            throw new DbException(404, 'Input the correct data in values(Array)');
+        }
         $typeValue = is_array(reset($values));
         $chunkValues = '';
         if ($typeValue) {
@@ -52,12 +61,21 @@ class Insert implements InsertBehavior  {
     }
 
     public function returning($params) {
-        $columns = implode(", ", $params);
-        $this -> pgsql -> returning = $columns;
+        if (is_array($params)) {
+            $columnsReturning = implode(", ", $params);
+        } elseif (is_string($params)) {
+            $columnsReturning = $params;
+        } else {
+            throw new DbException(404, 'Input the correct data in returning(Array or string)');
+        }
+        $this -> pgsql -> returning = $columnsReturning;
         return $this;
     }
 
     public function getInsertText() {
+        if (empty($this -> pgsql -> table)) {
+            throw new DbException(404, 'Invalid query Insert. Please, check the entered data');
+        }
         $sql = 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? (' (' . ($this -> pgsql -> columns) . ') ') : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ? ' RETURNING ' . $this -> pgsql -> returning : '');
         return $sql;
     }

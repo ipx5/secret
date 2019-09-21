@@ -12,7 +12,6 @@ class ActiveRecord {
         self::$tableName = $tableName;
         self::$config = $config;
         self::$db = $connection;
-        app::getInstance()->printTest($config);
         return new self();
     }
 
@@ -98,7 +97,6 @@ class ActiveRecord {
         $row = reset($result);
         if ($row != false) {
             $element = new self();
-            print_r($element::$config);
             foreach ($element::$config as $key => $value) {
                 $element::$config[$key]['value'] = $row[$key];
             }
@@ -110,7 +108,6 @@ class ActiveRecord {
 
     public function select($limit = 0, $offset = 0) {
         $result = self::$db -> queryBuilder('select') -> select('*') -> from(self::$tableName) -> limit($limit) -> offset($offset) -> query();
-        app::getInstance()->printTest($result);
         if ($result != false) {
             $arrayUsers = [];
             foreach ($result as $value) {
