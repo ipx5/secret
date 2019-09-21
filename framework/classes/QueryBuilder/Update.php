@@ -15,12 +15,18 @@ class Update implements UpdateBehavior {
     }
 
     public function table($tableName) {
+        if (!is_string($tableName)) {
+            throw new DbException(404, 'Invalid format table(Select)');
+        }
         $this -> pgsql -> table = $tableName;
         return $this;
     }
 
     public function set($values) {
         $chunkQuery = '';
+        if (!is_array($values)) {
+            throw new DbException(404, 'Input the correct data in columns(Array)');
+        }
         $typeValues = is_array(reset($values));
         if ($typeValues) {
             foreach ($values as $key => $value) {
@@ -38,6 +44,9 @@ class Update implements UpdateBehavior {
     }
 
     public function getUpdateText() {
+        if (empty($this -> pgsql -> table) || empty($this -> pgsql -> values)) {
+            throw new DbException(404, 'Invalid query Update. Please, check the entered data');
+        }
         $sql = 'UPDATE ' . $this -> pgsql -> table . ' SET ' . $this -> pgsql -> values;
         if (!empty($this -> pgsql -> where)) {
             $sql .= ' WHERE ' . $this -> pgsql -> where;
@@ -52,5 +61,4 @@ class Update implements UpdateBehavior {
     public function __call($name, $params) {
         return $this -> pgsql -> $name(reset($params));
     }
-
 }

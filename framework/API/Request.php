@@ -9,32 +9,17 @@ class request {
     public $action = '';
 
     public function __construct() {
-
         $this -> request = $_REQUEST ?? [];
         $this -> controller = $this -> request['controller'] ?? '';
         $this -> action = $this -> request['action'] ?? '';
         $this -> isForm = isset($this -> request['send']);
         unset($this -> request['controller'], $this -> request['action'], $this->request['send']);
-
-        $typeRequest = $this -> getTypeRequest();
-        if ($typeRequest === 'api') {
-            $this->requestForApi();
-        }
     }
 
-    public function requestForApi() {
+    public function run() {
         $router = new Router($this -> getUrl(), $this -> getMethod());
-        $Routes = new Routes($router);
+        new Routes($router);
         $router -> run();
-    }
-
-    public function server($key) {
-        $value = $_SERVER[strtoupper($key)];
-        return isset($value) ? $this -> clean($value) : $this -> clean($_SERVER);
-    }
-
-    public function getTypeRequest() {
-        return explode('/', $_SERVER['REQUEST_URI'])[1];
     }
 
     public function getUrl() {

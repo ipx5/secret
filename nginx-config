@@ -48,12 +48,6 @@ server {
 		try_files $uri $uri/ =404;
 		rewrite ^/([a-zA-Z0-9_]*?)/?([a-zA-Z0-9_]*?)?/?$ /index.php?controller=$1&action=$2&$query_string last;
 	}
-
-
-	location /api {
-                try_files $uri $uri/ =404;
-                rewrite ^/api/?([a-zA-Z0-9_]*?)/?([a-zA-Z0-9_]*?)?/?$ /index.php?controller=$1&action=$2&$query_string last;
-        }
 	
 
 	location ~ \.php$ {

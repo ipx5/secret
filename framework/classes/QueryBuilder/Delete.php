@@ -15,6 +15,9 @@ class Delete implements DeleteBehavior {
     }
 
     public function from($tableName) {
+        if (!is_string($tableName)) {
+            throw new DbException(404, 'Invalid format table(Delete)');
+        }
         $this -> pgsql -> table = $tableName;
         return $this;
     }
@@ -24,8 +27,12 @@ class Delete implements DeleteBehavior {
     }
 
     public function where($condition) {
+        $conditionType = is_array($condition);
+        if (!$conditionType) {
+            throw new DbException(404, 'Input the correct data in where(Array)');
+        }
         $sql = '';
-        if (is_array(reset($condition))) {
+        if ($conditionType && is_array(reset($condition))) {
             foreach ($condition as $key => $value) {
                 $sql .= $this -> toScreen($value);
             }
@@ -54,6 +61,9 @@ class Delete implements DeleteBehavior {
     }
 
     public function getDeleteText() {
+        if (empty($this -> pgsql -> table)) {
+            throw new DbException(404, 'Invalid query Delete. Please, check the entered data');
+        }
         $sql = 'DELETE FROM ' . $this -> pgsql -> table;
         if (!empty($this -> pgsql -> where)) {
             $sql .= ' WHERE ' . $this -> pgsql -> where;

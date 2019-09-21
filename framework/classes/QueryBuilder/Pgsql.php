@@ -21,25 +21,32 @@ class Pgsql implements PgsqlBehavior {
     public $orderBy;
     public $join;
     public $connection = false;
+    private $listMethods = ['select', 'insert', 'update', 'delete'];
     public function __construct($config) {
         if ($this->connection == false) {
             $this->connection = pg_connect('host= ' . $config['host'] . ' port=' . $config['port'] . ' dbname=' . $config['dbname'] . ' user=' . $config['user'] . ' password=' . $config['password']);
         }
     }
     public function queryBuilder($type) {
-        $className = ucfirst($type);
+        $lowerType = strtolower($type);
+        if (!in_array($lowerType, $this -> listMethods)) {
+            throw new DbException(404, 'Invalid query type. Pgsql');
+        };
+        $className = ucfirst($lowerType);
+        if (!class_exists($className)) {
+            throw new DbException(404, 'Class not found. Pgsql');
+        }
         $this -> currentState = new $className($this);
-        $this -> queryType = $type;
+        $this -> queryType = $lowerType;
         return $this -> currentState;
     }
 
     public function query() {
         $nameMethod = 'get' . ucfirst($this -> queryType) . 'Text';
-        $sql = $this -> $nameMethod();
-        echo $sql;
+        $sql = $this -> currentState -> $nameMethod();
         $this -> clear();
         if ($this -> queryType == 'select') {
-            return $this -> currentState -> selectQuery($sql);
+            return $this -> selectQuery($sql);
         } else if ($this -> returning) {
             $result = pg_query($this->connection, $sql);
             $insert_row = pg_fetch_row($result);
@@ -50,15 +57,24 @@ class Pgsql implements PgsqlBehavior {
     }
 
     public function __call($name, $params) {
+        if (empty($this -> currentState)) {
+            throw new DbException(404, 'Please, initialize your QueryBuilder');
+        }
+        if (!isset($this -> currentState -> $name)) {
+            throw new DbException(404, 'Input the correct function');
+        }
         return $this -> currentState -> $name(reset($params));
     }
 
     public function where($condition) {
         // [..., ..., ..., ...] 1 array
         // [ [...], [...], [...], [...] ] arrays in array
-        $typeQuery = gettype(reset($condition));
+        if (!is_array($condition)) {
+            throw new DbException(404, 'Input the correct data in where(Array)');
+        };
+        $typeQuery = is_array(reset($condition));
         $sql = '';
-        if ($typeQuery == 'array') {
+        if ($typeQuery) {
             foreach ($condition as $value) {
                 $sql .= $this -> toScreen($value);
             }

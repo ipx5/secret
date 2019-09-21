@@ -32,40 +32,19 @@ class app {
     }
 
     public function start($config) {
-        $this->config = $config;
         autoloadRun();
-        //if(!empty($_COOKIE) || (bool) $this-> acceptCookie){
-            $this-> acceptCookie = 1;
-            $this-> user = new user;
-            $this -> request =  new Request;
-            $this -> response =  new Response;
-        //} 
-        //new Users();
+        $this->config = $config;
+        $this-> acceptCookie = 1;
+        $this-> user = new user;
+        $this -> request =  new Request;
+        $this -> response =  new Response;
         try {
-            $this -> runController(
-                    (!empty($_REQUEST['controller']) ? $_REQUEST['controller'] : 'main'),
-                    (!empty($_REQUEST['action']) ? $_REQUEST['action'] : 'page')
-                    );
-        } catch (httpException $e) {
+            $this -> request -> run();
+        } catch (HttpException $e) {
             $e ->sendHttpState();
-        } catch (dbException $e) {
-            echo $e->getMessage();
+        } catch (DbException $e) {
+            $e ->sendHttpState();
         }
-    }
-    
-    protected function runController($controller, $action) {
-        
-        $fname = 'controller' . ucfirst(strtolower(str_replace(['/', '.'], '', $controller)));
-
-        if (!@include_once $this->paths['controllers'] . $fname . '.php') {
-            throw new httpException(404, 'Controller file not found');
-        }
-        if (!class_exists($fname)) {
-            throw new httpException(404, 'Controller class not found');
-        }
-        $aname = 'action' .ucfirst(strtolower($action));
-        $controller = new $fname;
-        $controller -> $aname();
     }
 
     public function printTest($value) {

@@ -17,16 +17,10 @@ abstract class Controller {
                 throw new dbException('Undefine model');
             }
             $this-> models[$name] = new $name();
-            // if (file_exists(app::getInstance()->paths['models'] . $name . '.php')) {
-            //     include app::getInstance()->paths['models'] . $name . '.php';
-            //     $this->models[$name] = new $name();
-            // } else {
-            //     throw new dbException('Undefined model');
-            // }
         }
         return $this-> models[$name];
     }
-    protected function renderLayout( $params =[]) {
+    protected function renderLayout($params =[]) {
         foreach ($params as $name => $value) {
             $$name = $value;
         }
@@ -34,6 +28,7 @@ abstract class Controller {
         include app::getInstance()->paths['layouts']. $this-> layout.'.php';
         return ob_get_clean();
     }
+
     protected function renderTemplate($name, $params = []) {
         foreach ($params as $var => $value) {
             $$var = $value;

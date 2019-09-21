@@ -6,8 +6,6 @@ class test extends Model {
     }
 
     public function insertFakeData() {
-        $AR = $this -> ActiveRecord('roles');
-        $result = $AR -> select(10, 0);
-        print_r($result);
+//        $this -> db -> queryBuilder('update') -> table('users') -> set(['email' => 'yandex', 'password' => 'yaaa'])-> query();
     }
 }
