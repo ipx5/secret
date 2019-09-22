@@ -44,6 +44,8 @@ class app {
             $e ->sendHttpState();
         } catch (DbException $e) {
             $e ->sendHttpState();
+        } finally {
+            $this -> response -> render();
         }
     }
 

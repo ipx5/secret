@@ -5,11 +5,8 @@ abstract class Controller {
     protected $models = [];
     protected $layout = 'main';
     protected $templateDir = '';
-    public $response;
 
-    public function __construct() {
-        $this->response = new Response ;
-    }
+    public function __construct() {}
     
     protected function getModel($name) {
         if (!isset($this-> models[$name])) {
@@ -38,8 +35,11 @@ abstract class Controller {
         return ob_get_clean();
     }
 
-    public function send($status = 200, $msg) {
-        $this->response->setHeader(sprintf('HTTP/1.1 ' . $status . ' %s' , $this->response->getStatusCodeText($status)));
-        $this->response->setContent($msg);
+    public function responseSetContent($content) {
+        app::getInstance() -> response->setContent($content);
+    }
+
+    public function responseSendStatus($status) {
+        app::getInstance()->response->sendStatus($status);
     }
 }
