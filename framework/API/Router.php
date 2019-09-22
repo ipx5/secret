@@ -54,12 +54,10 @@ class Router {
         preg_match_all('@:([\w]+)@', $pattern, $params, PREG_PATTERN_ORDER);
 
         $patternAsRegex = preg_replace_callback('@:([\w]+)@', [$this, 'convertPatternToRegex'], $pattern);
-
         if (substr($pattern, -1) === '/' ) {
             $patternAsRegex = $patternAsRegex . '?';
         }
         $patternAsRegex = '@^' . $patternAsRegex . '$@';
-
         if (preg_match($patternAsRegex, $url, $paramsValue)) {
             array_shift($paramsValue);
             foreach ($params[0] as $key => $value) {
@@ -91,7 +89,6 @@ class Router {
         $this->complianceByMethod();
         $this->complianceByPattern($this->matchRouter);
         //debug($this->matchRouter);
-
         
         if (!$this->matchRouter || empty($this->matchRouter)) {
             //debug('q');
@@ -125,10 +122,10 @@ class Router {
             } else {
                 $method = 'index';
             }
-
             // call to controller
-            if (is_callable([$controller, $method]))
+            if (is_callable([$controller, $method])) {
                 return call_user_func([$controller, $method], $params);
+            }
             else
 				$this->sendNotFound();
         }

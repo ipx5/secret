@@ -6,7 +6,7 @@ class Routes {
         //     echo 'Welcome ';
         // });
         $router -> get('/', 'main@actionPage');
-        $router->get('/posts', 'post@actionShow');
+        $router->get('/posts/:id', 'post@actionShow');
         $router -> get('/user/register', 'user@actionRegister');
         $router -> get('/user/authorization/', 'user@actionAuthorization');
         $router -> get('/user/users/', 'user@actionAuthorization');
