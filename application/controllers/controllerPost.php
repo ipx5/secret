@@ -6,15 +6,15 @@ class controllerPost extends Controller {
     }
     public function actionShow($params)
     {
-        print_r($params);
         $model = $this-> getModel('posts');
-        if ($params['id']) {
+        if (!empty($params['id'])) {
             $posts = $model -> getUser($params['id']);
+        } else {
+            $posts = $model -> postsList();
         }
         $data = ['data' => $posts];
 
-        $this->response->sendStatus(200);
-        $this->response->setContent($data);
-        $this->response->render();
+        $this -> responseSendStatus(200);
+        $this -> responseSetContent($data);
     }
 }
