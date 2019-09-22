@@ -123,7 +123,6 @@ class Select implements SelectInterface {
         if (!empty($this -> pgsql -> orderBy)) {
             $sql .= ' ORDER BY ' . $this -> pgsql -> orderBy;
         }
-        echo $sql;
         return $sql;
     }
 

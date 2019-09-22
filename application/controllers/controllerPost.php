@@ -4,9 +4,12 @@ class controllerPost extends Controller {
     public function __construct(){
         parent::__construct();
     }
-    public function actionShow()
+    public function actionShow($params)
     {
-        $posts = $this-> getModel('posts')-> postsList();
+        $model = $this-> getModel('posts');
+        if ($params['id']) {
+            $posts = $model -> getUser($params['id']);
+        }
         $data = ['data' => $posts];
 
         $this->response->sendStatus(200);
