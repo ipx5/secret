@@ -8,7 +8,9 @@ class controllerRole extends Controller {
 
     public function actionShow(){
         $roles = $this-> getModel('roles')-> rolesList();
-        echo $this-> renderLayout(['lo_content' => $this-> renderTemplate('roleList',['roles'=> $roles])]);
+        $this -> responeSendHtml(
+            ['lo_content' => $this-> renderTemplate('roleList',['roles'=> $roles])]
+        );
     }
 
     public function actionEdit(){
@@ -16,7 +18,7 @@ class controllerRole extends Controller {
         if(app::getInstance()-> request-> isForm){
             try{
                 $this-> getModel('roles')-> saveRole(app::getInstance()-> request-> request);
-                header('location:/role/show');
+                $this -> responseSetHeader('location:/role/show');
             } catch (Exception $e){
                 $error = $e-> getMessage();
             }
@@ -24,7 +26,7 @@ class controllerRole extends Controller {
         $id = app::getInstance()-> request -> request['id'] ?? 0;
         $priveileges = $this-> getModel('roles')-> privilegesList();
         $role = $this-> getModel('roles')-> roleInfoById($id);
-        echo $this-> renderLayout([
+        $this -> responeSendHtml([
             'lo_content' => $this-> renderTemplate('roleEdit', [
                 'privileges' => $priveileges,
                 'role' => $role,

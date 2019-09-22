@@ -9,8 +9,8 @@ class controllerMain extends Controller {
         $model -> insertFakeData();
 
         // render view at the end
-        echo $this -> renderLayout(['lo_content' =>
-            $this -> renderTemplate('auth')
-        ]);
+        $this -> responeSendHtml(
+            ['lo_content' => $this -> renderTemplate('auth')]
+        );
     }
 }

@@ -71,6 +71,7 @@ class Response {
 
     protected $version;
     protected $content;
+    protected $page;
 
     public function __construct () {
         $this->setVersion('1.1');
@@ -96,6 +97,10 @@ class Response {
         return $this->headers;
     }
 
+    public function setHtml($html) {
+        $this -> page = $html;
+    }
+
     public function setContent($content) {
         $this->content .= json_encode($content);
     }
@@ -114,15 +119,18 @@ class Response {
         }
     }
     public function render() {
-        if ($this->content) {
+        if (!headers_sent()) {
+            foreach ($this->headers as $header) {
+                header($header, true);
+            }
+        }
+        if (!empty($this->content)) {
             $output = $this->content;
             // Headers
-            if (!headers_sent()) {
-                foreach ($this->headers as $header) {
-                    header($header, true);
-                }
-            }
             echo $output;
+        }
+        if (!empty($this -> page)) {
+            echo $this -> page;
         }
     }
 

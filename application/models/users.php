@@ -2,7 +2,7 @@
 
 class users extends Model {
     public function usersList(){
-        return $users= $this-> db -> queryBuilder('select')-> select('*')-> from('users')-> query();
+        return $this-> db -> queryBuilder('select')-> select('*')-> from('users')-> query();
     }
     public function getUserById($id){
         $user= $this-> db -> queryBuilder('select')-> select('*')-> from('users')-> where(['id' => $id])-> query();

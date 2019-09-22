@@ -26,13 +26,13 @@ return [
         'local' => [
             'host' => '194.87.102.4',
             'port' => 5432,
-            'dbname' => 'secret',
+            'dbname' => 'hackeru',
             'user' => 'hackeru',
             'password' => 'HackerUwd2'
         ]
     ],
-//    'memcashed' => [
-//        'host' => '127.0.0.1',
-//        'port' => 11211
-//    ]
+    'memcashed' => [
+        'host' => '127.0.0.1',
+        'port' => 11211
+    ]
 ];
