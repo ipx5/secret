@@ -33,12 +33,12 @@ class app {
 
     public function start($config) {
         autoloadRun();
-
         $this->config = $config;
         $this-> acceptCookie = 1;
-        $this-> user = new user;
         $this -> request =  new Request;
         $this -> response =  new Response;
+        $this-> user = new user;
+
         try {
             $this -> request -> run();
         } catch (HttpException $e) {

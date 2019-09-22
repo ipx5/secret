@@ -36,11 +36,19 @@ abstract class Controller {
         return ob_get_clean();
     }
 
+    public function responseSetHeader($header) {
+        app::getInstance() -> response -> setHeader($header);
+    }
+
     public function responseSetContent($content) {
         app::getInstance() -> response->setContent($content);
     }
 
     public function responseSendStatus($status) {
         app::getInstance()->response->sendStatus($status);
+    }
+
+    public function responeSendHtml($page) {
+        app::getInstance() -> response -> setHtml($this -> renderLayout($page));
     }
 }

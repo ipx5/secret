@@ -28,6 +28,8 @@ class Insert implements InsertBehavior  {
         if ($columnsIsArray && count($columns) > 1) {
             $this -> pgsql -> columns = implode(',', $columns);
         } elseif (is_string($columns)) {
+            $this -> pgsql -> columns = $columns;
+        } elseif (count($columns) === 1) {
             $this -> pgsql -> columns = reset($columns);
         } else {
             throw new DbException(404, 'Input the correct data in columns(Array or string)');
@@ -77,6 +79,7 @@ class Insert implements InsertBehavior  {
             throw new DbException(404, 'Invalid query Insert. Please, check the entered data');
         }
         $sql = 'INSERT INTO ' . $this -> pgsql -> table  . (($this -> pgsql -> columns) ? (' (' . ($this -> pgsql -> columns) . ') ') : '')  . ' VALUES ' . $this -> pgsql -> values . ' '.  ( $this -> pgsql -> returning ? ' RETURNING ' . $this -> pgsql -> returning : '');
+
         return $sql;
     }
 

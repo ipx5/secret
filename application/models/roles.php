@@ -46,10 +46,11 @@ class roles extends Model {
             return $this-> createRole($role);
         }
     }
+
     public function createRole($role){
         $privileges = $role['privilege'];
         unset($role['id'], $role['privilege']);
-        $this-> db-> queryBuilder('insert')-> insert('roles')-> columns(['name'])-> values([$role])-> query();
+        $this-> db-> queryBuilder('insert')-> insert('roles')-> columns(['name'])-> values([$role['name']])-> query();
         $id = $this-> db-> queryBuilder('select')-> select('id')-> from('roles')-> where(['name'=> $role['name']])-> query();; 
         $id = reset($id);
         $id = $id['id'];
