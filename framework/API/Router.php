@@ -51,8 +51,13 @@ class Router {
     }
 
     public function dispatch($url, $pattern) {
+        $urlParams = parse_url($url);
+        $url = $urlParams['path'];
+        $output = [];
+        if (isset($urlParams['query'])) {
+            $queryUrl = parse_str($urlParams['query'], $output);
+        }
         preg_match_all('@:([\w]+)@', $pattern, $params, PREG_PATTERN_ORDER);
-
         $patternAsRegex = preg_replace_callback('@:([\w]+)@', [$this, 'convertPatternToRegex'], $pattern);
         if (substr($pattern, -1) === '/' ) {
             $patternAsRegex = $patternAsRegex . '?';
@@ -66,6 +71,7 @@ class Router {
                     $this->setParams($val, urlencode($paramsValue[$val]));
                 }
             }
+                $this -> setParams('query', $output);
             return true;
         }
         return false;

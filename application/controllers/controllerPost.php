@@ -6,6 +6,7 @@ class controllerPost extends Controller {
     }
     public function actionShow($params)
     {
+        print_r($params);
         $model = $this-> getModel('posts');
         if ($params['id']) {
             $posts = $model -> getUser($params['id']);
