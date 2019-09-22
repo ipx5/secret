@@ -71,7 +71,9 @@ class Router {
                     $this->setParams($val, urlencode($paramsValue[$val]));
                 }
             }
+            if (isset($urlParams['query'])) {
                 $this -> setParams('query', $output);
+            }
             return true;
         }
         return false;
