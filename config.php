@@ -31,4 +31,8 @@ return [
             'password' => 'HackerUwd2'
         ]
     ],
+//    'memcashed' => [
+//        'host' => '127.0.0.1',
+//        'port' => 11211
+//    ]
 ];

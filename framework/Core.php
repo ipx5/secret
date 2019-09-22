@@ -9,7 +9,7 @@ function debug ($str){
 }
 class app {
     // Singleton
-    protected $config = false;
+    public $config = false;
     public $request = false;
     public $response = false;
     public $user = false;
@@ -33,6 +33,7 @@ class app {
 
     public function start($config) {
         autoloadRun();
+
         $this->config = $config;
         $this-> acceptCookie = 1;
         $this-> user = new user;
