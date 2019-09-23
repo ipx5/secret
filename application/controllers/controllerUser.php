@@ -11,7 +11,7 @@ class controllerUser extends Controller{
     }
     public function actionEditUser(){
         $error = '';
-        if(app::getInstance()-> request-> isForm){
+        if($this -> getRequest()-> isForm){
             try{
                 $this-> getModel('users')-> saveUser(app::getInstance()-> request-> request);
                 $this -> responseSetHeader('location:/user/users');
@@ -20,7 +20,7 @@ class controllerUser extends Controller{
                 $error = $e-> getMessage();
             }
         }
-        $id = app::getInstance()-> request -> request['id'] ?? 0;
+        $id = $this -> getRequest() -> request['id'] ?? 0;
         $user = $this-> getModel('users')-> getUserById($id);
         $roles = $this-> getModel('roles')-> rolesList();
 
@@ -34,10 +34,10 @@ class controllerUser extends Controller{
     }
 
     public function actionRegister(){
+        $usersModel= $this-> getModel('users');
         $db = new Pgsql( app::getInstance()-> db['local']);
-        $users = $db-> queryBuilder('select')-> select('*')-> from('users')-> where(['!', 'sub_token' => ''])-> query();
+        $users = $usersModel -> userRefister();
         foreach ($users as $user) {
-            echo $user['status'];
             switch($user['status']){
                 case 1:
                     echo 'Status: '.$user['status'].' авторизация : <a target="_blank" href="/user/authorization?token='.$user['sub_token'].'">'.$user['email'].'</a><br/>';
@@ -50,10 +50,11 @@ class controllerUser extends Controller{
     }
 
     public function actionRegistration(){
-        $data = app::getInstance()-> request-> request;
-        if( app::getInstance()-> request-> isForm ){
+
+        $data = $this -> getRequest()-> request;
+        if( $this -> getRequest() -> isForm ){
             try{
-                app::getInstance()-> user-> registration(app::getInstance()-> request-> request);
+                $this -> getUser()-> registration($this -> getRequest()-> request);
             } catch (Exception $e){
                 $data['error'] = $e-> getMessage();
             }
@@ -64,11 +65,11 @@ class controllerUser extends Controller{
     }
 
     public function actionAuthorization(){
-        $data = app::getInstance()-> request -> request;
-        if ( app::getInstance()-> request-> isForm ){
+        $data = $this -> getRequest() -> request;
+        if ( $this -> getRequest()-> isForm ){
             try{
-                $user = app::getInstance()-> user-> authenticate(app::getInstance()-> request-> request);
-                app::getInstance()-> user-> authorization($user);
+                $user = $this -> getUser()-> authenticate($this -> getRequest()-> request);
+                $this -> getUser() -> authorization($user);
             } catch (Exception $e){
                 $data['error'] = $e-> getMessage();
             }
@@ -80,10 +81,10 @@ class controllerUser extends Controller{
     }
 
     public function actionReset(){
-        $data = app::getInstance()-> request -> request;
-        if ( app::getInstance()-> request-> isForm ){
+        $data = $this -> getRequest() -> request;
+        if ( $this -> getRequest()-> isForm ){
             try{
-                app::getInstance()-> user-> reset(app::getInstance()-> request-> request);
+                $this -> getUser() -> reset($this -> getRequest()-> request);
                 $this -> responseSetHeader('location:/user/resetSuccess?email='.app::getInstance()-> request-> request['email']);
             } catch (Exception $e){
                 $data['error'] = $e-> getMessage();
@@ -102,10 +103,10 @@ class controllerUser extends Controller{
     }
 
     public function actionRestore(){
-        $data = app::getInstance()-> request -> request;
-        if ( app::getInstance()-> request-> isForm ){
+        $data = $this -> getRequest() -> request;
+        if ( $this -> getRequest()-> isForm ){
             try {
-                app::getInstance()-> user-> restore($data);
+                $this -> getUser()-> restore($data);
                 $this -> responseSetHeader('location:/user/authorization');
             } catch (Exception $e){
                 $data['error'] = $e-> getMessage();
@@ -117,7 +118,7 @@ class controllerUser extends Controller{
     }
     
     public function actionLogout(){
-        app::getInstance()-> user-> logout();
+        $this -> getUser() -> logout();
         $this -> responseSetHeader('location:/user/authorization');
     }
 }

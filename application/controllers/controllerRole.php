@@ -15,7 +15,7 @@ class controllerRole extends Controller {
 
     public function actionEdit(){
         $error = '';
-        if(app::getInstance()-> request-> isForm){
+        if($this -> getRequest() -> isForm){
             try{
                 $this-> getModel('roles')-> saveRole(app::getInstance()-> request-> request);
                 $this -> responseSetHeader('location:/role/show');
@@ -23,7 +23,7 @@ class controllerRole extends Controller {
                 $error = $e-> getMessage();
             }
         }
-        $id = app::getInstance()-> request -> request['id'] ?? 0;
+        $id = $this -> getRequest() -> request['id'] ?? 0;
         $priveileges = $this-> getModel('roles')-> privilegesList();
         $role = $this-> getModel('roles')-> roleInfoById($id);
         $this -> responeSendHtml([

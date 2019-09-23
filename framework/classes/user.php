@@ -16,16 +16,14 @@ class user {
         // $test= $this-> db -> QueryBuilder('select')-> select('*')-> from('users')-> where(['email'=>'toxa@hacker.ua'])->query();
         // debug($test);
         //debug($_SESSION);
-        if(!isset($this-> id)){
-            if(isset($_COOKIE['token'])){
-                $user = $this-> db-> queryBuilder('select')-> select('id, email, role_id, is_admin, reg_date, status')-> from('users')-> where(['token' => $_COOKIE['token']])-> query();
-                $user = reset($user); //удаляю ключ из массива (метод php)
-                if(empty($user)){
-                    setcookie('token', '', time()-1, '/');
-                } else {
-                    foreach ($user as $key => $value) {
-                        $this-> $key =$value;
-                    }
+        if(!isset($this-> id) && isset($_COOKIE['token'])){
+            $user = $this-> db-> queryBuilder('select')-> select('id, email, role_id, is_admin, reg_date, status')-> from('users')-> where(['token' => $_COOKIE['token']])-> query();
+            $user = reset($user); //удаляю ключ из массива (метод php)
+            if(empty($user)){
+                setcookie('token', '', time()-1, '/');
+            } else {
+                foreach ($user as $key => $value) {
+                    $this-> $key =$value;
                 }
             }
         }

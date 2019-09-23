@@ -40,6 +40,14 @@ abstract class Controller {
         app::getInstance() -> response -> setHeader($header);
     }
 
+    public function getRequest() {
+        return app::getInstance() -> request;
+    }
+
+    public function getUser() {
+        return app::getInstance() -> user;
+    }
+
     public function responseSetContent($content) {
         app::getInstance() -> response->setContent($content);
     }
