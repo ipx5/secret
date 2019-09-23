@@ -28,9 +28,9 @@ class Select implements SelectInterface {
             foreach ($columns as $value) {
                 foreach ($value as $key => $val) {
                     if ($sql === '') {
-                        $sql .= $key . '.' . $val;
+                        $sql .= $key . ' ' . $val;
                     } else {
-                        $sql .= ', ' . $key . '.' . $val;
+                        $sql .= ', ' . $key . ' ' . $val;
                     }
                 }
             }
@@ -42,13 +42,13 @@ class Select implements SelectInterface {
                     if (!$keyIsString) {
                         $sql .= $value;
                     } else {
-                        $sql .= $key . '.' . $value;
+                        $sql .= $key . ' ' . $value;
                     }
                 } else {
                     if (!$keyIsString) {
                         $sql .= ', ' . $value;
                     } else {
-                        $sql .= $key . '.' . $value;
+                        $sql .= ', ' . $key . ' ' . $value;
                     }
                 }
             }
@@ -62,8 +62,12 @@ class Select implements SelectInterface {
     }
 
     public function from($tableName) {
-        if (!is_string($tableName)) {
+        if (!is_string($tableName) && !is_array($tableName)) {
             throw new DbException(404, 'Invalid format table(Select)');
+        }
+        if (is_array($tableName)) {
+            $keyName = key($tableName);
+            $tableName = $keyName . ' ' . $tableName[$keyName];
         }
         $this-> pgsql -> table = $tableName;
         return $this;
@@ -84,17 +88,41 @@ class Select implements SelectInterface {
         return $this;
     }
 
-    public function join($type, $table, $params = '') {
-        $sql = $type . ' ' . $table . ' on ';
-        $paramsSql = '';
-        foreach ($params as $key => $value) {
-            if ($value === '=') {
-                $paramsSql .= $value;
-            } else {
-                $paramsSql .= $key . '.' . $value;
-            }
+    public function join($type = '', $table, $params) {
+        if (!is_array($table) && !is_string($table)) {
+            throw new DbException(404, 'Invalid format join');
         }
-        $this -> pgsql -> join = $sql . $paramsSql;
+        $sql = '';
+        if ($type === strtoupper($type)) {
+            $typeJoin = 'JOIN';
+        } else {
+            $typeJoin = strtoupper($type) . ' JOIN';
+        }
+        if (is_array($table)) {
+            $keyTable = key($table);
+            $table = $keyTable . ' ' . $table[$keyTable];
+        }
+        $termJoin = '';
+        if (is_array($params)) {
+            $sign = '=';
+            foreach ($params as $key=>$value) {
+                $keyIsString = is_string($key);
+                if ($keyIsString) {
+                    $termJoin .= $key . $sign . $value;
+                    $sign = '=';
+                } elseif ($value === '!') {
+                    $sign = '!=';
+                } elseif ($value === 'AND' || $value === 'OR') {
+                    $termJoin .= ' ' . $value . ' ';
+                    $sign = '=';
+                }
+            }
+        } elseif (is_string($params)) {
+            $termJoin .= $params;
+        } else {
+            throw new DbException(404, 'Invalid format join');
+        }
+        $this -> pgsql -> join = $typeJoin . ' ' . $table . ' ON ' . $termJoin;
         return $this;
     }
 
