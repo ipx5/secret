@@ -17,4 +17,7 @@ class users extends Model {
         }
         $this-> db-> queryBuilder('update')-> table('users')-> set(['role_id'=> $user])-> where(['id'=> $id])-> query();
     }
+    public function userRefister() {
+        return $this -> db-> queryBuilder('select')-> select('*')-> from('users')-> where(['!', 'sub_token' => ''])-> query();
+    }
 }
