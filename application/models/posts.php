@@ -3,10 +3,10 @@
 class posts extends Model {
 
     public function postsList(){
-        return $this-> db -> queryBuilder('select')-> select('*')-> from('posts')-> query();
+        return $this-> db -> queryBuilder('select')-> select('*')-> from('post')-> query();
     }
 
     public function getUser($id) {
-        return $this -> db -> queryBuilder('select') -> select('*') -> from('posts') -> where(['id' => $id]) -> query();
+        return $this -> db -> queryBuilder('select') -> select('*') -> from('post') -> where(['id' => $id]) -> query();
     }
 }

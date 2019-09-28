@@ -88,7 +88,7 @@ class Router {
 
     public function run() {
         if (!is_array($this->router) || empty($this->router)) 
-            throw new Exception('Добавь роуты');
+            throw new Exception('Добавь руты');
         $this->complianceByMethod();
         $this->complianceByPattern($this->matchRouter);
         //debug($this->matchRouter);

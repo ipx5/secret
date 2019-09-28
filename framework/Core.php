@@ -1,12 +1,7 @@
 <?php
 
 //spl_autoload_register('app::autoload');
-function debug ($str){
-    echo '<pre>';
-    var_dump($str);
-    echo '</pre>';
-    exit;
-}
+
 class app {
     // Singleton
     public $config = false;
@@ -38,19 +33,20 @@ class app {
 //        Logger::getLogger('start_app') -> log($str);
         $this->config = $config;
         $this-> acceptCookie = 1;
-        $this -> request =  new Request;
-        $this -> response =  new Response;
+        $this-> request =  new Request;
+        $this-> response =  new Response;
         $this-> user = new user;
         Logger::getLogger('start_app') -> log('success start');
 
         try {
-            $this -> request -> run();
+            $this-> request-> run();
         } catch (HttpException $e) {
-            $e ->sendHttpState();
+            $e-> sendHttpState();
         } catch (DbException $e) {
-            $e ->sendHttpState();
+            //TODO
+            $e-> sendHttpState();
         } finally {
-            $this -> response -> render();
+            $this-> response-> render();
         }
     }
 
@@ -58,5 +54,12 @@ class app {
         echo "<pre>";
         print_r($value);
         echo "</pre>";
+    }
+
+    function debug ($str){
+        echo '<pre>';
+        var_dump($str);
+        echo '</pre>';
+        exit;
     }
 }

@@ -17,7 +17,7 @@ class user {
         // debug($test);
         //debug($_SESSION);
         if(!isset($this-> id) && isset($_COOKIE['token'])){
-            $user = $this-> db-> queryBuilder('select')-> select('id, email, role_id, is_admin, reg_date, status')-> from('users')-> where(['token' => $_COOKIE['token']])-> query();
+            $user = $this-> db-> queryBuilder('select')-> select('id, username, email, role_id, is_admin, reg_date, status')-> from('users')-> where(['token' => $_COOKIE['token']])-> query();
             $user = reset($user); //удаляю ключ из массива (метод php)
             if(empty($user)){
                 setcookie('token', '', time()-1, '/');
@@ -98,9 +98,13 @@ class user {
         if ($user['password'] != $user['repassword']){
             throw new Exception('Passwords do not match');
         }
-        $check = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['email'=> $user['email']])-> query();
+        $checkEmail = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['email'=> $user['email']])-> query();
         if( !empty($check)){
             throw new Exception("This email already exist");
+        }
+        $checkUsername = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['username'=> $user['username']])-> query();
+        if( !empty($check)){
+            throw new Exception("This username already exist");
         }
         unset($user['repassword']);
         $salt = md5(time() + random_int(0, PHP_INT_MAX));
@@ -112,8 +116,8 @@ class user {
         $user['sub_token'] = $subtoken;
         $this-> db-> queryBuilder('insert')
         -> insert('users')
-        -> columns(['email','password','salt','reg_date','status','sub_token'])
-        -> values([$user['email'],$user['password'],$user['salt'],$user['reg_date'],$user['status'],$user['sub_token']])
+        -> columns(['email','username','password','salt','reg_date','status','sub_token'])
+        -> values([$user['email'],$user['username'],$user['password'],$user['salt'],$user['reg_date'],$user['status'],$user['sub_token']])
         -> query();
         header('location:/user/register');
         //$link = 'http://localhost/user/authorization?token='.$subtoken;
