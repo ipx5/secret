@@ -30,7 +30,7 @@ class Pgsql implements PgsqlBehavior {
     public function queryBuilder($type) {
         $lowerType = strtolower($type);
         if (!in_array($lowerType, $this -> listMethods)) {
-            throw new DbException(404, 'Invalid query type. Pgsql');
+            throw new DbException(200, 'Invalid query type. Pgsql');
         };
         $className = ucfirst($lowerType);
         if (!class_exists($className)) {

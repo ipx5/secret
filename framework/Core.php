@@ -28,11 +28,15 @@ class app {
 
     public function start($config) {
         autoloadRun();
+//        Logger::$PATH = dirname(__FILE__);
+//        $str = 'start_app';
+//        Logger::getLogger('start_app') -> log($str);
         $this->config = $config;
         $this-> acceptCookie = 1;
         $this-> request =  new Request;
         $this-> response =  new Response;
         $this-> user = new user;
+        Logger::getLogger('start_app') -> log('success start');
 
         try {
             $this-> request-> run();

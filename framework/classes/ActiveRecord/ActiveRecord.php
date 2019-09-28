@@ -4,7 +4,10 @@ class ActiveRecord {
     public static $config = false;
     protected static $db = false;
     protected static $tableName;
-    private function __construct() {}
+    private function __construct($tableName, $config) {
+        $this -> tableName = $tableName;
+        $this -> config = $config;
+    }
     private function __wakeup() {}
     private function __clone(){}
 
@@ -12,7 +15,7 @@ class ActiveRecord {
         self::$tableName = $tableName;
         self::$config = $config;
         self::$db = $connection;
-        return new self();
+        return new self($tableName, $config);
     }
 
     public function __call($name, $arguments) {

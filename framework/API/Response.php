@@ -128,8 +128,7 @@ class Response {
             $output = $this->content;
             // Headers
             echo $output;
-        }
-        if (!empty($this -> page)) {
+        } else if (!empty($this -> page)) {
             echo $this -> page;
         }
     }

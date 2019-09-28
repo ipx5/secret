@@ -31,7 +31,7 @@ return [
             'password' => 'HackerUwd2'
         ]
     ],
-    'memcashed' => [
+    'memcached' => [
         'host' => '127.0.0.1',
         'port' => 11211
     ]

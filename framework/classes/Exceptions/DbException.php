@@ -5,6 +5,9 @@ class dbException extends Exception {
     public $messageError;
     protected $httpMessage = [
         404=> 'Not Found',
+        406 => 'Not Acceptable',
+        501 => 'Not Implemented',
+        200 => 'OK',
     ];
 
     public function __construct(int $code = 0, string $message = "") {
@@ -16,6 +19,10 @@ class dbException extends Exception {
     public function sendHttpState() {
         header('HTTP/1.0 ' . $this->getCode() . ' ' . $this -> httpMessage[$this -> getCode()]);
 
+
         echo $this -> messageError;
+
+        app::getInstance() -> response -> setContent($this -> messageError);
+
     }
 }

@@ -35,10 +35,8 @@ class Router {
 
     private function complianceByMethod() {
         foreach ($this->router as $value) {
-            
             if (strtoupper($this->method) == $value->getMethod())
                 array_push($this->matchRouter, $value);
-
         }
     }
     private function complianceByPattern($pattern) {
