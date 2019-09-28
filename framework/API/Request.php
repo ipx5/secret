@@ -9,15 +9,15 @@ class request {
     public $action = '';
 
     public function __construct() {
-        $this -> request = $_REQUEST ?? [];
-        $this -> controller = $this -> request['controller'] ?? '';
-        $this -> action = $this -> request['action'] ?? '';
-        $this -> isForm = isset($this -> request['send']);
-        unset($this -> request['controller'], $this -> request['action'], $this->request['send']);
+        $this-> request = $_REQUEST ?? [];
+        $this-> controller = $this-> request['controller'] ?? '';
+        $this-> action = $this-> request['action'] ?? '';
+        $this-> isForm = isset($this-> request['send']);
+        unset($this-> request['controller'], $this -> request['action'], $this->request['send']);
     }
 
     public function run() {
-        $router = new Router($this -> getUrl(), $this -> getMethod());
+        $router = new Router($this-> getUrl(), $this-> getMethod());
         new Routes($router);
         $router -> run();
     }

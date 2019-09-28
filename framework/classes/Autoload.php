@@ -3,7 +3,7 @@ spl_autoload_register('autoload');
 
 function autoloadRun() {
     $basepath = get_include_path();
-    $basepath .= PATH_SEPARATOR . CLASSES .
+    $basepath .= PS . CLASSES .
     $activeRecord = PS . AR;
     $queryBulder = PS . QB;
     $mvc = PS . MVC;

@@ -15,9 +15,14 @@ class dbException extends Exception {
         $this -> codeError = $code;
         $this -> messageError = $message;
     }
-
+    //TODO
     public function sendHttpState() {
         header('HTTP/1.0 ' . $this->getCode() . ' ' . $this -> httpMessage[$this -> getCode()]);
+
+
+        echo $this -> messageError;
+
         app::getInstance() -> response -> setContent($this -> messageError);
+
     }
 }
