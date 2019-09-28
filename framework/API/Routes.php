@@ -2,7 +2,7 @@
 
 class Routes {
     public function __construct($router){
-        $router -> get('/', 'main@actionPage');
+        //$router -> get('/', 'main@actionPage');
         //$router->get('/posts', 'post@actionShow');
         //$router->get('/posts/:id', 'post@actionShow');
         // $router -> get('/user/register/', 'user@actionRegister');
@@ -34,15 +34,15 @@ class Routes {
         //UserMethod
         $router -> get('/user/info/:id', 'user@actionGetInfo');
         $router -> get('/user/likes/:id', 'user@actionGetLikes');
-        $router -> get('/user/following/:id' 'user@actionGetFollowing');
+        $router -> get('/user/following/:id', 'user@actionGetFollowing');
 
-        $router -> post('/user/follow/:id' 'user@actionFollow');
-        $router -> post('/user/unfollow/:id' 'user@actionUnfollow');
-        $router -> post('/user/like/:id' 'user@actionLike');
-        $router -> post('/user/unlike/:id' 'user@actionLike');
+        $router -> post('/user/follow/:id', 'user@actionFollow');
+        $router -> post('/user/unfollow/:id', 'user@actionUnfollow');
+        $router -> post('/user/like/:id', 'user@actionLike');
+        $router -> post('/user/unlike/:id', 'user@actionLike');
 
         //TaggedMethod
-        $router -> post('/tagged' 'tag@actionGetPostsByTag');
+        $router -> post('/tagged', 'tag@actionGetPostsByTag');
 
     }
 }

@@ -30,18 +30,19 @@ class app {
         autoloadRun();
         $this->config = $config;
         $this-> acceptCookie = 1;
-        $this -> request =  new Request;
-        $this -> response =  new Response;
+        $this-> request =  new Request;
+        $this-> response =  new Response;
         $this-> user = new user;
 
         try {
-            $this -> request -> run();
+            $this-> request-> run();
         } catch (HttpException $e) {
-            $e ->sendHttpState();
+            $e-> sendHttpState();
         } catch (DbException $e) {
-            $e ->sendHttpState();
+            //TODO
+            $e-> sendHttpState();
         } finally {
-            $this -> response -> render();
+            $this-> response-> render();
         }
     }
 

@@ -25,6 +25,7 @@ CREATE TABLE users (
 	token varchar (40) not null default '',
 	sub_token varchar (40) not null default '',
 	role_id integer not null default 0,
+	status integer not null default 0,
 	is_admin boolean not null default '0',
 	reg_date timestamp not null default NOW(),
 	last_login timestamp not null default NOW(),

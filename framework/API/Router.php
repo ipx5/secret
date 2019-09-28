@@ -54,9 +54,6 @@ class Router {
         $urlParams = parse_url($url);
         $url = $urlParams['path'];
         $output = [];
-        if (isset($urlParams['query'])) {
-            $queryUrl = parse_str($urlParams['query'], $output);
-        }
         preg_match_all('@:([\w]+)@', $pattern, $params, PREG_PATTERN_ORDER);
         $patternAsRegex = preg_replace_callback('@:([\w]+)@', [$this, 'convertPatternToRegex'], $pattern);
         if (substr($pattern, -1) === '/' ) {
@@ -93,7 +90,7 @@ class Router {
 
     public function run() {
         if (!is_array($this->router) || empty($this->router)) 
-            throw new Exception('Добавь роуты');
+            throw new Exception('Добавь руты');
         $this->complianceByMethod();
         $this->complianceByPattern($this->matchRouter);
         //debug($this->matchRouter);
