@@ -1,17 +1,30 @@
 # Как работать с Query builder
 ***
 
-В файле с модулем контроллера пишем:
+Работа с БД в моделях.
+Инициализация в папке model:
 ### $this -> db -> queryBuilder(...);
-Без указания типа запроса ничего не сработает
-Поэтому на месте троеточия нужно поставить на выбор:
+На месте троеточия необходимо указать тип запроса(регистронезависимо):
 ##### select, insert, delete, update
-***
 
-### select
-##### $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where(['id' => 5]) -> query();
-Если в where необходимо добавить несколько параметров(AND, OR), то запрос будет выглядить так:
-$this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where([['id' => 5], ['OR'], ['email' => 'test@gmail.com']]);
+
+
+### Select
+ $this -> db -> queryBuilder('select') -> select('*') -> from('users') -> where(['id' => 5]) -> query();
+
+ $this -> db -> queryBuilder('select') -> select('id, mail, password') -> from('users') -> where(['id' => 5, 'AND', 'email' = 'test@test.ru' ]) -> query();
+
+ $this -> db -> queryBuilder('select') -> select(['id', 'mail', 'password']) -> from('users') -> where(['id' => 5, 'AND', 'email' = 'test@test.ru' ]) -> query();
+
+ $this -> db -> queryBuilder('select') -> select([['id'], 'mail', 'password']) -> from('users') -> where(['id' => 5, 'OR', 'id' = '35' ]) -> query();
+
+ $this -> db -> select(['p.id', 'p.email']) -> 
+ from(['roles_privileges' => 'rp']) -> join('JOIN', ['privileges' => 'p'] , ['p.id' => 'rp.privilege_id']) 
+ -> where(['rp.role_id' => 1]) -> query();
+
+   
+         $this -> db -> queryBuilder('select') -> select(['a.id' => 'id_a','a.fruit' => 'fruit_a']) -> from(['basket_a' => 'a']) ->
+        join('FULL', ['basket_b' => 'b'], ['!', 'a.fruit' => 'b.fruit', 'OR' , 'a.bread' => 'b.bread']) -> where(['a.id' => ':b.id']) -> query();
 ***
 
 ### update

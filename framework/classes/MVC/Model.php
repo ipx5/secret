@@ -10,9 +10,9 @@ abstract class Model {
         if ($this -> db === false) {
             $this -> db = new Pgsql(app::getInstance()->db['local']);
         }
-        if (($this -> memcashedObj === false) && array_key_exists('memcashed',app::getInstance()-> config)) {
+        if (($this -> memcashedObj === false) && array_key_exists('memcached',app::getInstance()-> config)) {
             $this -> memcashedObj = new Memcached();
-            $this -> memcashedObj -> addServer(app::getInstance()->memcashed['host'],app::getInstance()->memcashed['port']);
+            $this -> memcashedObj -> addServer(app::getInstance()->memcached['host'],app::getInstance()->memcached['port']);
         }
     }
 

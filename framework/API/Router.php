@@ -35,10 +35,8 @@ class Router {
 
     private function complianceByMethod() {
         foreach ($this->router as $value) {
-            
             if (strtoupper($this->method) == $value->getMethod())
                 array_push($this->matchRouter, $value);
-
         }
     }
     private function complianceByPattern($pattern) {
@@ -54,9 +52,6 @@ class Router {
         $urlParams = parse_url($url);
         $url = $urlParams['path'];
         $output = [];
-        if (isset($urlParams['query'])) {
-            $queryUrl = parse_str($urlParams['query'], $output);
-        }
         preg_match_all('@:([\w]+)@', $pattern, $params, PREG_PATTERN_ORDER);
         $patternAsRegex = preg_replace_callback('@:([\w]+)@', [$this, 'convertPatternToRegex'], $pattern);
         if (substr($pattern, -1) === '/' ) {
