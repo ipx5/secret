@@ -36,7 +36,7 @@ class app {
         $this-> request =  new Request;
         $this-> response =  new Response;
         $this-> user = new user;
-        Logger::getLogger('start_app') -> log('success start');
+//        Logger::getLogger('start_app') -> log('success start');
 
         try {
             $this-> request-> run();
