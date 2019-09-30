@@ -1,4 +1,4 @@
-import {WFMComponent, router} from "framework";
+import {WFMComponent, router, http} from "framework";
 
 class HomePageComponent extends WFMComponent {
     constructor(config) {
@@ -6,7 +6,8 @@ class HomePageComponent extends WFMComponent {
 
         this.data = {
             title: 'Главная страница',
-            link: 'Другая страница'
+            link: 'Другая страница',
+            ip: 'loading'
         }
     }
 
@@ -14,6 +15,14 @@ class HomePageComponent extends WFMComponent {
         return {
             'click .js-link': 'goToTabs'
         }
+    }
+
+    afterInit() {
+        http.get('https://api.ipify.org?format=json')
+            .then(({ip}) => {
+                this.data.ip = ip;
+                this.render()
+            })
     }
 
     goToTabs(event) {
@@ -29,8 +38,7 @@ export const homePageComponent = new HomePageComponent({
       <div class="card blue-grey darken-1">
         <div class="card-content white-text">
           <span class="card-title">{{title}}</span>
-          <p>I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively.</p>
+          <p>{{ip}}</p>
         </div>
         <div class="card-action">
           <a href="#not-exiting-path" class="js-link">{{ link }}</a>
