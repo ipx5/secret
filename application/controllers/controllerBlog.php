@@ -46,11 +46,24 @@ class controllerBlog extends Controller {
     public function actionGetFollowing($params){
         $model = $this-> getModel('blog');
         if (!empty($params['id'])) {
-            $likes = $model -> getFollowing($params['id']);
+            $following = $model -> getFollowing($params['id']);
         } else{
             //todo
         }
-        $data = ['data' => $likes];
+        $data = ['data' => $following];
+
+        $this -> responseSendStatus(200);
+        $this -> responseSetContent($data);
+    }
+
+    public function actionGetFollowers($params){
+        $model = $this-> getModel('blog');
+        if (!empty($params['id'])) {
+            $followers = $model -> getFollowers($params['id']);
+        } else{
+            //todo
+        }
+        $data = ['data' => $followers];
 
         $this -> responseSendStatus(200);
         $this -> responseSetContent($data);

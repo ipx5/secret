@@ -24,9 +24,9 @@ return [
     ],
     'db' => [
         'local' => [
-            'host' => '194.87.102.4',
+            'host' => 'localhost',
             'port' => 5432,
-            'dbname' => 'secret',
+            'dbname' => 'hackeru',
             'user' => 'hackeru',
             'password' => 'HackerUwd2'
         ]

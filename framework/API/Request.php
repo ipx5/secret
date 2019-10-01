@@ -29,4 +29,8 @@ class request {
     public function getMethod() {
         return strtoupper($_SERVER['REQUEST_METHOD']);
     }
+
+    public function getContent(){
+        return json_decode(file_get_contents("php://input"));
+    }
 }
