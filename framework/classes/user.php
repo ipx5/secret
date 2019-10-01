@@ -94,34 +94,35 @@ class user {
         //TODO отправить ссылку на емайл http://localhost/user/restore/?token=$subtoken
     }
 
-    public function registration($user){
-        if ($user['password'] != $user['repassword']){
-            throw new Exception('Passwords do not match');
-        }
-        $checkEmail = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['email'=> $user['email']])-> query();
-        if( !empty($check)){
-            throw new Exception("This email already exist");
-        }
-        $checkUsername = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['username'=> $user['username']])-> query();
-        if( !empty($check)){
-            throw new Exception("This username already exist");
-        }
-        unset($user['repassword']);
-        $salt = md5(time() + random_int(0, PHP_INT_MAX));
-        $user['password'] = sha1($user['password'].$salt);
-        $user['salt'] = $salt;
-        $user['reg_date'] = time();
-        $user['status'] = 1;
-        $subtoken = sha1(time()+random_int(0, PHP_INT_MAX));
-        $user['sub_token'] = $subtoken;
-        $this-> db-> queryBuilder('insert')
-        -> insert('users')
-        -> columns(['email','username','password','salt','reg_date','status','sub_token'])
-        -> values([$user['email'],$user['username'],$user['password'],$user['salt'],$user['reg_date'],$user['status'],$user['sub_token']])
-        -> query();
-        header('location:/user/register');
-        //$link = 'http://localhost/user/authorization?token='.$subtoken;
-    }
+    // public function registration($user){
+
+    //     if ($user['password'] != $user['repassword']){
+    //         throw new Exception('Passwords do not match');
+    //     }
+    //     $checkEmail = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['email'=> $user['email']])-> query();
+    //     if( !empty($check)){
+    //         throw new Exception("This email already exist");
+    //     }
+    //     $checkUsername = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['username'=> $user['username']])-> query();
+    //     if( !empty($check)){
+    //         throw new Exception("This username already exist");
+    //     }
+    //     unset($user['repassword']);
+    //     $salt = md5(time() + random_int(0, PHP_INT_MAX));
+    //     $user['password'] = sha1($user['password'].$salt);
+    //     $user['salt'] = $salt;
+    //     $user['reg_date'] = time();
+    //     $user['status'] = 1;
+    //     $subtoken = sha1(time()+random_int(0, PHP_INT_MAX));
+    //     $user['sub_token'] = $subtoken;
+    //     $this-> db-> queryBuilder('insert')
+    //     -> insert('users')
+    //     -> columns(['email','username','password','salt','reg_date','status','sub_token'])
+    //     -> values([$user['email'],$user['username'],$user['password'],$user['salt'],$user['reg_date'],$user['status'],$user['sub_token']])
+    //     -> query();
+    //     header('location:/user/register');
+    //     //$link = 'http://localhost/user/authorization?token='.$subtoken;
+    // }
 
     public function authenticate($user){
         $checkUser = $this-> db-> queryBuilder('select')-> select('*')-> from('users')-> where(['email'=> $user['email']])-> query();
