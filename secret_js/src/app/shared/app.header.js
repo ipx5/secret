@@ -14,6 +14,7 @@ export const appHeader = new AppHeader({
       <a href="#" class="brand-logo">Secret</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="#">Главная</a></li>
+        <li><a href="#si">Войти</a></li>
         <li><a href="#tabs">Табы</a></li>
         <li><a href="#directive">Директивы</a></li>
         <li><a href="#pipe">Пайпы</a></li>
