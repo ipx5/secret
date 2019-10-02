@@ -33,8 +33,10 @@ class HomePageComponent extends WFMComponent {
 
 export const homePageComponent = new HomePageComponent({
     selector: 'app-home-page',
-    template: `<div class="row">
-    <div class="col s12 m6 home__block">
+    template: `
+    <p class="flow-text">Home</p>
+    <div class="row">
+        <div class="col  home_block  offset-s5">
       <div class="card blue-grey darken-1">
         <div class="card-content white-text">
           <span class="card-title">{{title}}</span>
@@ -45,8 +47,10 @@ export const homePageComponent = new HomePageComponent({
         </div>
       </div>
     </div>
-  </div>`,
+  </div>
+
+  `,
     styles: `
-        .home__block { margin-top: 40px }
+        .home_block { margin-top: 40px }
     `
 });

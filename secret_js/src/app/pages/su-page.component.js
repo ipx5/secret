@@ -28,6 +28,7 @@ class SuPageComponent extends WFMComponent {
 export const suPageComponent = new SuPageComponent({
     selector: 'app-su-page',
     template: `
+    <p class="flow-text">Sing up</p>
     <main>
     <center>
     <div class="container">

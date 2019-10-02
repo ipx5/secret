@@ -13,11 +13,12 @@ export const appHeader = new AppHeader({
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Secret</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="#">Главная</a></li>
-        <li><a href="#si">Войти</a></li>
-        <li><a href="#tabs">Табы</a></li>
-        <li><a href="#directive">Директивы</a></li>
-        <li><a href="#pipe">Пайпы</a></li>
+      <li><a title="Explore" href="#" class="ngl btn-floating btn-large waves-effect waves-light black scale-transition"><i class="material-icons">explore</i></a></li>
+      <li><a title="Home" href="#home" class="ngl btn-floating btn-large waves-effect waves-light black"><i class="material-icons">home</i></a></li>
+        <li><a title="Create post" href="#create_post" class="ngl btn-floating btn-large waves-effect waves-light black"><i class="material-icons">create</i></a></li>
+
+        <li><a title="Login" href="#si" class="ngl btn-floating btn-large waves-effect waves-light black"><i class="material-icons">input</i></a></li>
+        <li><a title="User settings" href="#tabs" class="ngl btn-floating btn-large waves-effect waves-light black"><i class="material-icons">perm_identity</i></a><li>
       </ul>
     </div>
   </nav>
