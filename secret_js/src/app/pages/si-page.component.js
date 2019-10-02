@@ -28,6 +28,7 @@ class SiPageComponent extends WFMComponent {
 export const siPageComponent = new SiPageComponent({
     selector: 'app-si-page',
     template: `
+    <p class="flow-text" >Sing in</p>
     <main>
     <center>
       <div class="container">
