@@ -34,8 +34,8 @@ class Routes {
         //UserMethod
         
         $router -> get('/user/info/:id', 'user@actionGetInfo');
-        $router -> get('/user/likes/:id', 'user@actionGetLikes');
-        $router -> get('/user/following/:id', 'user@actionGetFollowing');
+        //$router -> get('/user/likes/:id', 'user@actionGetLikes');
+        //$router -> get('/user/following/:id', 'user@actionGetFollowing');
 
         $router -> post('/user', 'user@actionCreateUser');
         $router -> post('/user/follow/:id', 'user@actionFollow');
@@ -44,7 +44,7 @@ class Routes {
         $router -> post('/user/unlike/:id', 'user@actionLike');
 
         //TaggedMethod
-        $router -> post('/tagged', 'tag@actionGetPostsByTag');
+        //$router -> post('/tagged', 'tag@actionGetPostsByTag');
 
     }
 }
