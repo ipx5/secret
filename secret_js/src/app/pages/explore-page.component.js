@@ -41,9 +41,90 @@ export const explorePageComponent = new ExplorePageComponent({
         <span class="white-text">I am a very simple card. I am good at containing small bits of information.
         I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
         </span>
-        <a title="comments" class="ngl btn-floating btn-small waves-effect waves-light scale-transition"><i class="material-icons">forum</i></a>
+        <div class="row">
+        <div class="col offset-s8">
+        <a title="comments" class=" ngl btn-floating btn-small waves-effect waves-light scale-transition"><i class="material-icons">forum</i></a>
+        </div>
+        <div >
         <a title="like" class="ngl btn-floating btn-small waves-effect waves-light  scale-transition pulse"><i class="material-icons ">favorite_border</i></a>
-      </div>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="col s12 m5">
+      <div class="card-panel teal">
+        <span class="white-text">I am a very simple card. I am good at containing small bits of information.
+        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+        </span>
+        <div class="row">
+        <div class="col offset-s8">
+        <a title="comments" class=" ngl btn-floating btn-small waves-effect waves-light scale-transition"><i class="material-icons">forum</i></a>
+        </div>
+        <div>
+        <a title="like" class="ngl btn-floating btn-small waves-effect waves-light  scale-transition pulse"><i class="material-icons ">favorite_border</i></a>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="col s12 m5">
+      <div class="card-panel teal">
+        <span class="white-text">I am a very simple card. I am good at containing small bits of information.
+        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+        </span>
+        <div class="row">
+        <div class="col offset-s8">
+        <a title="comments" class=" ngl btn-floating btn-small waves-effect waves-light scale-transition"><i class="material-icons">forum</i></a>
+        </div>
+        <div>
+        <a title="like" class="ngl btn-floating btn-small waves-effect waves-light  scale-transition pulse"><i class="material-icons ">favorite_border</i></a>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="col s12 m5">
+      <div class="card-panel teal">
+        <span class="white-text">I am a very simple card. I am good at containing small bits of information.
+        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+        </span>
+        <div class="row">
+        <div class="col offset-s8">
+        <a title="comments" class=" ngl btn-floating btn-small waves-effect waves-light scale-transition"><i class="material-icons">forum</i></a>
+        </div>
+        <div>
+        <a title="like" class="ngl btn-floating btn-small waves-effect waves-light  scale-transition pulse"><i class="material-icons ">favorite_border</i></a>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="col s12 m5">
+      <div class="card-panel teal">
+        <span class="white-text">I am a very simple card. I am good at containing small bits of information.
+        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+        </span>
+        <div class="row">
+        <div class="col offset-s8">
+        <a title="comments" class=" ngl btn-floating btn-small waves-effect waves-light scale-transition"><i class="material-icons">forum</i></a>
+        </div>
+        <div>
+        <a title="like" class="ngl btn-floating btn-small waves-effect waves-light  scale-transition pulse"><i class="material-icons ">favorite_border</i></a>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="col s12 m5">
+      <div class="card-panel teal">
+        <span class="white-text">I am a very simple card. I am good at containing small bits of information.
+        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+        </span>
+        <div class="row">
+        <div class="col offset-s8">
+        <a title="comments" class=" ngl btn-floating btn-small waves-effect waves-light scale-transition"><i class="material-icons">forum</i></a>
+        </div>
+        <div>
+        <a title="like" class="ngl btn-floating btn-small waves-effect waves-light  scale-transition pulse"><i class="material-icons ">favorite_border</i></a>
+        </div>
+        </div>
+        </div>
     </div>
   </div>
     `

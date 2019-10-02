@@ -31,6 +31,7 @@ export const cpPageComponent = new CpPageComponent({
     <p class="flow-text">Post</p>
     <main>
       <center>
+      
       <div class="row">
       <form class="col s12">
         <div class="row">
@@ -40,17 +41,18 @@ export const cpPageComponent = new CpPageComponent({
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12">
+          <div class="input-field col s12 ">
             <textarea id="textarea2" class="materialize-textarea"></textarea>
             <label for="textarea2">Text</label>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+            </button>
           </div>
         </div>
       </form>
     </div>
     
-    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <i class="material-icons right">send</i>
-  </button>
+
       </center>
     </main>
         `
