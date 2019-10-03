@@ -9,7 +9,7 @@ class Http {
 }
 
 function sendRequest(method, url, data = {}) {
-    return fetch(url, {method}).then(response => response.json())
+    return fetch(url, {method, data}).then(response => response.json())
 }
 
 export const http = new Http();
