@@ -14,6 +14,7 @@ function sendGetRequest(method, url) {
 }
 
 function sendRequest(method, url, data = {}) {
+
     return fetch(url, {
         method,
         mode: 'no-cors',
@@ -25,6 +26,7 @@ function sendRequest(method, url, data = {}) {
     })
     // .then(response => console.log('Успех:', response))
     // .catch(error => console.error('Ошибка:', error));
+
 }
 
 export const http = new Http();
