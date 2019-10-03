@@ -53,10 +53,14 @@ abstract class Controller {
     }
 
     public function responseSendStatus($status) {
-        app::getInstance()->response->sendStatus($status);
+        app::getInstance()-> response->sendStatus($status);
     }
 
     public function responeSendHtml($page) {
         app::getInstance() -> response -> setHtml($this -> renderLayout($page));
+    }
+
+    public function requestGetContent(){
+        return app::getInstance() -> request-> getContent();
     }
 }

@@ -1,7 +1,7 @@
-import {router} from "./routing/router";
+
 import {_} from "../tools/util";
-import { renderComponent } from "./component/render-component";
-import {RoutingModule} from "./routing/routing.module";
+
+
 import { initComponents } from "./component/init-components";
 import { initRouting } from "./routing/init-routing";
 import {initDirectives} from "./directives/init-directives";

@@ -1,7 +1,12 @@
 <?php
 
 //spl_autoload_register('app::autoload');
-
+function debug ($str){
+    echo '<pre>';
+    var_dump($str);
+    echo '</pre>';
+    exit;
+}
 class app {
     // Singleton
     public $config = false;
@@ -56,10 +61,5 @@ class app {
         echo "</pre>";
     }
 
-    function debug ($str){
-        echo '<pre>';
-        var_dump($str);
-        echo '</pre>';
-        exit;
-    }
+
 }

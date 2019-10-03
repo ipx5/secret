@@ -1,6 +1,9 @@
 <?php
 
 class controllerUser extends Controller{
+    public function __construct(){
+        parent::__construct();
+    }
     public $templateDir = 'user';
 
     public function actionUsers(){
@@ -36,7 +39,7 @@ class controllerUser extends Controller{
     public function actionRegister(){
         $usersModel= $this-> getModel('users');
         $db = new Pgsql( app::getInstance()-> db['local']);
-        $users = $usersModel -> userRefister();
+        $users = $usersModel -> userRegister();
         foreach ($users as $user) {
             switch($user['status']){
                 case 1:
@@ -49,20 +52,21 @@ class controllerUser extends Controller{
         }
     }
 
-    public function actionRegistration(){
+    // public function actionRegistration(){
+        
+    //     $data = $this -> getRequest()-> request;
 
-        $data = $this -> getRequest()-> request;
-        if( $this -> getRequest() -> isForm ){
-            try{
-                $this -> getUser()-> registration($this -> getRequest()-> request);
-            } catch (Exception $e){
-                $data['error'] = $e-> getMessage();
-            }
-        }
-        $this -> responeSendHtml([
-            'lo_content' => $this-> renderTemplate('registration', $data)
-        ]);
-    }
+    //     if( $this -> getRequest() -> isForm ){ 
+    //         try{
+    //             $this -> getUser()-> registration($this -> getRequest()-> request);
+    //         } catch (Exception $e){
+    //             $data['error'] = $e-> getMessage();
+    //         }
+    //     }
+    //     $this -> responeSendHtml([
+    //         'lo_content' => $this-> renderTemplate('registration', $data)
+    //     ]);
+    // }
 
     public function actionAuthorization(){
         $data = $this -> getRequest() -> request;
@@ -120,5 +124,55 @@ class controllerUser extends Controller{
     public function actionLogout(){
         $this -> getUser() -> logout();
         $this -> responseSetHeader('location:/user/authorization');
+    }
+
+    public function actionCreateUser(){
+        $data = $this->requestGetContent();
+        $this-> getModel('users')-> createUser($data);
+        $this -> responseSendStatus(200);
+        $this-> responseSetContent(array("message" => "User was created."));
+    }
+
+    public function actionGetInfo($params){
+        $model = $this-> getModel('users');
+        if (!empty($params['id'])) {
+            $info = $model -> getInfo($params['id']);
+        } else {
+            $info= $model-> usersList();
+        }
+        $data = ['data' => $info];
+        $this -> responseSendStatus(200);
+        $this -> responseSetContent($data);
+    }
+    
+    public function actionFollow($params){
+        if (!empty($params)) {
+            $this-> getModel('users')-> startFollow($params);
+            $this -> responseSendStatus(200);
+            $this-> responseSetContent(array("message" => "User is following the blog."));
+        }
+    }
+
+    public function actionUnfollow($params){
+        if (!empty($params)) {
+            $this-> getModel('users')-> stopFollow($params);
+            $this -> responseSendStatus(200);
+            $this-> responseSetContent(array("message" => "User does not follow the blog"));
+        }
+    }
+
+    public function actionLike($params){
+        if (!empty($params)) {
+            $this-> getModel('users')-> startLike($params);
+            $this -> responseSendStatus(200);
+            $this-> responseSetContent(array("message" => "User is like the post"));
+        }
+    }
+    public function actionUnlike($params){
+        if (!empty($params)) {
+            $this-> getModel('users')-> stopLike($params);
+            $this -> responseSendStatus(200);
+            $this-> responseSetContent(array("message" => "User does not like the post"));
+        }
     }
 }

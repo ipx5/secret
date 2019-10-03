@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 class Routes {
     public function __construct($router){
@@ -9,8 +9,8 @@ class Routes {
         // $router -> get('/user/authorization/', 'user@actionAuthorization');
         // $router -> get('/user/users/', 'user@actionUsers');
         // $router -> get('/error/notfound', 'error@actionNotfound');
-        // $router -> get('/user/registration', 'user@actionRegistration');
-        // $router -> post('/user/registration', 'user@actionRegistration');
+        
+        //$router -> post('/user/registration', 'user@actionRegistration');
         // $router -> get('/user/editUser', 'user@actionEditUser');
         // $router -> get('/user/reset','user@actionReset');
         // $router -> get('/user/logout','user@actionLogout');
@@ -32,17 +32,19 @@ class Routes {
         $router -> post('/post/delete/:id', 'blog@actionDeletePost');
 
         //UserMethod
+        
         $router -> get('/user/info/:id', 'user@actionGetInfo');
-        $router -> get('/user/likes/:id', 'user@actionGetLikes');
-        $router -> get('/user/following/:id', 'user@actionGetFollowing');
+        //$router -> get('/user/likes/:id', 'user@actionGetLikes');
+        //$router -> get('/user/following/:id', 'user@actionGetFollowing');
 
+        $router -> post('/user', 'user@actionCreateUser');
         $router -> post('/user/follow/:id', 'user@actionFollow');
         $router -> post('/user/unfollow/:id', 'user@actionUnfollow');
         $router -> post('/user/like/:id', 'user@actionLike');
         $router -> post('/user/unlike/:id', 'user@actionLike');
 
         //TaggedMethod
-        $router -> post('/tagged', 'tag@actionGetPostsByTag');
+        //$router -> post('/tagged', 'tag@actionGetPostsByTag');
 
     }
 }
