@@ -1,28 +1,33 @@
-import {WFMComponent, $} from "framework";
+import {WFMComponent, $, http} from "framework";
 
 class SuPageComponent extends WFMComponent {
     constructor(config) {
         super(config);
 
-        // this.data ={
-        //   createuser: 'Зарегистрироваться',
-        // }
+        this.data ={
+          username: '',
+          email: '',
+          password: '',
+          repassword:''
+        }
+    }
+    
+    events() {
+        return {
+            'click .btn': 'onClick',
+
+        }
     }
 
-    // events() {
-    //     return {
-    //         'click .collapsible': 'onTabClick'
-    //     }
-    //}
+    onClick() {
+      this.data.username= document.forms["reg-form"].elements["username"].value
+      this.data.email= document.forms["reg-form"].elements["email"].value
+      this.data.password= document.forms["reg-form"].elements["password"].value
+      this.data.repassword= document.forms["reg-form"].elements["repassword"].value
+      http.post('http://localhost/user',this.data)
+      document.location.href="#si"
+    }
 
-    // onTabClick({target}) {
-    //     let $target = $(target);
-    //     if (!$target.hasClass('collapsible-header')) {
-    //         return
-    //     }
-    //     this.el.findAll('.js-tab').forEach(e => e.removeClass('active'));
-    //     $target.parent().addClass('active');
-    // }
 }
 
 export const suPageComponent = new SuPageComponent({
@@ -35,25 +40,30 @@ export const suPageComponent = new SuPageComponent({
 <div class="row">
     <form class="col s12" id="reg-form">
       <div class="row">
+      <div class=" col s0">
+      <i class="material-icons">person_outline</i>
+      </div>
         <div class="input-field col s12">
-          <input id="username" type="text" class="validate" required>
-          <label for="username">Имя пользователя</label>
+          <input id="username" type="text" class="validate" required >
         </div>
       </div>
       <div class="row">
+      <div class=" col s0">
+      <i class="material-icons">email</i>
+      </div>
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate" required>
-          <label for="email">Email</label>
+          <input id="email" type="email" class="validate" required >
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s6">
-          <input id="password" type="password" class="validate" minlength="6" required>
-          <label for="password">Пароль</label>
+      <div class=" col s0">
+      <i class="material-icons">vpn_key</i>
+      </div>
+        <div class="input-field col s5">
+          <input id="password" type="password" class="validate" minlength="4" required >
         </div>
-        <div class="input-field col s6">
-        <input id="repassword" type="password" class="validate" minlength="6" required>
-        <label for="repassword">Повторите пароль</label>
+        <div class="input-field col s5">
+        <input id="repassword" type="password" class="validate" minlength="4" required >
       </div>
       </div>
         <div class="input-field col s12">

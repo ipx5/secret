@@ -4,11 +4,11 @@ class ExplorePageComponent extends WFMComponent {
     constructor(config) {
         super(config);
 
-    //     this.data = {
-    //         title: 'Главная страница',
-    //         link: 'Другая страница',
-    //         ip: 'loading'
-    //     }
+        this.data = {
+            title: '',
+            text: ' ',
+
+        }
     }
 
     // events() {
@@ -17,13 +17,17 @@ class ExplorePageComponent extends WFMComponent {
     //     }
     // }
 
-    // afterInit() {
-    //     http.get('https://api.ipify.org?format=json')
-    //         .then(({ip}) => {
-    //             this.data.ip = ip;
-    //             this.render()
-    //         })
-    // }
+    afterInit() {
+        http.get('http://localhost/posts/')
+            .then(({title}) => {
+                this.data.title = title;
+                this.render()
+            })
+            .then(({data}) => {
+              this.data.text = text;
+              this.render()
+          })
+    }
 
     // goToTabs(event) {
     //     event.preventDefault();
@@ -38,8 +42,7 @@ export const explorePageComponent = new ExplorePageComponent({
     <div class="row">
     <div class="col s12 m5">
       <div class="card-panel teal">
-        <span class="white-text">I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+        <span class="white-text">{{ title }} {{ data }}
         </span>
         <div class="row">
         <div class="col offset-s8">
@@ -127,5 +130,14 @@ export const explorePageComponent = new ExplorePageComponent({
         </div>
     </div>
   </div>
+  <ul class="pagination">
+  <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+  <li class="active"><a href="#!">1</a></li>
+  <li class="waves-effect"><a href="#!">2</a></li>
+  <li class="waves-effect"><a href="#!">3</a></li>
+  <li class="waves-effect"><a href="#!">4</a></li>
+  <li class="waves-effect"><a href="#!">5</a></li>
+  <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+</ul>
     `
 });
