@@ -6,6 +6,7 @@ class Http {
     post(url, data) {
         return sendRequest('POST', url, data);
     }
+    // put()
 }
 
 function sendGetRequest(method, url) {
@@ -26,7 +27,6 @@ function sendRequest(method, url, data = {}) {
     })
     // .then(response => console.log('Успех:', response))
     // .catch(error => console.error('Ошибка:', error));
-
 }
 
 export const http = new Http();
