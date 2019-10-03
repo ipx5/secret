@@ -29,29 +29,150 @@ export const tabsPagePageComponent = new TabsPagePageComponent({
             <ul class="collapsible popout">
               <li class="js-tab">
                 <div class="collapsible-header">
-                  <i class="material-icons">filter_drama</i>First</div>
-                <div class="collapsible-body" style="">
-                  <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat.</span>
+                  <i class="material-icons">person_outline</i>Учетная запись</div>
+                <div class="collapsible-body" >
+                <form action="#">
+                <p>
+                <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox">
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+              <div class="switch">
+              <label>
+                Off
+                <input type="checkbox">
+                <span class="lever"></span>
+                On
+              </label>
+            </div>
+                  <label>
+                    <input type="checkbox" />
+                    <span>Red</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" checked="checked" />
+                    <span>Yellow</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" class="filled-in" checked="checked" />
+                    <span>Filled in</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input id="indeterminate-checkbox" type="checkbox" />
+                    <span>Indeterminate Style</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" checked="checked" disabled="disabled" />
+                    <span>Green</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" disabled="disabled" />
+                    <span>Brown</span>
+                  </label>
+                </p>
+              </form>
                 </div>
               </li>
               <li class="js-tab">
                 <div class="collapsible-header">
-                  <i class="material-icons">place</i>Second</div>
-                <div class="collapsible-body" style="">
-                  <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat.</span>
+                  <i class="material-icons">home</i>Блог</div>
+                <div class="collapsible-body" >
+                <form action="#">
+                <p>
+                  <label>
+                    <input type="checkbox" />
+                    <span>Red</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" checked="checked" />
+                    <span>Yellow</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" class="filled-in" checked="checked" />
+                    <span>Filled in</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input id="indeterminate-checkbox" type="checkbox" />
+                    <span>Indeterminate Style</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" checked="checked" disabled="disabled" />
+                    <span>Green</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" disabled="disabled" />
+                    <span>Brown</span>
+                  </label>
+                </p>
+              </form>
                 </div>
               </li>
               <li class="active js-tab">
                 <div class="collapsible-header">
-                  <i class="material-icons">whatshot</i>Third</div>
+                  <i class="material-icons">settings</i>Настройки</div>
                 <div class="collapsible-body">
-                  <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat.</span>
+                <form action="#">
+                <p>
+                  <label>
+                    <input type="checkbox" />
+                    <span>Red</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" checked="checked" />
+                    <span>Yellow</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" class="filled-in" checked="checked" />
+                    <span>Filled in</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input id="indeterminate-checkbox" type="checkbox" />
+                    <span>Indeterminate Style</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" checked="checked" disabled="disabled" />
+                    <span>Green</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" disabled="disabled" />
+                    <span>Brown</span>
+                  </label>
+                </p>
+              </form>
                 </div>
               </li>
             </ul>
