@@ -7,6 +7,8 @@ abstract class Model {
     protected $memcashe = false;
     protected $memcashedObj = false;
     public function __construct() {
+
+
         if ($this -> db === false) {
             $this -> db = new Pgsql(app::getInstance()->db['local']);
         }

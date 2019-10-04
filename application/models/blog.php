@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Blog extends Model {
 
@@ -34,6 +34,30 @@ class Blog extends Model {
         -> where(['bu.is_follower' => true, 'AND', 'bu.blog_id' => $id])-> query();
     }
     
+    public function postsList(){
+        
+        return $this-> db -> queryBuilder('select')-> select('*')-> from('post')-> query();
+    }
+
+    public function getPosts($id){
+        return $this-> db -> queryBuilder('select')-> select('*')-> from('post')-> where(['blog_id'=> $id])-> query();
+    }
+    public function createPost($data, $id){
+        $this-> db-> queryBuilder('insert')
+        -> insert('post')
+        -> columns(['title','data','blog_id'])
+        -> values([$data->title,$data->data, $id])
+        -> query();
+        }
+
+    public function undatePost($data, $id){
+        $this-> db-> queryBuilder('update')-> table('post')-> set([['title'=> $data->title],['data'=> $data->data]] )-> where(['id'=> $id])-> query();
+    }
+
+    public function deletePost($id){
+        $this-> db-> queryBuilder('delete') -> from('post') -> where(['id'=> $id])-> query();
+    }
+
 }
 
 

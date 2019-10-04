@@ -25,17 +25,19 @@ class Routes {
         $router -> get('/likes/:id', 'blog@actionGetLikes');
         $router -> get('/following/:id', 'blog@actionGetFollowing');
         $router -> get('/followers/:id', 'blog@actionGetFollowers');
-        $router -> get('/posts/:id', 'blog@actionGetPosts');
+        $router -> get('/posts/:id', 'blog@actionGetPostsId');
+        $router -> get('/posts', 'blog@actionGetPosts');
 
         $router -> post('/post/:id', 'blog@actionPost');
+        
         $router -> post('/post/edit/:id', 'blog@actionEditPost');
         $router -> post('/post/delete/:id', 'blog@actionDeletePost');
 
         //UserMethod
         
         $router -> get('/user/info/:id', 'user@actionGetInfo');
-        $router -> get('/user/likes/:id', 'user@actionGetLikes');
-        $router -> get('/user/following/:id', 'user@actionGetFollowing');
+        //$router -> get('/user/likes/:id', 'user@actionGetLikes');
+        //$router -> get('/user/following/:id', 'user@actionGetFollowing');
 
         $router -> post('/user', 'user@actionCreateUser');
         $router -> post('/user/follow/:id', 'user@actionFollow');
@@ -44,7 +46,7 @@ class Routes {
         $router -> post('/user/unlike/:id', 'user@actionLike');
 
         //TaggedMethod
-        $router -> post('/tagged', 'tag@actionGetPostsByTag');
+        //$router -> post('/tagged', 'tag@actionGetPostsByTag');
 
     }
 }

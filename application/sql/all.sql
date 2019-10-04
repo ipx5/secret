@@ -87,3 +87,12 @@ CREATE TABLE blog_users (
 	FOREIGN KEY (blog_id) REFERENCES blog (id),
 	FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
+CREATE TABLE post_users (
+	post_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+	is_owner boolean not null default '0',
+	is_like boolean not null default '0',
+    FOREIGN KEY (post_id) REFERENCES post (id),
+	FOREIGN KEY (user_id) REFERENCES users (id)
+);

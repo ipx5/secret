@@ -102,7 +102,7 @@ class Response {
     }
 
     public function setContent($content) {
-        $this->content .= json_encode($content);
+        $this->content = json_encode($content);
     }
 
     public function getContent() {

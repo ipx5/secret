@@ -133,4 +133,47 @@ class controllerUser extends Controller{
         $this-> responseSetContent(array("message" => "User was created."));
     }
     
+
+    public function actionGetInfo($params){
+        $model = $this-> getModel('users');
+        if (!empty($params['id'])) {
+            $info = $model -> getInfo($params['id']);
+        } else {
+            $info= $model-> usersList();
+        }
+        $data = ['data' => $info];
+        $this -> responseSendStatus(200);
+        $this -> responseSetContent($data);
+    }
+    
+    public function actionFollow($params){
+        if (!empty($params)) {
+            $this-> getModel('users')-> startFollow($params);
+            $this -> responseSendStatus(200);
+            $this-> responseSetContent(array("message" => "User is following the blog."));
+        }
+    }
+
+    public function actionUnfollow($params){
+        if (!empty($params)) {
+            $this-> getModel('users')-> stopFollow($params);
+            $this -> responseSendStatus(200);
+            $this-> responseSetContent(array("message" => "User does not follow the blog"));
+        }
+    }
+
+    public function actionLike($params){
+        if (!empty($params)) {
+            $this-> getModel('users')-> startLike($params);
+            $this -> responseSendStatus(200);
+            $this-> responseSetContent(array("message" => "User is like the post"));
+        }
+    }
+    public function actionUnlike($params){
+        if (!empty($params)) {
+            $this-> getModel('users')-> stopLike($params);
+            $this -> responseSendStatus(200);
+            $this-> responseSetContent(array("message" => "User does not like the post"));
+        }
+    }
 }

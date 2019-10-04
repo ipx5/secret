@@ -1,5 +1,6 @@
 <?php
 
+
 //spl_autoload_register('app::autoload');
 function debug ($str){
     echo '<pre>';

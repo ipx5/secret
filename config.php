@@ -4,14 +4,14 @@ define('DS', DIRECTORY_SEPARATOR);
 define('BASE_PATH', __DIR__ .DS);
 define('PS', PATH_SEPARATOR);
 define('APP_PATH', BASE_PATH . 'application' . DS);
-define('CLASSES', BASE_PATH . 'framework' . DS . 'classes'. DS);
+define('CLASSES', BASE_PATH . 'framework' . DS . 'classes');
 define('IMG', APP_PATH . 'views' . DS .  'img' . DS);
-define('QB', CLASSES . DS . 'QueryBuilder'. DS);
-define('AR', CLASSES . DS . 'ActiveRecord'. DS);
-define('Exceptions', CLASSES . DS . 'Exceptions'. DS);
-define('MVC', CLASSES . DS . 'MVC'. DS);
-define('API', BASE_PATH . 'framework' . DS . 'API'. DS);
-define('HTTP', CLASSES . DS . 'Http'. DS);
+define('QB', CLASSES . DS . 'QueryBuilder');
+define('AR', CLASSES . DS . 'ActiveRecord');
+define('Exceptions', CLASSES . DS . 'Exceptions');
+define('MVC', CLASSES . DS . 'MVC');
+define('API', BASE_PATH . 'framework' . DS . 'API');
+define('HTTP', CLASSES . DS . 'Http');
 define('CONTROLLERS', APP_PATH . 'controllers'. DS);
 
 return [

@@ -10,8 +10,9 @@ function autoloadRun() {
     $api = PS . API;
     $exceptions = PS . Exceptions;
     $http = PS . HTTP;
-    $basepath .= $queryBulder . $mvc . $activeRecord . $api . $exceptions . $http;
-
+    $models = PS . APP_PATH . 'models';
+    $basepath .= $queryBulder . $mvc . $activeRecord . $api . $exceptions . $http . $models;
+    //debug($models);
     set_include_path($basepath);
 }
 

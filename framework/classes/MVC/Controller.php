@@ -10,9 +10,9 @@ abstract class Controller {
     
     protected function getModel($name) {
         if (!isset($this-> models[$name])) {
-            if (!@include app::getInstance()-> paths['models'] . $name . '.php'){
-                throw new DbException(404, 'Undefined model');
-            }
+            // if (!@include app::getInstance()-> paths['models'] . $name . '.php'){
+            //     throw new DbException(404, 'Undefined model');
+            // }
             $this-> models[$name] = new $name();
         }
         return $this-> models[$name];
@@ -49,6 +49,7 @@ abstract class Controller {
     }
 
     public function responseSetContent($content) {
+
         app::getInstance() -> response->setContent($content);
     }
 
