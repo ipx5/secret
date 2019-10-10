@@ -28,10 +28,8 @@ function initEvents() {
     if (_.isUndefined(this.events)) return
 
     let events = this.events();
-
     Object.keys(events).forEach(key => {
         let listener = key.split(' ');
-
         this.el
             .find(listener[1])
             .on(listener[0], this[events[key]].bind(this))

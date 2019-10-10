@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6746d835-dd0f-4f31-be89-907ae09f9d06" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/pages/post.component.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/shared/directives/click-directive.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/shared/directives/onChange-directive.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/shared/pipes/posts-pipe.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/models/blog.php" beforeDir="false" afterPath="$PROJECT_DIR$/../application/models/blog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config.php" beforeDir="false" afterPath="$PROJECT_DIR$/../config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../framework/API/Routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/API/Routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../framework/Core.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/Core.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../framework/classes/Autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/classes/Autoload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../framework/classes/MVC/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/classes/MVC/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../framework/classes/QueryBuilder/Pgsql.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/classes/QueryBuilder/Pgsql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../index.php" beforeDir="false" afterPath="$PROJECT_DIR$/../index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/cp-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/cp-page.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/explore-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/explore-page.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/home-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/home-page.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/pipes-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/pipes-page.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/si-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/si-page.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/su-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/su-page.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/directives/hover-derective.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/directives/hover-directive.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/framework/core/component/component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/framework/core/component/component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/framework/core/module.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/framework/core/module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/framework/core/pipes/apply-pipe.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/framework/core/pipes/apply-pipe.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/framework/core/pipes/pipesFactory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/framework/core/pipes/pipesFactory.js" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1Rk3TJ5npKwZ47p0Rp752oEIuvx" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6746d835-dd0f-4f31-be89-907ae09f9d06" name="Default Changelist" comment="" />
+      <created>1570197273004</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1570197273004</updated>
+      <workItem from="1570197276653" duration="1674000" />
+      <workItem from="1570378748628" duration="3377000" />
+      <workItem from="1570435779600" duration="2668000" />
+      <workItem from="1570448302793" duration="5222000" />
+      <workItem from="1570611032881" duration="10574000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -18,6 +18,7 @@
     "webpack-dev-server": "^3.8.1"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "material-components-web": "^3.2.0",
     "materialize-css": "^1.0.0-rc.2"
   }

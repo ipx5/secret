@@ -1,9 +1,4 @@
 <?php 
-header("Access-Control-Allow-Origin: http://localhost/");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, GET");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 class Blog extends Model {
 
@@ -40,21 +35,29 @@ class Blog extends Model {
     }
     
     public function postsList(){
+        $this-> db-> queryBuilder('insert')
+            -> insert('post')
+            -> columns(['title','data', 'blog_id'])
+            -> values(['wswdwdwd','wqdqwd', 1])
+            -> query();
         return $this-> db -> queryBuilder('select')-> select('*')-> from('post')-> query();
     }
 
     public function getPosts($id){
         return $this-> db -> queryBuilder('select')-> select('*')-> from('post')-> where(['blog_id'=> $id])-> query();
     }
-    public function createPost($data, $id){
-        $this-> db-> queryBuilder('insert')
-        -> insert('post')
-        -> columns(['title','data','blog_id'])
-        -> values([$data->title,$data->data, $id])
-        -> query();
-        }
 
     public function createPost($data, $id){
+        $request = app::getInstance()->request->request;
+        print_r($request);
+        $this-> db-> queryBuilder('insert')
+        -> insert('post')
+        -> columns(['title','text','blog_id'])
+        -> values([$request['title'], $request['text'], $request['id']])
+        -> query();
+    }
+
+    public function updatePost($data, $id){
         $this-> db-> queryBuilder('update')-> table('post')-> set([['title'=> $data->title],['data'=> $data->data]] )-> where(['id'=> $id])-> query();
     }
 

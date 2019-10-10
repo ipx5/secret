@@ -1,4 +1,4 @@
-import {WFMComponent, $} from "framework";
+import {WFMComponent, $, http} from "framework";
 
 class SiPageComponent extends WFMComponent {
     constructor(config) {
@@ -9,11 +9,10 @@ class SiPageComponent extends WFMComponent {
         }
     }
 
-    // events() {
-    //     return {
-    //         'click .collapsible': 'onTabClick'
-    //     }
-    //}
+    afterInit() {
+
+        // http.post()
+    }
 
     // onTabClick({target}) {
     //     let $target = $(target);
@@ -39,21 +38,16 @@ export const siPageComponent = new SiPageComponent({
               </div>
             </div>
             <div class='row'>
-            <div class=" col s0">
-            <i class="material-icons">person_outline</i>
-            </div>
               <div class='input-field col s12'>
                 <input class='validate' type='email' name='email' id='email' />
+                <label for='email'>Логин</label>
               </div>
             </div>
 
             <div class='row'>
-            <div class=" col s0">
-            <i class="material-icons">vpn_key</i>
-            </div>
               <div class='input-field col s12'>
                 <input class='validate' type='password' name='password' id='password' />
-
+                <label for='password'>Пароль</label>
               </div>
               <label style='float: right;'>
 								<a class='black-text' href='#!'><b>Забыли пароль?</b></a>

@@ -1,17 +1,18 @@
-import {WFMComponent, $, http} from "framework";
+import {WFMComponent, $} from "framework";
+import {http} from "../../framework";
 
 class SuPageComponent extends WFMComponent {
     constructor(config) {
         super(config);
 
         this.data ={
-          username: '',
-          email: '',
-          password: '',
-          repassword:''
+            username: '',
+            email: '',
+            password: '',
+            repassword:''
         }
     }
-    
+
     events() {
         return {
             'click .btn': 'onClick',
@@ -20,14 +21,13 @@ class SuPageComponent extends WFMComponent {
     }
 
     onClick() {
-      this.data.username= document.forms["reg-form"].elements["username"].value
-      this.data.email= document.forms["reg-form"].elements["email"].value
-      this.data.password= document.forms["reg-form"].elements["password"].value
-      this.data.repassword= document.forms["reg-form"].elements["repassword"].value
-      http.post('http://localhost/user',this.data)
-      document.location.href="#si"
+        this.data.username= document.forms["reg-form"].elements["username"].value
+        this.data.email= document.forms["reg-form"].elements["email"].value
+        this.data.password= document.forms["reg-form"].elements["password"].value
+        this.data.repassword= document.forms["reg-form"].elements["repassword"].value
+        http.post('http://194.87.102.4/:8080/user',this.data)
+        document.location.href="#si"
     }
-
 }
 
 export const suPageComponent = new SuPageComponent({
@@ -40,30 +40,25 @@ export const suPageComponent = new SuPageComponent({
 <div class="row">
     <form class="col s12" id="reg-form">
       <div class="row">
-      <div class=" col s0">
-      <i class="material-icons">person_outline</i>
-      </div>
         <div class="input-field col s12">
-          <input id="username" type="text" class="validate" required >
+          <input id="username" type="text" class="validate" required>
+          <label for="username">Имя пользователя</label>
         </div>
       </div>
       <div class="row">
-      <div class=" col s0">
-      <i class="material-icons">email</i>
-      </div>
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate" required >
+          <input id="email" type="email" class="validate" required>
+          <label for="email">Email</label>
         </div>
       </div>
       <div class="row">
-      <div class=" col s0">
-      <i class="material-icons">vpn_key</i>
-      </div>
-        <div class="input-field col s5">
-          <input id="password" type="password" class="validate" minlength="4" required >
+        <div class="input-field col s6">
+          <input id="password" type="password" class="validate" minlength="6" required>
+          <label for="password">Пароль</label>
         </div>
-        <div class="input-field col s5">
-        <input id="repassword" type="password" class="validate" minlength="4" required >
+        <div class="input-field col s6">
+        <input id="repassword" type="password" class="validate" minlength="6" required>
+        <label for="repassword">Повторите пароль</label>
       </div>
       </div>
         <div class="input-field col s12">
