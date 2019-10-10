@@ -14,7 +14,7 @@ export const pipePageComponent = new PipePageComponent({
     template: `
     <div class="row">
             <div class="col s12 m6 pipe__block">
-              <h4>{{number}}</h4>
+              <h4>{{number | num}}</h4>
               <h4>{{number | multi:20}}</h4>
               <h4>{{number | multi}}</h4>
             </div>

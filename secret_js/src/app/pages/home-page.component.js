@@ -1,4 +1,5 @@
 import {WFMComponent, router, http} from "framework";
+import axios from 'axios';
 
 class HomePageComponent extends WFMComponent {
     constructor(config) {
@@ -18,14 +19,13 @@ class HomePageComponent extends WFMComponent {
     }
 
     afterInit() {
-        http.get('https://api.ipify.org?format=json')
-            .then(({ip}) => {
-                this.data.ip = ip;
-                this.render()
-            })
+        // http.get('http://secret.com/posts/1').then(res => console.log(res))
+        // this.render()
     }
 
     goToTabs(event) {
+
+
         event.preventDefault();
         router.navigate('tabs');
     }

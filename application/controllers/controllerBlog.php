@@ -68,9 +68,10 @@ class controllerBlog extends Controller {
         $this -> responseSetContent($data);
     }
 
-    public function actionPost($params){
+    public function actionCreatePost($params){
         if (!empty($params['id'])) {
             $data = $this->requestGetContent();
+            $data = app::getInstance()->request->request;
             $this-> getModel('blog')-> createPost($data, $params['id']);
             $this -> responseSendStatus(200);
             $this-> responseSetContent(array("message" => "Post was created."));

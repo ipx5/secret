@@ -26,8 +26,8 @@ class Routes {
         $router -> get('/following/:id', 'blog@actionGetFollowing');
         $router -> get('/followers/:id', 'blog@actionGetFollowers');
         $router -> get('/posts/:id', 'blog@actionGetPosts');
-
-        $router -> post('/post/:id', 'blog@actionPost');
+        $router -> get('/posts', 'blog@actionGetPosts');
+        $router -> post('/post/:id', 'blog@actionCreatePost');
         $router -> post('/post/edit/:id', 'blog@actionEditPost');
         $router -> post('/post/delete/:id', 'blog@actionDeletePost');
 

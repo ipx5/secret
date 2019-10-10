@@ -20,7 +20,6 @@ export class Module {
 
     start() {
         initPipes(this.pipes);
-
         initComponents(this.botstrapComponent, this.components);
         initRouting(this.routes, this.dispatcher);
         initDirectives(this.directives);

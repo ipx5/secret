@@ -42,7 +42,7 @@ class app {
         $this-> response =  new Response;
         $this-> user = new user;
 //        Logger::getLogger('start_app') -> log('success start');
-
+//        $this -> response -> setHeader('Access-Control-Allow-Origin: *');
         try {
             $this-> request-> run();
         } catch (HttpException $e) {

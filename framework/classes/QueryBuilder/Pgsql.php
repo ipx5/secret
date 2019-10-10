@@ -52,6 +52,7 @@ class Pgsql implements PgsqlBehavior {
             $insert_row = pg_fetch_row($result);
             return $insert_id = $insert_row[0];
         } else {
+//            echo $sql;
             return pg_query($this->connection, $sql);
         }
     }
