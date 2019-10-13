@@ -1,32 +1,42 @@
 import {WFMComponent, $} from "framework";
 import {http} from "../../framework";
-
+import axios from 'axios';
 class SuPageComponent extends WFMComponent {
     constructor(config) {
         super(config);
 
         this.data ={
-            username: '',
+            name: '',
             email: '',
             password: '',
-            repassword:''
+            passwordRepeat: ''
         }
     }
 
     events() {
         return {
-            'click .btn': 'onClick',
-
+            'click .btn-register': 'toRegister',
+            'change .inputName' : 'toHandler',
+            'change .inputEmail' : 'toHandler',
+            'change .inputPassword': 'toHandler',
+            'change .inputRepeatPassword' : 'toHandler'
         }
     }
 
-    onClick() {
-        this.data.username= document.forms["reg-form"].elements["username"].value
-        this.data.email= document.forms["reg-form"].elements["email"].value
-        this.data.password= document.forms["reg-form"].elements["password"].value
-        this.data.repassword= document.forms["reg-form"].elements["repassword"].value
-        http.post('http://194.87.102.4/:8080/user',this.data)
-        document.location.href="#si"
+    toHandler(e) {
+        this.data[e.target.name] = e.target.value;
+    }
+
+    toRegister(e) {
+        e.preventDefault();
+        let email = this.data.email;
+        let username = this.data.name;
+        let password = this.data.password;
+        let repassword = this.data.passwordRepeat;
+        let dataForm = {email, username, password, repassword};
+        console.log(dataForm)
+        axios.post('http://secret.com/user', dataForm).then(res => console.log(res))
+        http.post('http://secret.com/user', dataForm).then(res => console.log(res))
     }
 }
 
@@ -41,23 +51,23 @@ export const suPageComponent = new SuPageComponent({
     <form class="col s12" id="reg-form">
       <div class="row">
         <div class="input-field col s12">
-          <input id="username" type="text" class="validate" required>
+          <input name="name" id="username" type="text" class="validate inputName" required>
           <label for="username">Имя пользователя</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate" required>
+          <input name="email" id="email" type="email" class="validate inputEmail" required>
           <label for="email">Email</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="password" type="password" class="validate" minlength="6" required>
+          <input name="password" id="password" type="password" class="validate inputPassword" minlength="6" required>
           <label for="password">Пароль</label>
         </div>
         <div class="input-field col s6">
-        <input id="repassword" type="password" class="validate" minlength="6" required>
+        <input name="passwordRepeat" id="repassword" type="password" class="validate inputRepeatPassword" minlength="6" required>
         <label for="repassword">Повторите пароль</label>
       </div>
       </div>

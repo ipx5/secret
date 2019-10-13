@@ -42,8 +42,8 @@ class users extends Model {
         $user->sub_token = $subtoken;
         $this-> db-> queryBuilder('insert')
         -> insert('users')
-        -> columns(['email','username','password','salt','status','sub_token'])
-        -> values([$user->email,$user->username,$user->password,$user->salt,$user->status,$user->sub_token])
+        -> columns(['email','username','password','salt','status','sub_token', 'role_id'])
+        -> values([$user->email,$user->username,$user->password,$user->salt,$user->status,$user->sub_token, 1])
         -> query();
     }
 

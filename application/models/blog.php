@@ -48,13 +48,21 @@ class Blog extends Model {
     }
 
     public function createPost($data, $id){
-        $request = app::getInstance()->request->request;
-        print_r($request);
+//        $new = json_decode($data, true);
+//        $new = '';
+//        die();
+//        print_r($data);
         $this-> db-> queryBuilder('insert')
-        -> insert('post')
-        -> columns(['title','text','blog_id'])
-        -> values([$request['title'], $request['text'], $request['id']])
-        -> query();
+            -> insert('post')
+            -> columns(['title','text','blog_id'])
+            -> values([$data -> title, $data -> text, $data -> id])-> query();
+//        $request = app::getInstance()->request->request;
+//        print_r($request);
+//        $this-> db-> queryBuilder('insert')
+//        -> insert('post')
+//        -> columns(['title','text','blog_id'])
+//        -> values([$request['title'], $request['text'], 1])
+//        -> query();
     }
 
     public function updatePost($data, $id){

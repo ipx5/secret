@@ -32,53 +32,16 @@ class CpPageComponent extends WFMComponent {
         console.log(event.target)
     }
 
-    // events() {
-    //     return {
-    //         'click .collapsible': 'onTabClick'
-    //     }
-    //}
-
     createPost(e) {
         e.preventDefault()
 
         let title = this.data.inputText;
         let text = this.data.inputTitle;
         let data = {title: title, text: text, id: 1};
-        var formBody = [];
-        for (var property in data) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(data[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
 
-
-
-        console.log(JSON.stringify(data));
-        fetch('http://secret.com/post/1', {
-            method: 'POST',
-            headers: {
-            //     'Access-Control-Allow-Origin': 'http://localhost:4200',
-            // 'Access-Control-Allow-Headers': 'http://localhost:4200',
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-
-                // 'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-                },
-            // mode: 'cors',
-            body: formBody
-        }).then(res => res.body).then(res => this.render())
-        // http.post('http://secret.com/post/1', {title: title, text: text})
-        //     .then(res => console.log(JSON.stringify(res))).then(res => this.render());
+        http.post('http://secret.com/post/1', data)
+            .then(res => console.log(res));
     }
-    // onTabClick({target}) {
-    //     let $target = $(target);
-    //     if (!$target.hasClass('collapsible-header')) {
-    //         return
-    //     }
-    //     this.el.findAll('.js-tab').forEach(e => e.removeClass('active'));
-    //     $target.parent().addClass('active');
-    // }
 }
 
 export const cpPageComponent = new CpPageComponent({
