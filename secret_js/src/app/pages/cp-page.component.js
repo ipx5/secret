@@ -40,7 +40,13 @@ class CpPageComponent extends WFMComponent {
         let data = {title: title, text: text, id: 1};
 
         http.post('http://secret.com/post/1', data)
-            .then(res => console.log(res));
+            .then(res => console.log(res)).then(res => this.cleanState());
+    }
+
+    cleanState() {
+        this.data.inputTitle = '';
+        this.data.inputText = '';
+        this.render();
     }
 }
 
@@ -55,13 +61,13 @@ export const cpPageComponent = new CpPageComponent({
       <form class="col s12">
         <div class="row">
           <div class="input-field col s12">
-            <textarea id="textarea1" name="inputTitle" class="materialize-textarea inputTitle"></textarea>
+            <textarea id="textarea1" name="inputTitle" class="materialize-textarea inputTitle" value = "{{ inputTitle }}"></textarea>
             <label for="textarea1">Title</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12 ">
-            <textarea id="textarea2" name="inputText" class="materialize-textarea inputText"></textarea>
+            <textarea id="textarea2" name="inputText" class="materialize-textarea inputText" value = {{inputText}}></textarea>
             <label for="textarea2">Text</label>
             <button class="btn waves-effect waves-light" type="submit" name="action">Submit
             <i class="material-icons right">send</i>
