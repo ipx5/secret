@@ -2,34 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6746d835-dd0f-4f31-be89-907ae09f9d06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/pages/post.component.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/shared/directives/click-directive.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/shared/directives/onChange-directive.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/shared/pipes/posts-pipe.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../application/models/blog.php" beforeDir="false" afterPath="$PROJECT_DIR$/../application/models/blog.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../config.php" beforeDir="false" afterPath="$PROJECT_DIR$/../config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../framework/API/Routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/API/Routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../framework/Core.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/Core.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../framework/classes/Autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/classes/Autoload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../framework/classes/MVC/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/classes/MVC/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../framework/classes/QueryBuilder/Pgsql.php" beforeDir="false" afterPath="$PROJECT_DIR$/../framework/classes/QueryBuilder/Pgsql.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../index.php" beforeDir="false" afterPath="$PROJECT_DIR$/../index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/cp-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/cp-page.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/secret_js.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/secret_js.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/pages/explore-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/explore-page.component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/home-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/home-page.component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/pipes-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/pipes-page.component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/si-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/si-page.component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/su-page.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/su-page.component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/directives/hover-derective.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/directives/hover-directive.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/framework/core/component/component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/framework/core/component/component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/framework/core/module.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/framework/core/module.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/framework/core/pipes/apply-pipe.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/framework/core/pipes/apply-pipe.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/framework/core/pipes/pipesFactory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/framework/core/pipes/pipesFactory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/post.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/post.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/directives/click-directive.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/directives/click-directive.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/directives/onChange-directive.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/directives/onChange-directive.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/pipes/posts-pipe.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/pipes/posts-pipe.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +33,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -79,6 +62,12 @@
       <workItem from="1570435779600" duration="2668000" />
       <workItem from="1570448302793" duration="5222000" />
       <workItem from="1570611032881" duration="10574000" />
+      <workItem from="1570701632235" duration="151000" />
+      <workItem from="1570702076961" duration="212000" />
+      <workItem from="1570709553372" duration="617000" />
+      <workItem from="1570789494520" duration="30000" />
+      <workItem from="1570799622886" duration="1435000" />
+      <workItem from="1570965901432" duration="571000" />
     </task>
     <servers />
   </component>
