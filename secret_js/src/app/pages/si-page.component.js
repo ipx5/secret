@@ -1,4 +1,5 @@
 import {WFMComponent, $, http} from "framework";
+import axios from 'axios';
 
 class SiPageComponent extends WFMComponent {
     constructor(config) {
@@ -6,22 +7,31 @@ class SiPageComponent extends WFMComponent {
 
         this.data ={
           createuser: 'Зарегистрироваться',
+            email: '',
+            password: ''
         }
     }
 
-    afterInit() {
-
-        // http.post()
+    events() {
+        return {
+            'change #email': 'toHandler',
+            'change #password': 'toHandler',
+            'click .login': 'toAuth'
+        }
     }
 
-    // onTabClick({target}) {
-    //     let $target = $(target);
-    //     if (!$target.hasClass('collapsible-header')) {
-    //         return
-    //     }
-    //     this.el.findAll('.js-tab').forEach(e => e.removeClass('active'));
-    //     $target.parent().addClass('active');
-    // }
+    toHandler(e) {
+        this.data[e.target.name] = e.target.value;
+    }
+
+    toAuth(e) {
+        e.preventDefault();
+        let email = this.data.email;
+        let password = this.data.password;
+        let data = {email, password};
+        axios.post('http://secret.com/user/login', data).then(res => console.log(res))
+        http.post('http://secret.com/user/login', data).then(res => console.log(res));
+    }
 }
 
 export const siPageComponent = new SiPageComponent({
@@ -40,7 +50,7 @@ export const siPageComponent = new SiPageComponent({
             <div class='row'>
               <div class='input-field col s12'>
                 <input class='validate' type='email' name='email' id='email' />
-                <label for='email'>Логин</label>
+                <label for='email'>Email</label>
               </div>
             </div>
 
@@ -57,7 +67,7 @@ export const siPageComponent = new SiPageComponent({
             <br />
             <center>
               <div class='row'>
-                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect black'>Войти</button>
+                <button type='submit' name='btn_login' class='login col s12 btn btn-large waves-effect black'>Войти</button>
               </div>
             </center>
           </form>

@@ -119,11 +119,9 @@ class Response {
         }
     }
     public function render() {
-        if (!headers_sent()) {
             foreach ($this->headers as $header) {
                 header($header, true);
             }
-        }
         if (!empty($this->content)) {
             $output = $this->content;
             // Headers

@@ -125,12 +125,12 @@ class user {
     // }
 
     public function authenticate($user){
-        $checkUser = $this-> db-> queryBuilder('select')-> select('*')-> from('users')-> where(['email'=> $user['email']])-> query();
+        $checkUser = $this-> db-> queryBuilder('select')-> select('*')-> from('users')-> where(['email'=> $user -> email])-> query();
         if(empty($checkUser)){
             throw new Exception('Email '.$user['email']. 'is not found');
         }
         $checkUser = reset($checkUser); //удаляю ключ из массива (метод php)
-        $hash = sha1($user['password'].$checkUser['salt']);
+        $hash = sha1($user -> password.$checkUser['salt']);
         if($hash != $checkUser['password']){
             throw new Exception('Password incorrect'); 
         }
@@ -141,7 +141,6 @@ class user {
             $this-> db-> queryBuilder('update')-> table('users')-> set([['sub_token'=> ''], ['status'=> 0]])-> where(['id'=> $checkUser['id']])-> query();
         } elseif ($checkUser['status'] == 2) {
             throw new Exception('Password is reset');
-            
         }
         unset($checkUser['password'], $checkUser['salt'], $checkUser['token'], $checkUser['sub_token']);
         return $checkUser;

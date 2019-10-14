@@ -15,6 +15,7 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Credentials", "true");
 header("Access-Control-Allow-Headers", "*");
 
+
 $config = include './config.php';
 include './framework/Core.php';
 include './framework/classes/Autoload.php';

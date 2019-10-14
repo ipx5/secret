@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 class Routes {
     public function __construct($router){
@@ -38,6 +38,7 @@ class Routes {
         //$router -> get('/user/following/:id', 'user@actionGetFollowing');
 
         $router -> post('/user', 'user@actionCreateUser');
+        $router -> post('/user/login', 'user@actionAuthorization');
         $router -> post('/user/follow/:id', 'user@actionFollow');
         $router -> post('/user/unfollow/:id', 'user@actionUnfollow');
         $router -> post('/user/like/:id', 'user@actionLike');

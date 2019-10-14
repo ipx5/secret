@@ -39,8 +39,8 @@ class app {
         $this->config = $config;
         $this-> acceptCookie = 1;
         $this-> request =  new Request;
-        $this-> response =  new Response;
         $this-> user = new user;
+        $this-> response =  new Response;
 //        Logger::getLogger('start_app') -> log('success start');
 //        $this -> response -> setHeader('Access-Control-Allow-Origin: *');
         try {

@@ -19,7 +19,6 @@ class controllerUser extends Controller{
                 $this-> getModel('users')-> saveUser(app::getInstance()-> request-> request);
                 $this -> responseSetHeader('location:/user/users');
             } catch (Exception $e){
-                echo 'wewe';
                 $error = $e-> getMessage();
             }
         }
@@ -69,18 +68,17 @@ class controllerUser extends Controller{
     // }
 
     public function actionAuthorization(){
-        $data = $this -> getRequest() -> request;
-        if ( $this -> getRequest()-> isForm ){
+        $data = $this -> requestGetContent();
             try{
-                $user = $this -> getUser()-> authenticate($this -> getRequest()-> request);
+                $user = $this -> getUser()-> authenticate($data);
                 $this -> getUser() -> authorization($user);
+                $this -> responseSetContent('Всё хорошо');
             } catch (Exception $e){
                 $data['error'] = $e-> getMessage();
             }
-        }
-        $this -> responeSendHtml([
-                'lo_content' => $this-> renderTemplate('authorization', $data)
-            ]);
+//        $this -> responeSendHtml([
+//                'lo_content' => $this-> renderTemplate('authorization', $data)
+//            ]);
         
     }
 
