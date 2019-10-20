@@ -1,14 +1,18 @@
-import {WFMComponent, $, http} from "framework";
+import {WFMComponent, $, http, _} from "framework";
 import axios from 'axios';
 
 class SiPageComponent extends WFMComponent {
     constructor(config) {
         super(config);
-
-        this.data ={
-          createuser: 'Зарегистрироваться',
+        this.data = {
+            createuser: 'Зарегистрироваться',
             email: '',
-            password: ''
+            password: '',
+            token: '',
+            display: 'block',
+            message: '',
+            username: '',
+            displayButton: 'none'
         }
     }
 
@@ -16,7 +20,8 @@ class SiPageComponent extends WFMComponent {
         return {
             'change #email': 'toHandler',
             'change #password': 'toHandler',
-            'click .login': 'toAuth'
+            'click .login': 'toAuth',
+            'click .logout': 'toLogout'
         }
     }
 
@@ -24,13 +29,41 @@ class SiPageComponent extends WFMComponent {
         this.data[e.target.name] = e.target.value;
     }
 
+    toLogout(e) {
+        console.log(e)
+    }
+
     toAuth(e) {
         e.preventDefault();
         let email = this.data.email;
         let password = this.data.password;
         let data = {email, password};
-        axios.post('http://secret.com/user/login', data).then(res => console.log(res))
-        http.post('http://secret.com/user/login', data).then(res => console.log(res));
+        http.post('http://secret.com/user/login', data).then(res => {
+            console.log(res)
+            if (res.status === 200 && !_.isUndefined(res.token)) {
+                this.data.username = res.username;
+                this.data.token = res.token;
+            }
+        }).then(res => {
+            if (!_.isUndefined(this.data.token)) {
+                this.data.display = "none";
+                this.data.displayButton = "block";
+                this.data.message = "Вы вошли как " + this.data.username;
+            }
+        }).then(res => this.render())
+    }
+
+    onInit() {
+        
+    }
+
+    afterInit() {
+        if (this.data.token !== '') {
+            this.data.display = "none";
+            this.data.displayButton = "block";
+            this.data.message = "Вы вошли как " + this.data.username;
+            this.render();
+        }
     }
 }
 
@@ -41,7 +74,9 @@ export const siPageComponent = new SiPageComponent({
     <main>
     <center>
       <div class="container">
-        <div class="row" style="display: inline-block; padding: 32px 48px 0px 48px;">
+        {{message}}
+        <a class="waves-effect waves-light btn logout" style="display: {{displayButton}}">Выйти</a>
+        <div class="row" style="display: {{display}}; padding: 32px 48px 0px 48px;" >
           <form class="col s12" method="post">
             <div class='row'>
               <div class='col s12'>
@@ -77,5 +112,6 @@ export const siPageComponent = new SiPageComponent({
         `,
         styles: `
         .si__block {width: 50px}
+        
     `
 });

@@ -15,6 +15,7 @@ module.exports = {
     devtool: 'eval',
 
     devServer: {
+        // host: 'pbdev.com',
         port: 4200
     },
 

@@ -6,7 +6,7 @@
 // 0-register but not corfirmed
 // 2-password is reseted
 
-session_start();
+
 class user {
     protected $db = false;
     public $isUser = false;
@@ -94,46 +94,15 @@ class user {
         //TODO отправить ссылку на емайл http://localhost/user/restore/?token=$subtoken
     }
 
-    // public function registration($user){
 
-    //     if ($user['password'] != $user['repassword']){
-    //         throw new Exception('Passwords do not match');
-    //     }
-    //     $checkEmail = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['email'=> $user['email']])-> query();
-    //     if( !empty($check)){
-    //         throw new Exception("This email already exist");
-    //     }
-    //     $checkUsername = $this-> db-> queryBuilder('select')-> select('id')-> from('users')-> where(['username'=> $user['username']])-> query();
-    //     if( !empty($check)){
-    //         throw new Exception("This username already exist");
-    //     }
-    //     unset($user['repassword']);
-    //     $salt = md5(time() + random_int(0, PHP_INT_MAX));
-    //     $user['password'] = sha1($user['password'].$salt);
-    //     $user['salt'] = $salt;
-    //     $user['reg_date'] = time();
-    //     $user['status'] = 1;
-    //     $subtoken = sha1(time()+random_int(0, PHP_INT_MAX));
-    //     $user['sub_token'] = $subtoken;
-    //     $this-> db-> queryBuilder('insert')
-    //     -> insert('users')
-    //     -> columns(['email','username','password','salt','reg_date','status','sub_token'])
-    //     -> values([$user['email'],$user['username'],$user['password'],$user['salt'],$user['reg_date'],$user['status'],$user['sub_token']])
-    //     -> query();
-    //     header('location:/user/register');
-    //     //$link = 'http://localhost/user/authorization?token='.$subtoken;
-    // }
 
-    public function authenticate($user){
-        $checkUser = $this-> db-> queryBuilder('select')-> select('*')-> from('users')-> where(['email'=> $user -> email])-> query();
-        if(empty($checkUser)){
-            throw new Exception('Email '.$user['email']. 'is not found');
-        }
-        $checkUser = reset($checkUser); //удаляю ключ из массива (метод php)
-        $hash = sha1($user -> password.$checkUser['salt']);
+    public function authenticate($user, $checkUser){
+        $hash = sha1($user['password'] . $checkUser['salt']);
+
         if($hash != $checkUser['password']){
             throw new Exception('Password incorrect'); 
         }
+
         if($checkUser['status'] != 0){
             if(!isset($user['sub_token']) || $user['sub_token'] != $checkUser['sub_token']){
                 throw new Exception('Invalid data for email confirmation');
@@ -146,15 +115,9 @@ class user {
         return $checkUser;
     }
 
-    public function authorization($user){
-        for(;;){
-            $token =sha1(time().random_int(0, PHP_INT_MAX));
-            $check = $this-> db -> queryBuilder('select')-> select('id')-> from('users')-> where(['token'=> $token])->query();
-            if (empty($check)){
-                break;
-            }
-        }
-        setcookie('token', $token, time()+365*86400, '/', '', false, true);
+
+
+    public function authorization($user, $token){
         $this-> db-> queryBuilder('update')-> table('users')->set(['token'=>$token])-> where(['id'=> $user['id']])-> query();
         foreach ($user as $key => $value) {
             $this-> $key = $value;

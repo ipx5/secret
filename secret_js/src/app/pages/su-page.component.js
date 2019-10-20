@@ -34,8 +34,6 @@ class SuPageComponent extends WFMComponent {
         let password = this.data.password;
         let repassword = this.data.passwordRepeat;
         let dataForm = {email, username, password, repassword};
-        console.log(dataForm)
-        axios.post('http://secret.com/user', dataForm).then(res => console.log(res))
         http.post('http://secret.com/user', dataForm).then(res => console.log(res))
     }
 }

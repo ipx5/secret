@@ -6,34 +6,15 @@ class ExplorePageComponent extends WFMComponent {
         super(config);
 
         this.data = {
-            // title: 'Главная страница',
-            // link: 'Другая страница',
             ip: 'loading',
             posts: `loading`
         }
     }
 
-    events() {
-        return {
-            // 'click .white-text': 'goToTabs'
-        }
-    }
-
     afterInit() {
-        http.get('http://secret.com/posts/1').then(res => {
+        http.get('http://secret.com/posts').then(res => {
             this.data.posts = res.data;
         }).then(res => console.log(this.data.posts)).then(res => this.render());
-    }
-
-
-
-    goToTabs(event) {
-        console.log(event.target)
-        // event.preventDefault();
-        // router.navigate('tabs');
-    }
-
-    getPostList(posts) {
     }
 }
 

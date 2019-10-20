@@ -40,9 +40,20 @@ class app {
         $this-> acceptCookie = 1;
         $this-> request =  new Request;
         $this-> user = new user;
+//        $token =sha1(time().random_int(0, PHP_INT_MAX));
+////        for(;;){
+////            $check = $this-> db -> queryBuilder('select')-> select('id')-> from('users')-> where(['token'=> $token])->query();
+////            if (empty($check)){
+////                break;
+////            }
+////        }
+//        setcookie('token', $token, time()+365*86400, '/', 'secret.com' ,false, true);
+//        print_r($_COOKIE);
+//        die();
         $this-> response =  new Response;
 //        Logger::getLogger('start_app') -> log('success start');
 //        $this -> response -> setHeader('Access-Control-Allow-Origin: *');
+
         try {
             $this-> request-> run();
         } catch (HttpException $e) {

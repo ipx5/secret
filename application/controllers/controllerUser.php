@@ -6,6 +6,34 @@ class controllerUser extends Controller{
     }
     public $templateDir = 'user';
 
+    public function actionCreateUser(){
+        $request = $this -> getRequestData();
+        $this-> getModel('users')-> createUser($request);
+        $this -> responseSendStatus(200);
+        $this-> responseSetContent(array("message" => "User was created."));
+    }
+
+    public function actionAuthorization(){
+        $data = $this -> getRequestData();
+        try{
+            $modelUsers = $this->getModel('users');
+            $checkUser = $modelUsers -> checkEmail($data['email']);
+            if (empty($checkUser)) {
+                throw new Exception('No find user', 201);
+            }
+            $user = $this -> getUser()-> authenticate($data, $checkUser);
+            $modelUsers = $this -> getModel('users');
+            $token = $modelUsers -> getToken();
+            $this -> getUser() -> authorization($user, $token);
+            $this -> responseSendStatus(200);
+            $this -> responseSetContent(['token'=>$token, 'status'=>200, 'username'=>$checkUser['username'],
+                    'email' => $checkUser['email'], 'is_admin' => $checkUser['is_admin']
+                ]);
+        } catch (Exception $e){
+            $data['error'] = $e-> getMessage();
+        }
+    }
+
     public function actionUsers(){
         $users= $this-> getModel('users')-> usersList();
         $this -> responeSendHtml(
@@ -51,37 +79,6 @@ class controllerUser extends Controller{
         }
     }
 
-    // public function actionRegistration(){
-        
-    //     $data = $this -> getRequest()-> request;
-
-    //     if( $this -> getRequest() -> isForm ){ 
-    //         try{
-    //             $this -> getUser()-> registration($this -> getRequest()-> request);
-    //         } catch (Exception $e){
-    //             $data['error'] = $e-> getMessage();
-    //         }
-    //     }
-    //     $this -> responeSendHtml([
-    //         'lo_content' => $this-> renderTemplate('registration', $data)
-    //     ]);
-    // }
-
-    public function actionAuthorization(){
-        $data = $this -> requestGetContent();
-            try{
-                $user = $this -> getUser()-> authenticate($data);
-                $this -> getUser() -> authorization($user);
-                $this -> responseSetContent('Всё хорошо');
-            } catch (Exception $e){
-                $data['error'] = $e-> getMessage();
-            }
-//        $this -> responeSendHtml([
-//                'lo_content' => $this-> renderTemplate('authorization', $data)
-//            ]);
-        
-    }
-
     public function actionReset(){
         $data = $this -> getRequest() -> request;
         if ( $this -> getRequest()-> isForm ){
@@ -122,13 +119,6 @@ class controllerUser extends Controller{
     public function actionLogout(){
         $this -> getUser() -> logout();
         $this -> responseSetHeader('location:/user/authorization');
-    }
-
-    public function actionCreateUser(){
-        $data = $this->requestGetContent();
-        $this-> getModel('users')-> createUser($data);
-        $this -> responseSendStatus(200);
-        $this-> responseSetContent(array("message" => "User was created."));
     }
 
     public function actionGetInfo($params){
