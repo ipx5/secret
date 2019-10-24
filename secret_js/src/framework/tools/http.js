@@ -3,7 +3,9 @@ class Http {
         let object = {
             method: 'GET',
             url: url,
-            mode: 'cors'
+            mode: 'cors',
+            credentials: 'include',
+            withCredentials: "true"
         };
         return fetch(url, object).then(response => response.json());
     }
@@ -14,7 +16,10 @@ class Http {
             url: url,
             mode: 'cors',
             headers:{"content-type": "application/x-www-form-urlencoded"},
-            body: parseData(data)
+            body: parseData(data),
+            credentials: 'include',
+            withCredentials: "true"
+            // credentials: 'include'
         };
         return fetch(url, object).then(response => response.json());
     }

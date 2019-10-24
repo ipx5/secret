@@ -21,12 +21,12 @@ class controllerUser extends Controller{
             if (empty($checkUser)) {
                 throw new Exception('No find user', 201);
             }
+
             $user = $this -> getUser()-> authenticate($data, $checkUser);
             $modelUsers = $this -> getModel('users');
-            $token = $modelUsers -> getToken();
-            $this -> getUser() -> authorization($user, $token);
+            $this -> getUser() -> authorization($user);
             $this -> responseSendStatus(200);
-            $this -> responseSetContent(['token'=>$token, 'status'=>200, 'username'=>$checkUser['username'],
+            $this -> responseSetContent(['status'=>200, 'login' => 'true', 'username'=>$checkUser['username'],
                     'email' => $checkUser['email'], 'is_admin' => $checkUser['is_admin']
                 ]);
         } catch (Exception $e){
@@ -117,8 +117,11 @@ class controllerUser extends Controller{
     }
     
     public function actionLogout(){
+        $usersModel = $this -> getModel('users');
+        $data = $this -> getRequestData();
+        $usersModel -> searchForUsername($data['username']);
         $this -> getUser() -> logout();
-        $this -> responseSetHeader('location:/user/authorization');
+        $this -> responseSetContent(['status' => 200]);
     }
 
     public function actionGetInfo($params){

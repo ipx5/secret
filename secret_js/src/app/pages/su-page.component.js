@@ -34,7 +34,7 @@ class SuPageComponent extends WFMComponent {
         let password = this.data.password;
         let repassword = this.data.passwordRepeat;
         let dataForm = {email, username, password, repassword};
-        http.post('http://secret.com/user', dataForm).then(res => console.log(res))
+        http.post('http://serv.secret.com/user', dataForm).then(res => console.log(res))
     }
 }
 

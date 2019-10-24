@@ -5,17 +5,13 @@
 // 1-ok
 // 0-register but not corfirmed
 // 2-password is reseted
-
-
+session_start();
 class user {
     protected $db = false;
     public $isUser = false;
 
     public function __construct(){
         $this-> db= new Pgsql(app::getInstance()-> db['local']);
-        // $test= $this-> db -> QueryBuilder('select')-> select('*')-> from('users')-> where(['email'=>'toxa@hacker.ua'])->query();
-        // debug($test);
-        //debug($_SESSION);
         if(!isset($this-> id) && isset($_COOKIE['token'])){
             $user = $this-> db-> queryBuilder('select')-> select('id, username, email, role_id, is_admin, reg_date, status')-> from('users')-> where(['token' => $_COOKIE['token']])-> query();
             $user = reset($user); //удаляю ключ из массива (метод php)
@@ -26,9 +22,6 @@ class user {
                     $this-> $key =$value;
                 }
             }
-        }
-        if(isset($_COOKIE['token'])){
-            setcookie('token', $_COOKIE['token'], time()+365*86400, '/', '', false, true);
         }
         if(isset($this-> id)){
             $this-> isUser = true;
@@ -117,22 +110,21 @@ class user {
 
 
 
-    public function authorization($user, $token){
-        $this-> db-> queryBuilder('update')-> table('users')->set(['token'=>$token])-> where(['id'=> $user['id']])-> query();
-        foreach ($user as $key => $value) {
-            $this-> $key = $value;
+    public function authorization($user){
+        if (empty($_COOKIE['token'])) {
+            $token =sha1(time().random_int(0, PHP_INT_MAX));
+            setcookie('token', $token, time()+365*864, '/', 'serv.secret.com', false, true);
+            $this-> db-> queryBuilder('update')-> table('users')->set(['token'=>$token])-> where(['id'=> $user['id']])-> query();
+            foreach ($user as $key => $value) {
+                $this-> $key = $value;
+            }
         }
         $this-> isUser = true;
     }
 
     public function logout(){
-        $this-> db-> queryBuilder('update')-> table('users')-> set(['token'=> ''])-> where(['id'=> $user['id']])-> query();
+        unset($_COOKIE['token']);
         $_SESSION = [];
-        setcookie('token', '', time()-1, '/');
+        setcookie('token', '', time() - 1000, '/', '.serv.secret.com');
     }
-
-    // public function saveRole()
-    // {
-    //     //TODO save role
-    // }
 }

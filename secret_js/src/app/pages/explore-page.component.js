@@ -12,9 +12,9 @@ class ExplorePageComponent extends WFMComponent {
     }
 
     afterInit() {
-        http.get('http://secret.com/posts').then(res => {
+        http.get('http://serv.secret.com/posts').then(res => {
             this.data.posts = res.data;
-        }).then(res => console.log(this.data.posts)).then(res => this.render());
+        }).then(res => console.log(this.data.posts)).then(res => this.render()).catch(res => console.log(res));
     }
 }
 

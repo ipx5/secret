@@ -8,7 +8,7 @@ class SiPageComponent extends WFMComponent {
             createuser: 'Зарегистрироваться',
             email: '',
             password: '',
-            token: '',
+            login: false,
             display: 'block',
             message: '',
             username: '',
@@ -30,7 +30,21 @@ class SiPageComponent extends WFMComponent {
     }
 
     toLogout(e) {
-        console.log(e)
+        let localName = localStorage.getItem('username');
+        let data = {username: localName}
+        http.post('http://serv.secret.com/user/logout', data).then(res => {
+            console.log(res)
+            if (res.status === 200) {
+                localStorage.removeItem("login");
+                localStorage.removeItem("username");
+                this.data.message = '';
+                this.data.display = "block";
+                this.data.displayButton = "none";
+                console.log(localStorage)
+            }
+        }).then(res => {
+            this.render()
+        })
     }
 
     toAuth(e) {
@@ -38,32 +52,35 @@ class SiPageComponent extends WFMComponent {
         let email = this.data.email;
         let password = this.data.password;
         let data = {email, password};
-        http.post('http://secret.com/user/login', data).then(res => {
-            console.log(res)
-            if (res.status === 200 && !_.isUndefined(res.token)) {
+        http.post('http://serv.secret.com/user/login', data).then(res => {
+            if (res.status === 200) {
                 this.data.username = res.username;
-                this.data.token = res.token;
-            }
-        }).then(res => {
-            if (!_.isUndefined(this.data.token)) {
+                localStorage.setItem('login', 'true');
+                localStorage.setItem('username', res.username);
+                this.data.message = "Вы вошли как" + localStorage.getItem('username');
                 this.data.display = "none";
                 this.data.displayButton = "block";
-                this.data.message = "Вы вошли как " + this.data.username;
             }
-        }).then(res => this.render())
+        }).then(res => {
+            this.render()
+        });
     }
+
+    // onInit() {
+    //
+    // }
 
     onInit() {
-        
-    }
-
-    afterInit() {
-        if (this.data.token !== '') {
+        if (localStorage.getItem('login') === "true") {
+            this.data.message = "Вы вошли как" + localStorage.getItem('username');
             this.data.display = "none";
             this.data.displayButton = "block";
-            this.data.message = "Вы вошли как " + this.data.username;
-            this.render();
+        } else {
+            this.data.message = '';
+            this.data.display = "block";
+            this.data.displayButton = "none";
         }
+        this.render();
     }
 }
 

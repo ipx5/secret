@@ -136,12 +136,16 @@ class users extends Model {
         }
     }
 
-    public function getToken() {
-        $token =sha1(time().random_int(0, PHP_INT_MAX));
-        $result = $this -> memcashedObj -> get('token');
-        if (empty($result)) {
-            $this -> memcashedObj -> set('token', $token, time()+365*86400);
-        }
-        return $result;
+    public function searchForUsername($username) {
+        $this-> db-> queryBuilder('update')-> table('users')-> set(['token'=> ''])-> where(['username'=> $username])-> query();
     }
+
+//    public function getToken() {
+//        $token =sha1(time().random_int(0, PHP_INT_MAX));
+//        $result = $this -> memcashedObj -> get('token');
+//        if (empty($result)) {
+//            $this -> memcashedObj -> set('token', $token, time()+365*86400);
+//        }
+//        return $result;
+//    }
 }

@@ -39,6 +39,7 @@ class Routes {
 
         $router -> post('/user', 'user@actionCreateUser');
         $router -> post('/user/login', 'user@actionAuthorization');
+        $router -> post('/user/logout', 'user@actionLogout');
         $router -> post('/user/follow/:id', 'user@actionFollow');
         $router -> post('/user/unfollow/:id', 'user@actionUnfollow');
         $router -> post('/user/like/:id', 'user@actionLike');
